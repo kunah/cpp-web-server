@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include)
 
-add_executable(cpp_web_server main.cpp src/HTTPParser.cpp)
+add_executable(cpp_web_server main.cpp src/HTTPParser.cpp src/WebServer.cpp)
