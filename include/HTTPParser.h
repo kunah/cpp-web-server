@@ -34,8 +34,12 @@ private:
 
     void SetMethod(std::string & str);
 
+    void ParseHeader();
+    std::string GetLine();
+
     std::shared_ptr<unsigned char> buffer;
     size_t bufferSize;
+    size_t index;
 };
 
 

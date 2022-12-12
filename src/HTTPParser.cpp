@@ -1,8 +1,8 @@
 #include <HTTPParser.h>
 
-HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSize) : buffer(_buffer), bufferSize(_bufferSize) {
+HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSize) : buffer(std::move(_buffer)), bufferSize(_bufferSize) {
 
-    size_t index = 0;
+    index = 0;
     std::string strMethod, uri, mode;
     while(index < bufferSize){
         if(isspace(buffer.get()[index]))
@@ -25,8 +25,12 @@ HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSiz
         mode.push_back(buffer.get()[index]);
         ++index;
     }
+    while(isspace(buffer.get()[index]))
+        ++index;
 
     Logger::debug(strMethod, uri, mode);
+
+    ParseHeader();
 
 }
 
@@ -64,4 +68,39 @@ void HTTPParser::SetMethod(std::string &str) {
             Logger::debug("Short message");
             throw std::runtime_error("Short message");
     }
+}
+
+void HTTPParser::ParseHeader() {
+
+    while(true){
+        auto line = GetLine();
+        if(line.empty())
+            return;
+
+        auto res = line.find(':');
+        if(res == std::string::npos){
+            Logger::debug("Not a header line");
+            throw std::runtime_error("Bad header");
+        }
+        Logger::info(std::string(line.begin(), line.begin() + res), std::string(line.begin() + res + 2, line.end()));
+        header[{line.begin(), line.begin() + res}] = {line.begin() + res + 2, line.end()};
+    }
+
+}
+
+std::string HTTPParser::GetLine() {
+    std::string ret;
+    while(index < bufferSize){
+        if(buffer.get()[index] == '\n'){
+            ++index;
+            break;
+        }
+        if(buffer.get()[index] == '\r'){
+            ++index;
+            continue;
+        }
+        ret.push_back(buffer.get()[index]);
+        ++index;
+    }
+    return ret;
 }
