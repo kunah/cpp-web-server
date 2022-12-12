@@ -37,7 +37,7 @@ public:
 
 private:
 
-    static void ThreadTask(std::queue<WorkItem> & poolItems, std::mutex & itemsMtx);
+    static void ThreadTask(uint16_t thID, std::queue<WorkItem> & poolItems, std::mutex & itemsMtx);
 
     std::vector<std::thread> pool;
 

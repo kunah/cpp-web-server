@@ -5,6 +5,7 @@
 #include <chrono>
 #include <iomanip>
 #include <mutex>
+#include <cerrno>
 
 #define LOG_LEVEL Logger::Level::INFO
 

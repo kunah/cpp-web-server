@@ -10,6 +10,7 @@
 #include <arpa/inet.h>
 
 #include <Logger.h>
+#include <ThreadPool.h>
 
 typedef struct sockaddr_in sockaddr_in;
 
@@ -26,6 +27,8 @@ private:
     sockaddr_in address;
     int socketFD;
     uint16_t port;
+
+    ThreadPool pool;
 };
 
 #endif //CPP_WEB_SERVER_WEBSERVER_H
