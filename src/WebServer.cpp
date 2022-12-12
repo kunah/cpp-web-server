@@ -60,7 +60,8 @@ void WebServer::Run() {
             throw std::runtime_error("Can't accept connection (error code " + std::to_string(newConnectionID) + ")");
         }
         inet_ntop(MODE, &remoteAddress.sin_addr.s_addr, ipAddress, INET_ADDRSTRLEN);
-        Logger::info(std::string("Connection received ") + ipAddress);
+        Logger::info("Connection received");
+        Logger::debug("Connection received", ipAddress);
 
         if(socketFD == -1)
             break;

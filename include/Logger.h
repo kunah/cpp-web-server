@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <mutex>
 
-#define LOG_LEVEL Logger::Level::DEBUG
+#define LOG_LEVEL Logger::Level::INFO
 
 class Logger {
 public:
@@ -22,10 +22,22 @@ public:
     Logger(Logger & other) = delete;
     void operator=(Logger & other) = delete;
 
-    static void error(const std::string & msg);
-    static void warn(const std::string & msg);
-    static void info(const std::string & msg);
-    static void debug(const std::string & msg);
+    template<class ... Args>
+    inline static void error(Args ... args) {
+        Logger::Instance()->PrintMultipleLog(Logger::Level::ERROR, "[ERROR]", args...);
+    }
+    template<class ... Args>
+    inline static void warn(Args ... args) {
+        Logger::Instance()->PrintMultipleLog(Logger::Level::WARN, "[WARN]", args...);
+    }
+    template<class ... Args>
+    inline static void info(Args ... args) {
+        Logger::Instance()->PrintMultipleLog(Logger::Level::INFO, "[INFO]", args...);
+    }
+    template<class ... Args>
+    inline static void debug(Args ... args) {
+        Logger::Instance()->PrintMultipleLog(Logger::Level::DEBUG, "[DEBUG]", args...);
+    }
 
 
 protected:
@@ -38,7 +50,16 @@ protected:
 
 private:
 
-    void PrintLog(Logger::Level msgLevel, const std::string & msg);
+    template<class ... Args>
+    inline void PrintMultipleLog(Logger::Level msgLevel, Args ... args) {
+        if(level < msgLevel)
+            return;
+        mtx.lock();
+        PrintCurrentTime();
+        ((outStream << " " << args) , ...);
+        outStream << std::endl;
+        mtx.unlock();
+    }
 
     std::ostream & PrintCurrentTime();
 
