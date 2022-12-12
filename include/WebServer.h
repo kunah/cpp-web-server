@@ -2,15 +2,14 @@
 #define CPP_WEB_SERVER_WEBSERVER_H
 
 #include <iostream>
-#include <iomanip>
 #include <string>
-
 
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <chrono>
+
+#include <Logger.h>
 
 typedef struct sockaddr_in sockaddr_in;
 
@@ -28,7 +27,5 @@ private:
     int socketFD;
     uint16_t port;
 };
-
-std::ostream & PrintCurrentTime(std::ostream & io);
 
 #endif //CPP_WEB_SERVER_WEBSERVER_H

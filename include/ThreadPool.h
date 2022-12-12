@@ -1,10 +1,14 @@
 #ifndef CPP_WEB_SERVER_THREADPOOL_H
 #define CPP_WEB_SERVER_THREADPOOL_H
 
+#include <iostream>
+
 #include <vector>
 #include <queue>
 #include <mutex>
 #include <thread>
+
+#include <Logger.h>
 
 typedef void (*itemFnc)(void*);
 
@@ -32,6 +36,9 @@ public:
     void Add(WorkItem _wi);
 
 private:
+
+    static void ThreadTask(std::queue<WorkItem> & poolItems, std::mutex & itemsMtx);
+
     std::vector<std::thread> pool;
 
     std::mutex itemsMtx;

@@ -60,19 +60,10 @@ void WebServer::Run() {
             throw std::runtime_error("Can't accept connection (error code " + std::to_string(newConnectionID) + ")");
         }
         inet_ntop(MODE, &remoteAddress.sin_addr.s_addr, ipAddress, INET_ADDRSTRLEN);
-        PrintCurrentTime(std::cout) << " Connection received " << ipAddress << std::endl;
+        Logger::info(std::string("Connection received ") + ipAddress);
 
         if(socketFD == -1)
             break;
     }
 
-}
-
-std::ostream & PrintCurrentTime(std::ostream & io) {
-    auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    auto time = std::gmtime(&now);
-    io << '[' << std::setw(2) << std::setfill('0') <<  time->tm_hour << ":";
-    io << std::setw(2) << std::setfill('0') <<  time->tm_min << ":";
-    io << std::setw(2) << std::setfill('0') <<  time->tm_sec << ']';
-    return io;
 }
