@@ -30,7 +30,8 @@ void ThreadPool::ThreadTask(uint16_t thID, std::queue<int> &poolItems, std::mute
 
         // TODO: implement thread logic
 
-        ClientRequest::Run(item);
+        ClientRequest request(item);
+        request.Run();
 
     }
 }

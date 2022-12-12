@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include <Logger.h>
+#include <HTTPParser.h>
 
 #define BUFFER_SIZE 1'000'000
 
@@ -18,7 +19,7 @@ public:
     ClientRequest(ClientRequest & _other) = delete;
     void operator=(ClientRequest & _other) = delete;
 
-    static void Run(int socketFD);
+    void Run();
 private:
 
     void ReadSocket();
