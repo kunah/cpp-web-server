@@ -7,4 +7,4 @@ find_package(Threads REQUIRED)
 
 include_directories(include)
 
-add_executable(cpp_web_server main.cpp src/WebServer.cpp src/Logger.cpp src/ThreadPool.cpp)
+add_executable(cpp_web_server main.cpp src/WebServer.cpp src/Logger.cpp src/ThreadPool.cpp src/ClientRequest.cpp)

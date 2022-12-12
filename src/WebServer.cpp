@@ -54,14 +54,16 @@ void WebServer::Run() {
         char ipAddress[INET_ADDRSTRLEN];
 
         // waiting for new connection
-        int newConnectionID = accept(socketFD, (struct sockaddr *) &remoteAddress, &size);
-        if (newConnectionID < 0){
+        int newConnectionFD = accept(socketFD, (struct sockaddr *) &remoteAddress, &size);
+        if (newConnectionFD < 0){
             Logger::error("Problem with accepting connection:", strerror(errno));
-            throw std::runtime_error("Can't accept connection (error code " + std::to_string(newConnectionID) + ")");
+            throw std::runtime_error("Can't accept connection (error code " + std::to_string(newConnectionFD) + ")");
         }
         inet_ntop(MODE, &remoteAddress.sin_addr.s_addr, ipAddress, INET_ADDRSTRLEN);
         Logger::info("Connection received");
         Logger::debug("Connection received", ipAddress);
+
+        pool.Add(newConnectionFD);
 
         if(socketFD == -1)
             break;
