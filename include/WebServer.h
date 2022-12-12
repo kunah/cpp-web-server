@@ -16,7 +16,8 @@ typedef struct sockaddr_in sockaddr_in;
 
 class WebServer {
 public:
-
+    /// Default constructor for webserver
+    /// \param _port port to bind
     WebServer(uint16_t _port);
 
     void Run();

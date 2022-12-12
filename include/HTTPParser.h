@@ -4,6 +4,7 @@
 
 class HTTPParser {
 public:
+    /// Methods in HTTP
     enum HTTPMethod{
         GET = 0,
         PUT,

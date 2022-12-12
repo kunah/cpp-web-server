@@ -38,10 +38,13 @@ WebServer::WebServer(uint16_t _port) : port(_port) {
         throw std::runtime_error("Can't listen");
     }
 
-    std::cout << "Server ready and listening on port " << port << std::endl;
+    std::cout << "Server prepared" << std::endl;
 }
 
 void WebServer::Run() {
+
+    std::cout << "Server listening on port " << port << std::endl;
+
     while(true){
 
         sockaddr_in remoteAddress;
