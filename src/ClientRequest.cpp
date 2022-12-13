@@ -9,7 +9,8 @@ ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(Serve
 ClientRequest::~ClientRequest() {
     if(socketFD >= 0){
         Logger::debug("Closing connection", socketFD);
-        close(socketFD);
+        if(close(socketFD))
+            Logger::debug("Close connection problem:", strerror(errno));
     }
     Logger::debug("Destroying client request");
 }
@@ -38,35 +39,10 @@ void ClientRequest::ReadSocket() {
     }
     Logger::debug("Requested message:\n", buffer.get());
 
-    HTTPParser request(buffer, bytesRead);
+    request = HTTPParser(buffer, bytesRead);
+}
 
-    auto map = mapping->GetMapping(request.uri);
-
-    std::fstream file(map.string());
-
-    if(!file.is_open()){
-        Logger::error("Can't open file", map);
-        throw std::runtime_error("Can't open file for given mapping");
-    }
-    std::string fileInfo, tmp;
-    while(file.good()){
-        std::getline(file, tmp);
-        fileInfo.append(tmp);
-    }
-    file.close();
-    Logger::debug("Content of", map, fileInfo);
-
-    HTTPParser response;
-    auto in_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X");
-    response.header["Date"] = ss.str();
-    response.header["Content-Length"] = std::to_string(fileInfo.size());
-    response.header["Content-Type"] = "text/html";
-    response.header["Connection"] = "Closed";
-    response.body = fileInfo;
-    response.version = "HTTP/1.1 200 OK";
-
+void ClientRequest::SendResponse() {
     auto res = response.ToString();
     Logger::debug("Sending response", res);
 
@@ -74,10 +50,12 @@ void ClientRequest::ReadSocket() {
         Logger::error("Can't send data", strerror(errno));
         throw std::runtime_error("Can't send data to client");
     }
-
 }
 
 void ClientRequest::Run() {
     Logger::debug("Running Client request");
     ReadSocket();
+    HTTPState state(request.method);
+    response = state.HandleRequest(request);
+    SendResponse();
 }

@@ -14,7 +14,8 @@ add_executable(cpp_web_server
         src/ThreadPool.cpp
         src/ClientRequest.cpp
         src/HTTPParser.cpp
-        src/ServerMapping.cpp)
+        src/ServerMapping.cpp
+        src/States/HTTPState.cpp)
 
 message(STATUS ${CMAKE_CURRENT_BINARY_DIR})
 

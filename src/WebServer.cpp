@@ -39,8 +39,7 @@ WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
     }
 
     Logger::info("Adding default mapping");
-    auto mapping = ServerMapping::Instance();
-    mapping->Add("/", "dist/index.html");
+    ServerMapping::RegisterURI(HTTPMethod::GET, "/", "dist/index.html");
     Logger::info("Server prepared");
 }
 

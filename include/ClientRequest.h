@@ -5,15 +5,14 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <unistd.h>
-#include <fstream>
-#include <chrono>
-#include <iomanip>
+
 #include <ctime>
 #include <sstream>
 
 #include <Logger.h>
 #include <HTTPParser.h>
 #include <ServerMapping.h>
+#include <States/HTTPState.h>
 
 #define BUFFER_SIZE 1'000'000
 
@@ -29,8 +28,11 @@ public:
 private:
 
     void ReadSocket();
+    void SendResponse();
 
-    std::string requestData;
+    HTTPParser request;
+
+    HTTPParser response;
 
     int socketFD;
     fd_set socket;

@@ -39,14 +39,25 @@ HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSiz
     Logger::debug("Request parsed");
 }
 
-std::string HTTPParser::ToString() {
+void HTTPParser::operator=(const HTTPParser &_other) {
+    this->index = _other.index;
+    this->buffer = _other.buffer;
+    this->method = _other.method;
+    this->bufferSize = _other.bufferSize;
+    this->version = _other.version;
+    this->body = _other.body;
+    this->header = _other.header;
+    this->uri = _other.uri;
+}
+
+std::string HTTPParser::ToString()  {
     std::stringstream ss;
-    ss << version << std::endl;
+    ss << version << "\r\n";
     for(auto [head, info] : header){
-        ss << head << ": " << info << std::endl;
+        ss << head << ": " << info << "\r\n";
     }
-    ss << std::endl;
-    ss << body;
+    ss << "\r\n";
+    ss << body << "\r\n";
     return ss.str();
 }
 
