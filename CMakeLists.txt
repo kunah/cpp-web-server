@@ -7,4 +7,21 @@ find_package(Threads REQUIRED)
 
 include_directories(include)
 
-add_executable(cpp_web_server main.cpp src/WebServer.cpp src/Logger.cpp src/ThreadPool.cpp src/ClientRequest.cpp src/HTTPParser.cpp)
+add_executable(cpp_web_server
+        main.cpp
+        src/WebServer.cpp
+        src/Logger.cpp
+        src/ThreadPool.cpp
+        src/ClientRequest.cpp
+        src/HTTPParser.cpp
+        src/ServerMapping.cpp)
+
+message(STATUS ${CMAKE_CURRENT_BINARY_DIR})
+
+file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/dist")
+
+file(GLOB files "dist/*")
+foreach(file ${files})
+    message(STATUS ${file})
+    file(COPY ${file} DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/dist")
+endforeach()

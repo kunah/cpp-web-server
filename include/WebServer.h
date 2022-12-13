@@ -11,6 +11,7 @@
 
 #include <Logger.h>
 #include <ThreadPool.h>
+#include <ServerMapping.h>
 
 typedef struct sockaddr_in sockaddr_in;
 

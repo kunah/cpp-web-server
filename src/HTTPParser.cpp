@@ -1,9 +1,11 @@
 #include <HTTPParser.h>
 
+HTTPParser::HTTPParser() : method(HTTPMethod::GET), buffer(nullptr), bufferSize(0), index(0) {}
+
 HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSize) : buffer(std::move(_buffer)), bufferSize(_bufferSize) {
 
     index = 0;
-    std::string strMethod, uri, mode;
+    std::string strMethod;
     while(index < bufferSize){
         if(isspace(buffer.get()[index]))
             break;
@@ -22,16 +24,30 @@ HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSiz
     while(index < bufferSize){
         if(isspace(buffer.get()[index]))
             break;
-        mode.push_back(buffer.get()[index]);
+        version.push_back(buffer.get()[index]);
         ++index;
     }
     while(isspace(buffer.get()[index]))
         ++index;
 
-    Logger::debug(strMethod, uri, mode);
+    Logger::debug(strMethod, uri, version);
 
     ParseHeader();
 
+    while(index < bufferSize)
+        body.append(GetLine());
+    Logger::debug("Request parsed");
+}
+
+std::string HTTPParser::ToString() {
+    std::stringstream ss;
+    ss << version << std::endl;
+    for(auto [head, info] : header){
+        ss << head << ": " << info << std::endl;
+    }
+    ss << std::endl;
+    ss << body;
+    return ss.str();
 }
 
 void HTTPParser::SetMethod(std::string &str) {

@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <functional>
+#include <sstream>
 
 #include <Logger.h>
 
@@ -23,13 +24,18 @@ public:
         PATCH = 2564937511
     };
 
+    HTTPParser();
     HTTPParser( std::shared_ptr<unsigned char> _buffer, size_t _bufferSize);
+
+    std::string ToString();
 
     HTTPMethod method;
 
     std::unordered_map<std::string, std::string> header;
 
     std::string body;
+    std::string uri;
+    std::string version;
 private:
 
     void SetMethod(std::string & str);

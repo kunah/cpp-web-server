@@ -38,6 +38,9 @@ WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
         throw std::runtime_error("Can't listen");
     }
 
+    Logger::info("Adding default mapping");
+    auto mapping = ServerMapping::Instance();
+    mapping->Add("/", "dist/index.html");
     Logger::info("Server prepared");
 }
 
