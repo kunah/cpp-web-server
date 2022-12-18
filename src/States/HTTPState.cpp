@@ -15,14 +15,14 @@ HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
 
     if(filePath == uris.end()){
         Logger::error("Request URI is not mapped", request.uri);
-        throw std::runtime_error("Request URI is not mapped");
+        throw HTTPError::HTTPNotFound();
     }
 
     std::fstream file(filePath->second);
 
     if(!file.is_open()){
         Logger::error("Can't open file", filePath->second);
-        throw std::runtime_error("Can't open file for given mapping");
+        throw HTTPError::HTTPNotFound();
     }
     std::string fileInfo, tmp;
     while(file.good()){

@@ -53,9 +53,15 @@ void ClientRequest::SendResponse() {
 }
 
 void ClientRequest::Run() {
-    Logger::debug("Running Client request");
-    ReadSocket();
-    HTTPState state(request.method);
-    response = state.HandleRequest(request);
-    SendResponse();
+    try{
+        Logger::debug("Running Client request");
+        ReadSocket();
+        HTTPState state(request.method);
+        response = state.HandleRequest(request);
+        SendResponse();
+    }
+    catch (HTTPError::ClientError & err){
+        response = err.Response();
+        SendResponse();
+    }
 }

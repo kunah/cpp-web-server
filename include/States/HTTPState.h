@@ -9,6 +9,7 @@
 #include <HTTPParser.h>
 #include <ServerMapping.h>
 #include <Logger.h>
+#include <Exceptions/ClientError.h>
 
 class HTTPState {
 public:
