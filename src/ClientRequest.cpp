@@ -64,4 +64,9 @@ void ClientRequest::Run() {
         response = err.Response();
         SendResponse();
     }
+    catch(...){
+        response = HTTPError::HTTPNotFound().Response();
+        response.version = "HTTP/1.1 500 Server Error";
+        SendResponse();
+    }
 }
