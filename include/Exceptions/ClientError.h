@@ -1,198 +1,148 @@
 #ifndef CPP_WEB_SERVER_CLIENTERROR_H
 #define CPP_WEB_SERVER_CLIENTERROR_H
 
-#include <exception>
-#include <sstream>
-#include <string>
-#include <HTTPParser.h>
-#include <fstream>
+#include <Exceptions/HTTPExceptionBase.h>
 
-#include <Logger.h>
+namespace HTTPException{
 
-namespace HTTPError{
-
-    enum ClientErrorCode{
-        BadRequest = 400,
-        Unauthorized,
-        PaymentRequired,
-        Forbidden,
-        NotFound,
-        MethodNotAllowed,
-        NotAcceptable,
-        ProxyAuthenticationRequired,
-        RequestTimeout,
-        Conflict,
-        Gone,
-        LengthRequired,
-        PreconditionFailed,
-        PayloadTooLarge,
-        URITooLong,
-        UnsupportedMediaType,
-        RangeNotSatisfiable,
-        ExpectationFailed,
-        MisdirectedRequest = 421,
-        UnprocessableEntity,
-        Locked,
-        FailedDependency,
-        TooEarly,
-        UpgradeRequired,
-        PreconditionRequired = 428,
-        TooManyRequest,
-        RequestHeaderFieldTooLarge = 431,
-        UnavailableForLegalReasons = 451
-
+    class HTTPBadRequest : public HTTPExceptionBase {
+    public:
+        HTTPBadRequest( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::BadRequest, "BadRequest", _webSite, _site) {}
     };
 
-    class ClientError : public std::exception {
+    class HTTPUnauthorized : public HTTPExceptionBase {
     public:
-        ClientError( ClientErrorCode _code, const std::string & _msg, bool _webSite, const std::string & _site);
-
-        HTTPParser Response();
-    private:
-        ClientErrorCode code;
-        bool webSite;
-        std::string site;
-        std::string msg;
+        HTTPUnauthorized( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Unauthorized, "Unauthorized", _webSite, _site) {}
     };
 
-    class HTTPBadRequest : public ClientError {
+    class HTTPPaymentRequired : public HTTPExceptionBase {
     public:
-        HTTPBadRequest( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::BadRequest, "BadRequest", _webSite, _site) {}
+        HTTPPaymentRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PaymentRequired, "PaymentRequired", _webSite, _site) {}
     };
 
-    class HTTPUnauthorized : public ClientError {
+    class HTTPForbidden : public HTTPExceptionBase {
     public:
-        HTTPUnauthorized( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::Unauthorized, "Unauthorized", _webSite, _site) {}
+        HTTPForbidden( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Forbidden, "Forbidden", _webSite, _site) {}
     };
 
-    class HTTPPaymentRequired : public ClientError {
+    class HTTPNotFound : public HTTPExceptionBase {
     public:
-        HTTPPaymentRequired( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::PaymentRequired, "PaymentRequired", _webSite, _site) {}
+        HTTPNotFound( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::NotFound, "NotFound", _webSite, _site) {}
     };
 
-    class HTTPForbidden : public ClientError {
+    class HTTPMethodNotAllowed : public HTTPExceptionBase {
     public:
-        HTTPForbidden( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::Forbidden, "Forbidden", _webSite, _site) {}
+        HTTPMethodNotAllowed( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::MethodNotAllowed, "MethodNotAllowed", _webSite, _site) {}
     };
 
-    class HTTPNotFound : public ClientError {
+    class HTTPNotAcceptable : public HTTPExceptionBase {
     public:
-        HTTPNotFound( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::NotFound, "NotFound", _webSite, _site) {}
+        HTTPNotAcceptable( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::NotAcceptable, "NotAcceptable", _webSite, _site) {}
     };
 
-    class HTTPMethodNotAllowed : public ClientError {
+    class HTTPProxyAuthenticationRequired : public HTTPExceptionBase {
     public:
-        HTTPMethodNotAllowed( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::MethodNotAllowed, "MethodNotAllowed", _webSite, _site) {}
+        HTTPProxyAuthenticationRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::ProxyAuthenticationRequired, "ProxyAuthenticationRequired", _webSite, _site) {}
     };
 
-    class HTTPNotAcceptable : public ClientError {
+    class HTTPRequestTimeout : public HTTPExceptionBase {
     public:
-        HTTPNotAcceptable( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::NotAcceptable, "NotAcceptable", _webSite, _site) {}
+        HTTPRequestTimeout( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::RequestTimeout, "RequestTimeout", _webSite, _site) {}
     };
 
-    class HTTPProxyAuthenticationRequired : public ClientError {
+    class HTTPConflict : public HTTPExceptionBase {
     public:
-        HTTPProxyAuthenticationRequired( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::ProxyAuthenticationRequired, "ProxyAuthenticationRequired", _webSite, _site) {}
+        HTTPConflict( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Conflict, "Conflict", _webSite, _site) {}
     };
 
-    class HTTPRequestTimeout : public ClientError {
+    class HTTPGone : public HTTPExceptionBase {
     public:
-        HTTPRequestTimeout( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::RequestTimeout, "RequestTimeout", _webSite, _site) {}
+        HTTPGone( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Gone, "Gone", _webSite, _site) {}
     };
 
-    class HTTPConflict : public ClientError {
+    class HTTPLengthRequired : public HTTPExceptionBase {
     public:
-        HTTPConflict( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::Conflict, "Conflict", _webSite, _site) {}
+        HTTPLengthRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::LengthRequired, "LengthRequired", _webSite, _site) {}
     };
 
-    class HTTPGone : public ClientError {
+    class HTTPPreconditionFailed : public HTTPExceptionBase {
     public:
-        HTTPGone( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::Gone, "Gone", _webSite, _site) {}
+        HTTPPreconditionFailed( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PreconditionFailed, "PreconditionFailed", _webSite, _site) {}
     };
 
-    class HTTPLengthRequired : public ClientError {
+    class HTTPPayloadTooLarge : public HTTPExceptionBase {
     public:
-        HTTPLengthRequired( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::LengthRequired, "LengthRequired", _webSite, _site) {}
+        HTTPPayloadTooLarge( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PayloadTooLarge, "PayloadTooLarge", _webSite, _site) {}
     };
 
-    class HTTPPreconditionFailed : public ClientError {
+    class HTTPURITooLong : public HTTPExceptionBase {
     public:
-        HTTPPreconditionFailed( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::PreconditionFailed, "PreconditionFailed", _webSite, _site) {}
+        HTTPURITooLong( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::URITooLong, "URITooLong", _webSite, _site) {}
     };
 
-    class HTTPPayloadTooLarge : public ClientError {
+    class HTTPUnsupportedMediaType : public HTTPExceptionBase {
     public:
-        HTTPPayloadTooLarge( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::PayloadTooLarge, "PayloadTooLarge", _webSite, _site) {}
+        HTTPUnsupportedMediaType( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UnsupportedMediaType, "UnsupportedMediaType", _webSite, _site) {}
     };
 
-    class HTTPURITooLong : public ClientError {
+    class HTTPRangeNotSatisfiable : public HTTPExceptionBase {
     public:
-        HTTPURITooLong( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::URITooLong, "URITooLong", _webSite, _site) {}
+        HTTPRangeNotSatisfiable( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::RangeNotSatisfiable, "RangeNotSatisfiable", _webSite, _site) {}
     };
 
-    class HTTPUnsupportedMediaType : public ClientError {
+    class HTTPExpectationFailed : public HTTPExceptionBase {
     public:
-        HTTPUnsupportedMediaType( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::UnsupportedMediaType, "UnsupportedMediaType", _webSite, _site) {}
+        HTTPExpectationFailed( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::ExpectationFailed, "ExpectationFailed", _webSite, _site) {}
     };
 
-    class HTTPRangeNotSatisfiable : public ClientError {
+    class HTTPMisdirectedRequest : public HTTPExceptionBase {
     public:
-        HTTPRangeNotSatisfiable( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::RangeNotSatisfiable, "RangeNotSatisfiable", _webSite, _site) {}
+        HTTPMisdirectedRequest( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::MisdirectedRequest, "MisdirectedRequest", _webSite, _site) {}
     };
 
-    class HTTPExpectationFailed : public ClientError {
+    class HTTPUnprocessableEntity : public HTTPExceptionBase {
     public:
-        HTTPExpectationFailed( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::ExpectationFailed, "ExpectationFailed", _webSite, _site) {}
+        HTTPUnprocessableEntity( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UnprocessableEntity, "UnprocessableEntity", _webSite, _site) {}
     };
 
-    class HTTPMisdirectedRequest : public ClientError {
+    class HTTPLocked : public HTTPExceptionBase {
     public:
-        HTTPMisdirectedRequest( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::MisdirectedRequest, "MisdirectedRequest", _webSite, _site) {}
+        HTTPLocked( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Locked, "Locked", _webSite, _site) {}
     };
 
-    class HTTPUnprocessableEntity : public ClientError {
+    class HTTPFailedDependency : public HTTPExceptionBase {
     public:
-        HTTPUnprocessableEntity( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::UnprocessableEntity, "UnprocessableEntity", _webSite, _site) {}
+        HTTPFailedDependency( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::FailedDependency, "FailedDependency", _webSite, _site) {}
     };
 
-    class HTTPLocked : public ClientError {
+    class HTTPTooEarly : public HTTPExceptionBase {
     public:
-        HTTPLocked( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::Locked, "Locked", _webSite, _site) {}
+        HTTPTooEarly( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::TooEarly, "TooEarly", _webSite, _site) {}
     };
 
-    class HTTPFailedDependency : public ClientError {
+    class HTTPUpgradeRequired : public HTTPExceptionBase {
     public:
-        HTTPFailedDependency( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::FailedDependency, "FailedDependency", _webSite, _site) {}
+        HTTPUpgradeRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UpgradeRequired, "UpgradeRequired", _webSite, _site) {}
     };
 
-    class HTTPTooEarly : public ClientError {
+    class HTTPPreconditionRequired : public HTTPExceptionBase {
     public:
-        HTTPTooEarly( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::TooEarly, "TooEarly", _webSite, _site) {}
+        HTTPPreconditionRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PreconditionRequired, "PreconditionRequired", _webSite, _site) {}
     };
 
-    class HTTPUpgradeRequired : public ClientError {
+    class HTTPTooManyRequest : public HTTPExceptionBase {
     public:
-        HTTPUpgradeRequired( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::UpgradeRequired, "UpgradeRequired", _webSite, _site) {}
+        HTTPTooManyRequest( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::TooManyRequest, "TooManyRequest", _webSite, _site) {}
     };
 
-    class HTTPPreconditionRequired : public ClientError {
+    class HTTPRequestHeaderFieldTooLarge : public HTTPExceptionBase {
     public:
-        HTTPPreconditionRequired( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::PreconditionRequired, "PreconditionRequired", _webSite, _site) {}
+        HTTPRequestHeaderFieldTooLarge( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::RequestHeaderFieldTooLarge, "RequestHeaderFieldTooLarge", _webSite, _site) {}
     };
 
-    class HTTPTooManyRequest : public ClientError {
+    class HTTPUnavailableForLegalReasons : public HTTPExceptionBase {
     public:
-        HTTPTooManyRequest( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::TooManyRequest, "TooManyRequest", _webSite, _site) {}
-    };
-
-    class HTTPRequestHeaderFieldTooLarge : public ClientError {
-    public:
-        HTTPRequestHeaderFieldTooLarge( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::RequestHeaderFieldTooLarge, "RequestHeaderFieldTooLarge", _webSite, _site) {}
-    };
-
-    class HTTPUnavailableForLegalReasons : public ClientError {
-    public:
-        HTTPUnavailableForLegalReasons( bool _webSite = false, const std::string & _site = "") : ClientError(ClientErrorCode::UnavailableForLegalReasons, "UnavailableForLegalReasons", _webSite, _site) {}
+        HTTPUnavailableForLegalReasons( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UnavailableForLegalReasons, "UnavailableForLegalReasons", _webSite, _site) {}
     };
 }
 

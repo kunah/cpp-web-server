@@ -60,12 +60,12 @@ void ClientRequest::Run() {
         response = state.HandleRequest(request);
         SendResponse();
     }
-    catch (HTTPError::ClientError & err){
+    catch (HTTPException::HTTPExceptionBase & err){
         response = err.Response();
         SendResponse();
     }
     catch(...){
-        response = HTTPError::HTTPNotFound().Response();
+        response = HTTPException::HTTPNotFound().Response();
         response.version = "HTTP/1.1 500 Server Error";
         SendResponse();
     }
