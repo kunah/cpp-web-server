@@ -17,7 +17,8 @@ add_executable(cpp_web_server
         src/ServerMapping.cpp
         src/States/HTTPState.cpp
         src/Exceptions/ClientError.cpp
-        src/Exceptions/HTTPExceptionBase.cpp)
+        src/Exceptions/HTTPExceptionBase.cpp
+        src/HTTPMappingRegistrar.cpp)
 
 message(STATUS ${CMAKE_CURRENT_BINARY_DIR})
 
