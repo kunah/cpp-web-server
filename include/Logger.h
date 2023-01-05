@@ -7,7 +7,7 @@
 #include <mutex>
 #include <cerrno>
 
-#define LOG_LEVEL Logger::Level::DEBUG
+#define LOG_LEVEL Logger::Level::INFO
 
 class Logger {
 public:
@@ -17,7 +17,8 @@ public:
         ERROR,
         WARN,
         INFO,
-        DEBUG
+        DEBUG,
+        UlTRA
     };
 
     Logger(Logger & other) = delete;
@@ -39,11 +40,15 @@ public:
     inline static void debug(Args ... args) {
         Logger::Instance()->PrintMultipleLog(Logger::Level::DEBUG, "[DEBUG]", args...);
     }
+    template<class ... Args>
+    inline static void ultra(Args ... args) {
+        Logger::Instance()->PrintMultipleLog(Logger::Level::UlTRA, "[ULTRA]", args...);
+    }
 
 
 protected:
 
-    Logger(Logger::Level _level);
+    Logger(Logger::Level _level = Logger::Level::INFO);
 
     static std::shared_ptr<Logger> Instance();
 
