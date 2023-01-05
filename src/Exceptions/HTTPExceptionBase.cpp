@@ -2,7 +2,8 @@
 
 
 
-HTTPException::HTTPExceptionBase::HTTPExceptionBase( ErrorCode _code, const std::string & _msg, bool _webSite, const std::string & _site)
+
+HTTPException::HTTPExceptionBase::HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site)
 : code(_code), webSite(_webSite), site(std::move(_site)), msg(std::move(_msg)) {}
 
 HTTPParser HTTPException::HTTPExceptionBase::Response() {

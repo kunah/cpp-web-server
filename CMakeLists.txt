@@ -20,6 +20,8 @@ add_executable(cpp_web_server
         src/Exceptions/HTTPExceptionBase.cpp
         src/HTTPMappingRegistrar.cpp)
 
+add_executable(second second.cpp)
+
 message(STATUS ${CMAKE_CURRENT_BINARY_DIR})
 
 file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/dist")

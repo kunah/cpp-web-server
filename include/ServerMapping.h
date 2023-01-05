@@ -15,6 +15,7 @@
 typedef std::unordered_map<std::string, std::string> uriMethod;
 
 /// Methods in HTTP
+// TODO: hashes are calculated on different devices differently
 enum HTTPMethod{ // std::hash of std::string(method) cropped to unsigned int
     GET = 1158220111,
     PUT = 795930711,
@@ -27,22 +28,28 @@ enum HTTPMethod{ // std::hash of std::string(method) cropped to unsigned int
     PATCH = 2564937511
 };
 
+/// Singleton class that stores server mappings for HTTP methods
 class ServerMapping {
 public:
     ServerMapping(ServerMapping & _other) = delete;
     void operator=(ServerMapping & _other) = delete;
-
+    /// Gets instance of the current mappings
     static std::shared_ptr<ServerMapping> Instance();
-
+    /// Register a new uri
+    /// \param method HTTP method that will be assigned to this uri
+    /// \param uri uri starting from root
+    /// \param path path to file to send back
+    /// \param type type of file to be added to HTTP response Content-Type header section
     static void RegisterURI(HTTPMethod method,const std::string & uri, const std::string & path, const std::string & type);
-
+    /// \return all mapped uris for given method
     uriMethod GetURIs(HTTPMethod method);
-
+    /// \return path of a file for given method and uri mapping
     std::string GetPath(HTTPMethod method, const std::string & uri);
-
+    /// \return content type for given file path
     std::string GetContentType(const std::string & path);
 
 protected:
+    /// Protected constructor to preserve singleton architecture
     ServerMapping() = default;
 
     inline static std::shared_ptr<ServerMapping> instance = nullptr;
