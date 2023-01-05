@@ -7,7 +7,7 @@
 #include <mutex>
 #include <cerrno>
 
-#define LOG_LEVEL Logger::Level::DEBUG
+#define LOG_LEVEL Logger::Level::INFO
 
 class Logger {
 public:
