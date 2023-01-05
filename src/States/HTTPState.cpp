@@ -18,26 +18,22 @@ HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
         throw HTTPException::HTTPNotFound();
     }
 
-    std::fstream file(filePath->second);
+    std::ifstream file(filePath->second, std::ios::binary);
 
     if(!file.is_open()){
         Logger::error("Can't open file", filePath->second);
         throw HTTPException::HTTPNotFound();
     }
-    std::string fileInfo, tmp;
-    while(file.good()){
-        std::getline(file, tmp);
-        fileInfo.append(tmp);
-    }
+    std::string tmp;
+    std::vector<unsigned char> fileInfo(std::istreambuf_iterator<char>(file), {});
     file.close();
-    Logger::debug("Content of", filePath->second, fileInfo);
+    Logger::debug(filePath->second, "File loaded");
 
     auto in_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X");
-    response.header["Date"] = ss.str();
+    std::stringstream ssDate;
+    ssDate << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X");
     response.header["Content-Length"] = std::to_string(fileInfo.size());
-    response.header["Content-Type"] = "text/html";
+    response.header["Content-Type"] = ServerMapping::Instance()->GetContentType(filePath->second);
     response.header["Connection"] = "Closed";
     response.body = fileInfo;
     response.version = "HTTP/1.1 200 OK";

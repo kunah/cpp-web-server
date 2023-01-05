@@ -34,8 +34,10 @@ HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSiz
 
     ParseHeader();
 
-    while(index < bufferSize)
-        body.append(GetLine());
+    while(index < bufferSize){
+        auto tmp = GetLine();
+        body.insert(body.end(), tmp.begin(), tmp.end());
+    }
     Logger::debug("Request parsed");
 }
 
@@ -50,15 +52,21 @@ void HTTPParser::operator=(const HTTPParser &_other) {
     this->uri = _other.uri;
 }
 
-std::string HTTPParser::ToString()  {
+std::vector<unsigned char> HTTPParser::ToData()  {
     std::stringstream ss;
-    ss << version << "\r\n";
+    std::vector<unsigned char> buffer;
+    buffer.insert(buffer.end(), version.begin(), version.end());
+    buffer.insert(buffer.end(), {'\r','\n'});
     for(auto [head, info] : header){
-        ss << head << ": " << info << "\r\n";
+        buffer.insert(buffer.end(), head.begin(), head.end());
+        buffer.insert(buffer.end(), {':', ' '});
+        buffer.insert(buffer.end(), info.begin(), info.end());
+        buffer.insert(buffer.end(), {'\r','\n'});
     }
-    ss << "\r\n";
-    ss << body << "\r\n";
-    return ss.str();
+    buffer.insert(buffer.end(), {'\r','\n'});
+    buffer.insert(buffer.end(), body.begin(), body.end());
+    buffer.insert(buffer.end(), {'\r','\n'});
+    return buffer;
 }
 
 void HTTPParser::SetMethod(std::string &str) {
@@ -109,7 +117,7 @@ void HTTPParser::ParseHeader() {
             Logger::debug("Not a header line");
             throw std::runtime_error("Bad header");
         }
-        Logger::info(std::string(line.begin(), line.begin() + res), std::string(line.begin() + res + 2, line.end()));
+        Logger::debug(std::string(line.begin(), line.begin() + res), std::string(line.begin() + res + 2, line.end()));
         header[{line.begin(), line.begin() + res}] = {line.begin() + res + 2, line.end()};
     }
 

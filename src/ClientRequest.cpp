@@ -43,10 +43,10 @@ void ClientRequest::ReadSocket() {
 }
 
 void ClientRequest::SendResponse() {
-    auto res = response.ToString();
-    Logger::debug("Sending response", res);
+    auto res = response.ToData();
+    Logger::debug("Sending response");
 
-    if (send(socketFD, res.c_str(), res.size(), MSG_NOSIGNAL) < 0) {
+    if (send(socketFD, res.data(), res.size(), MSG_NOSIGNAL) < 0) {
         Logger::error("Can't send data", strerror(errno));
         throw std::runtime_error("Can't send data to client");
     }
@@ -56,8 +56,7 @@ void ClientRequest::Run() {
     try{
         Logger::debug("Running Client request");
         ReadSocket();
-        HTTPState state(request.method);
-        response = state.HandleRequest(request);
+        response = HTTPState(request.method).HandleRequest(request);
         SendResponse();
     }
     catch (HTTPException::HTTPExceptionBase & err){

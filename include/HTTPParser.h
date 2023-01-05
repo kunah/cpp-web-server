@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <functional>
 #include <sstream>
+#include <vector>
 
 #include <Logger.h>
 #include <ServerMapping.h>
@@ -18,13 +19,13 @@ public:
     HTTPParser( std::shared_ptr<unsigned char> _buffer, size_t _bufferSize);
     void operator=( const HTTPParser & _other);
 
-    std::string ToString();
+    std::vector<unsigned char> ToData();
 
     HTTPMethod method;
 
     std::unordered_map<std::string, std::string> header;
 
-    std::string body;
+    std::vector<unsigned char> body;
     std::string uri;
     std::string version;
 private:

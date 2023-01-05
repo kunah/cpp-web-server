@@ -43,7 +43,7 @@ public:
 
 protected:
 
-    Logger(Logger::Level _level);
+    Logger(Logger::Level _level = Logger::Level::INFO);
 
     static std::shared_ptr<Logger> Instance();
 

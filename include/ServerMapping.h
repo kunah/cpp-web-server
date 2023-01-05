@@ -6,6 +6,7 @@
 #include <string>
 #include <filesystem>
 #include <mutex>
+#include <utility>
 
 #include <Logger.h>
 
@@ -33,11 +34,13 @@ public:
 
     static std::shared_ptr<ServerMapping> Instance();
 
-    static void RegisterURI(HTTPMethod method,const std::string & uri, const std::string & path);
+    static void RegisterURI(HTTPMethod method,const std::string & uri, const std::string & path, const std::string & type);
 
     uriMethod GetURIs(HTTPMethod method);
 
     std::string GetPath(HTTPMethod method, const std::string & uri);
+
+    std::string GetContentType(const std::string & path);
 
 protected:
     ServerMapping() = default;
@@ -49,6 +52,8 @@ private:
 
     std::mutex methodsMtx;
     std::unordered_map<HTTPMethod,uriMethod> HTTPMethodsMappings;
+    std::mutex pathMtx;
+    std::unordered_map<std::string, std::string> PathContentType;
 
 };
 

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <chrono>
 #include <iomanip>
+#include <vector>
 
 #include <HTTPParser.h>
 #include <ServerMapping.h>

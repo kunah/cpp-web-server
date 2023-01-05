@@ -8,13 +8,13 @@
 
 class HTTPMappingRegistrar{
 public:
-    HTTPMappingRegistrar(HTTPMethod method, const std::string & uri, const std::string & path);
+    HTTPMappingRegistrar(HTTPMethod method, const std::string & uri, const std::string & path, const std::string & type);
 };
 
 #define CONCAT_(x,y) x##y
 #define CONCAT(x,y) CONCAT_(x,y)
 
-#define REGISTER_URI(method, uri, path) \
-static HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, path);
+#define REGISTER_URI(method, uri, path, type) \
+static HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, path, type);
 
 #endif //CPP_WEB_SERVER_HTTPMAPPINGREGISTRAR_H
