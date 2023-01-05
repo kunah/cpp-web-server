@@ -118,7 +118,7 @@ void HTTPParser::ParseHeader() {
             throw std::runtime_error("Bad header");
         }
         std::string headerName(line.begin(), line.begin() + res), headerValue(line.begin() + res + 2, line.end());
-        Logger::debug(headerName, headerValue);
+        Logger::ultra(headerName, headerValue);
         header[headerName] = headerValue;
     }
 

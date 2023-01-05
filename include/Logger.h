@@ -17,7 +17,8 @@ public:
         ERROR,
         WARN,
         INFO,
-        DEBUG
+        DEBUG,
+        UlTRA
     };
 
     Logger(Logger & other) = delete;
@@ -38,6 +39,10 @@ public:
     template<class ... Args>
     inline static void debug(Args ... args) {
         Logger::Instance()->PrintMultipleLog(Logger::Level::DEBUG, "[DEBUG]", args...);
+    }
+    template<class ... Args>
+    inline static void ultra(Args ... args) {
+        Logger::Instance()->PrintMultipleLog(Logger::Level::UlTRA, "[ULTRA]", args...);
     }
 
 

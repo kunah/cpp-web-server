@@ -32,6 +32,8 @@ HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
     auto in_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::stringstream ssDate;
     ssDate << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X");
+    response.header["Date"] = ssDate.str();
+    response.header["Cache-Control"] = "max-age=60";
     response.header["Content-Length"] = std::to_string(fileInfo.size());
     response.header["Content-Type"] = ServerMapping::Instance()->GetContentType(filePath->second);
     response.header["Connection"] = "Closed";
