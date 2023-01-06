@@ -1,4 +1,5 @@
 #include <HTTPParser.h>
+#include <Exceptions/ClientError.h> // added to avoid cyclic includes
 
 HTTPParser::HTTPParser() : method(HTTPMethod::GET), buffer(nullptr), bufferSize(0), index(0) {}
 
@@ -41,7 +42,9 @@ HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSiz
     Logger::debug("Request parsed");
 }
 
-void HTTPParser::operator=(const HTTPParser &_other) {
+HTTPParser & HTTPParser::operator=(const HTTPParser &_other) {
+    if(&_other == this)
+        return *this;
     this->index = _other.index;
     this->buffer = _other.buffer;
     this->method = _other.method;
@@ -50,6 +53,8 @@ void HTTPParser::operator=(const HTTPParser &_other) {
     this->body = _other.body;
     this->header = _other.header;
     this->uri = _other.uri;
+
+    return *this;
 }
 
 std::vector<unsigned char> HTTPParser::ToData()  {
@@ -70,39 +75,30 @@ std::vector<unsigned char> HTTPParser::ToData()  {
 }
 
 void HTTPParser::SetMethod(std::string &str) {
-    auto hash = (unsigned int)std::hash<std::string>()(str);
-    switch (hash) {
-        case HTTPMethod::GET:
-            method = HTTPMethod::GET;
-            break;
-        case HTTPMethod::PUT:
-            method = HTTPMethod::PUT;
-            break;
-        case HTTPMethod::POST:
-            method = HTTPMethod::POST;
-            break;
-        case HTTPMethod::HEAD:
-            method = HTTPMethod::HEAD;
-            break;
-        case HTTPMethod::DELETE:
-            method = HTTPMethod::DELETE;
-            break;
-        case HTTPMethod::CONNECT:
-            method = HTTPMethod::CONNECT;
-            break;
-        case HTTPMethod::OPTIONS:
-            method = HTTPMethod::OPTIONS;
-            break;
-        case HTTPMethod::TRACE:
-            method = HTTPMethod::TRACE;
-            break;
-        case HTTPMethod::PATCH:
-            method = HTTPMethod::PATCH;
-            break;
-        default:
-            Logger::debug("Short message");
-            throw std::runtime_error("Short message");
+
+    if(str == "GET")
+        method = HTTPMethod::GET;
+    else if(str == "PUT")
+        method = HTTPMethod::PUT;
+    else if(str == "POST")
+        method = HTTPMethod::POST;
+    else if(str == "HEAD")
+        method = HTTPMethod::HEAD;
+    else if(str == "DELETE")
+        method = HTTPMethod::DELETE;
+    else if(str == "CONNECT")
+        method = HTTPMethod::CONNECT;
+    else if(str == "OPTIONS")
+        method = HTTPMethod::OPTIONS;
+    else if(str == "TRACE")
+        method = HTTPMethod::TRACE;
+    else if(str == "PATCH")
+        method = HTTPMethod::PATCH;
+    else{
+        Logger::debug("Unknown method");
+        throw HTTPException::HTTPBadRequest("Unknown method");
     }
+
 }
 
 void HTTPParser::ParseHeader() {

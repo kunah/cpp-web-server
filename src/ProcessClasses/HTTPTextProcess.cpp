@@ -4,7 +4,6 @@ HTTPTextProcess::HTTPTextProcess(std::string _filePath, std::string _contentType
         : BaseHTTPContentProcess(std::move(_filePath), std::move(_contentType)) {}
 
 HTTPParser HTTPTextProcess::Process(HTTPParser &request) {
-    // TODO: implement text class manipulation
 
     HTTPParser response;
 

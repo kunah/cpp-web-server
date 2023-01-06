@@ -20,7 +20,7 @@ public:
     HTTPParser();
     /// Creates object with parsed HTTP data from buffer
     HTTPParser( std::shared_ptr<unsigned char> _buffer, size_t _bufferSize);
-    void operator=( const HTTPParser & _other);
+    HTTPParser & operator=( const HTTPParser & _other);
 
     /// Prepares HTTP response
     std::vector<unsigned char> ToData();

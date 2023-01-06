@@ -1,6 +1,6 @@
 #include <ProcessClasses/HTTPBinaryProcess.h>
 
-HTTPBinaryProcess::HTTPBinaryProcess(std::string _filePath, std::string _contentType, int _maxAge)
+HTTPBinaryProcess::HTTPBinaryProcess(std::string _filePath, std::string _contentType, uint32_t _maxAge)
         : BaseHTTPContentProcess(std::move(_filePath), std::move(_contentType)), maxAge(_maxAge) {}
 
 HTTPParser HTTPBinaryProcess::Process(HTTPParser &request) {

@@ -3,6 +3,8 @@
 #include <ProcessClasses/HTTPTextProcess.h>
 #include <ProcessClasses/HTTPBinaryProcess.h>
 
+// TODO: solve error -> malloc: Heap corruption detected, free list is damaged at ....
+
 REGISTER_URI(HTTPMethod::GET, "/", HTTPTextProcess, "dist/index.html", "text/html")
 REGISTER_URI(HTTPMethod::GET, "/about", HTTPTextProcess, "dist/about.html", "text/html")
 REGISTER_URI(HTTPMethod::GET, "/favicon.ico", HTTPBinaryProcess   , "dist/favicon.ico", "image/x-icon", 60)

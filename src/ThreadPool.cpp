@@ -28,8 +28,6 @@ void ThreadPool::ThreadTask(uint16_t thID, std::queue<int> &poolItems, std::mute
         CV_UNLOCK
         Logger::debug("New connection on socket:", item);
 
-        // TODO: implement thread logic
-
         ClientRequest request(item);
         request.Run();
 
