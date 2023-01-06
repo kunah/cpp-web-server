@@ -23,7 +23,7 @@ public:
 #define CONCAT(x,y) CONCAT_(x,y)
 
 /// Macro to add new uri mapping
-#define REGISTER_URI(method, uri, obj, path, type) \
-static HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, [](){return std::make_shared<obj>(path,type);});
+#define REGISTER_URI(method, uri, obj, args...) \
+static HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, [](){return std::make_shared<obj>(args);});
 
 #endif //CPP_WEB_SERVER_HTTPMAPPINGREGISTRAR_H
