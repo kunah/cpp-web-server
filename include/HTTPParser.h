@@ -9,7 +9,7 @@
 #include <vector>
 
 #include <Logger.h>
-#include <ServerMapping.h>
+#include <HTTPMethod.h>
 
 /// Class that parses incoming HTTP request
 class HTTPParser {

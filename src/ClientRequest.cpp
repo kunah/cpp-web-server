@@ -1,4 +1,4 @@
-#include "ClientRequest.h"
+#include <ClientRequest.h>
 
 ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(ServerMapping::Instance()){
     timeout.tv_sec = 1;
