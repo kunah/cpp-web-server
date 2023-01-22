@@ -7,6 +7,7 @@
 #include <queue>
 #include <mutex>
 #include <thread>
+#include <condition_variable>
 
 #include <Logger.h>
 

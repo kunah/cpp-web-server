@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <mutex>
 #include <cerrno>
+#include <memory>
 
 #define LOG_LEVEL Logger::Level::DEBUG
 

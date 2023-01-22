@@ -17,4 +17,5 @@ public:
 #define REGISTER_URI(method, uri, path) \
 static HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, path);
 
+#define REGISTER_GET_URI(uri, path) REGISTER_URI(ServerMapping::HTTPMethods.find("GET")->second, uri, path);
 #endif //CPP_WEB_SERVER_HTTPMAPPINGREGISTRAR_H

@@ -1,8 +1,8 @@
 #include <WebServer.h>
 #include <HTTPMappingRegistrar.h>
 
-REGISTER_URI(HTTPMethod::GET, "/", "dist/index.html")
-REGISTER_URI(HTTPMethod::GET, "/about", "dist/about.html")
+REGISTER_GET_URI("/", "dist/index.html")
+REGISTER_GET_URI("/about", "dist/about.html")
 
 int main() {
 

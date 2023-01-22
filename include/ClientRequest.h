@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include <ctime>
+#include <cstring>
 #include <sstream>
 
 #include <Logger.h>
