@@ -2,7 +2,8 @@
 
 
 
-HTTPException::HTTPExceptionBase::HTTPExceptionBase( ErrorCode _code, const std::string & _msg, bool _webSite, const std::string & _site)
+
+HTTPException::HTTPExceptionBase::HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site)
 : code(_code), webSite(_webSite), site(std::move(_site)), msg(std::move(_msg)) {}
 
 HTTPParser HTTPException::HTTPExceptionBase::Response() {
@@ -22,17 +23,13 @@ HTTPParser HTTPException::HTTPExceptionBase::Response() {
             Logger::error("Can't open file", site);
             throw std::runtime_error("Can't open file for given mapping");
         }
-        std::string fileInfo, tmp;
-        while (file.good()) {
-            std::getline(file, tmp);
-            fileInfo.append(tmp);
-        }
+        std::vector<unsigned char> fileInfo(std::istreambuf_iterator<char>(file), {});
         file.close();
 
         response.header["Content-Length"] = std::to_string(fileInfo.size());
 
         response.header["Content-Type"] = "text/html";
-        response.body = site;
+        response.body = fileInfo;
     }
     response.header["Connection"] = "Closed";
     ss.str("");

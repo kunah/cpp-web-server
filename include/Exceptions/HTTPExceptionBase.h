@@ -11,6 +11,7 @@
 
 namespace HTTPException{
 
+    /// Enum of every single implemented error code exception for HTTP
     enum ErrorCode{
         BadRequest = 400,
         Unauthorized,
@@ -43,10 +44,16 @@ namespace HTTPException{
 
     };
 
+    /// Base exception interface for HTTP server
     class HTTPExceptionBase : public std::exception{
         public:
-            HTTPExceptionBase( ErrorCode _code, const std::string & _msg, bool _webSite, const std::string & _site);
+            /// \param _code HTTP error code
+            /// \param _msg msg of the exception
+            /// \param _webSite if to send a web site back
+            /// \param _site path to the site
+            HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site);
 
+            /// Generates response with given values
             HTTPParser Response();
         private:
             ErrorCode code;

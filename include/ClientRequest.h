@@ -18,18 +18,23 @@
 
 #define BUFFER_SIZE 1'000'000
 
+/// Class thah handles clients request
 class ClientRequest {
 public:
+    /// \param _socketFD File descriptor that refers to the socket
     ClientRequest(int _socketFD);
     ~ClientRequest();
 
     ClientRequest(ClientRequest & _other) = delete;
     void operator=(ClientRequest & _other) = delete;
 
+    /// Handles client
     void Run();
 private:
 
+    /// Reads data from the socket
     void ReadSocket();
+    /// Sends response to the client
     void SendResponse();
 
     HTTPParser request;

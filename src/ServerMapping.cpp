@@ -1,4 +1,4 @@
-#include "ServerMapping.h"
+#include <ServerMapping.h>
 
 std::shared_ptr<ServerMapping> ServerMapping::Instance() {
     std::unique_lock<std::mutex> lk(instanceMtx);
@@ -8,17 +8,17 @@ std::shared_ptr<ServerMapping> ServerMapping::Instance() {
 }
 
 
-void ServerMapping::RegisterURI(HTTPMethod method, const std::string &uri, const std::string &path) {
+void ServerMapping::RegisterURI(HTTPMethod method, const std::string &uri, functionProcess fnc) {
 //    auto pt = std::filesystem::absolute(path);
     ServerMapping::Instance(); // make sure to init Server Mapping
-    std::unique_lock<std::mutex> lk(instance->methodsMtx);
+    std::unique_lock<std::mutex> lkM(instance->methodsMtx);
     auto res = instance->HTTPMethodsMappings[method].find(uri);
     if(res != instance->HTTPMethodsMappings[method].end()){
         Logger::error("Trying to register uri for the same method");
         throw std::runtime_error("Trying to register uri for the same method");
     }
 
-    instance->HTTPMethodsMappings[method][uri] = path;
+    instance->HTTPMethodsMappings[method][uri] = std::move(fnc);
 }
 
 uriMethod ServerMapping::GetURIs(HTTPMethod method) {
@@ -26,12 +26,12 @@ uriMethod ServerMapping::GetURIs(HTTPMethod method) {
     return HTTPMethodsMappings[method];
 }
 
-std::string ServerMapping::GetPath(HTTPMethod method, const std::string &uri) {
+std::shared_ptr<BaseHTTPProcess> ServerMapping::GetProcess(HTTPMethod method, const std::string &uri) {
     std::unique_lock<std::mutex> lk(methodsMtx);
     auto res = HTTPMethodsMappings[method].find(uri);
     if(res == HTTPMethodsMappings[method].end()){
         Logger::error("Uri is not mapped for this method", uri);
         throw std::runtime_error("Uri is not mapped for this method");
     }
-    return res->second;
+    return res->second();
 }

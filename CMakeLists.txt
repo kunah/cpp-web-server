@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 project(cpp_web_server)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 find_package(Threads REQUIRED)
 
@@ -18,7 +18,13 @@ add_executable(cpp_web_server
         src/States/HTTPState.cpp
         src/Exceptions/ClientError.cpp
         src/Exceptions/HTTPExceptionBase.cpp
-        src/HTTPMappingRegistrar.cpp)
+        src/HTTPMappingRegistrar.cpp
+        src/ProcessClasses/BaseHTTPProcess.cpp
+        src/ProcessClasses/HTTPTextProcess.cpp
+        src/ProcessClasses/BaseHTTPContentProcess.cpp
+        src/ProcessClasses/HTTPBinaryProcess.cpp)
+
+add_executable(second second.cpp)
 
 set(CMAKE_CXX_FLAGS -pthread)
 

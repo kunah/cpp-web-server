@@ -5,16 +5,20 @@
 #include <fstream>
 #include <chrono>
 #include <iomanip>
+#include <vector>
 
 #include <HTTPParser.h>
 #include <ServerMapping.h>
 #include <Logger.h>
 #include <Exceptions/ClientError.h>
 
+/// Class that behaves based on HTTP method
 class HTTPState {
 public:
     HTTPState(HTTPMethod _method);
 
+    /// \param request request to handle
+    /// \return response in HTTPParser
     HTTPParser HandleRequest(HTTPParser & request);
 
     void SetState(HTTPMethod requestMethod);

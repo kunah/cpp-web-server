@@ -22,6 +22,7 @@ public:
     /// \param _port port to bind
     WebServer(uint16_t _port);
 
+    /// Runs the server
     void Run();
 
 private:

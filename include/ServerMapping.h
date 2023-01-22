@@ -6,40 +6,36 @@
 #include <string>
 #include <filesystem>
 #include <mutex>
+#include <utility>
 
 #include <Logger.h>
+#include <HTTPMethod.h>
+#include <ProcessClasses/BaseHTTPProcess.h>
 
-/// uri -> file path
-// TODO implement for function mapping
-typedef std::unordered_map<std::string, std::string> uriMethod;
+typedef std::function<std::shared_ptr<BaseHTTPProcess>()> functionProcess;
+/// uri -> process for handling that uri
+typedef std::unordered_map<std::string, functionProcess> uriMethod;
 
-/// Methods in HTTP
-enum HTTPMethod{ // std::hash of std::string(method) cropped to unsigned int
-    GET = 1158220111,
-    PUT = 795930711,
-    POST = 2893932544,
-    HEAD = 43864722,
-    DELETE = 1462665631,
-    CONNECT = 2484980613,
-    OPTIONS = 1947229628,
-    TRACE = 1138122765,
-    PATCH = 2564937511
-};
-
+/// Singleton class that stores server mappings for HTTP methods
 class ServerMapping {
 public:
     ServerMapping(ServerMapping & _other) = delete;
     void operator=(ServerMapping & _other) = delete;
-
+    /// Gets instance of the current mappings
     static std::shared_ptr<ServerMapping> Instance();
-
-    static void RegisterURI(HTTPMethod method,const std::string & uri, const std::string & path);
-
+    /// Register a new uri
+    /// \param method HTTP method that will be assigned to this uri
+    /// \param uri uri starting from root
+    /// \param fnc function that creates object that handles incoming request
+    /// \param type type of file to be added to HTTP response Content-Type header section
+    static void RegisterURI(HTTPMethod method,const std::string & uri, functionProcess fnc);
+    /// \return all mapped uris for given method
     uriMethod GetURIs(HTTPMethod method);
-
-    std::string GetPath(HTTPMethod method, const std::string & uri);
+    /// \return path of a file for given method and uri mapping
+    std::shared_ptr<BaseHTTPProcess> GetProcess(HTTPMethod method, const std::string & uri);
 
 protected:
+    /// Protected constructor to preserve singleton architecture
     ServerMapping() = default;
 
     inline static std::shared_ptr<ServerMapping> instance = nullptr;

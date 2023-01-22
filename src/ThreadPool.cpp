@@ -1,4 +1,4 @@
-#include "ThreadPool.h"
+#include <ThreadPool.h>
 
 
 ThreadPool::ThreadPool(uint16_t _size) {
@@ -27,8 +27,6 @@ void ThreadPool::ThreadTask(uint16_t thID, std::queue<int> &poolItems, std::mute
         poolItems.pop();
         CV_UNLOCK
         Logger::debug("New connection on socket:", item);
-
-        // TODO: implement thread logic
 
         ClientRequest request(item);
         request.Run();
