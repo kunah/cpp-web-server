@@ -24,7 +24,7 @@ add_executable(cpp_web_server
         src/ProcessClasses/BaseHTTPContentProcess.cpp
         src/ProcessClasses/HTTPBinaryProcess.cpp)
 
-add_executable(second second.cpp)
+#add_executable(second second.cpp)
 
 set(CMAKE_CXX_FLAGS -pthread)
 

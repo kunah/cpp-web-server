@@ -1,34 +1,34 @@
 #include <HTTPParser.h>
 #include <Exceptions/ClientError.h> // added to avoid cyclic includes
 
-HTTPParser::HTTPParser() : method(HTTPMethod::GET), buffer(nullptr), bufferSize(0), index(0) {}
+HTTPParser::HTTPParser() : method(HTTPMethod::GET), bufferSize(0), index(0) {}
 
-HTTPParser::HTTPParser(std::shared_ptr<unsigned char> _buffer, size_t _bufferSize) : buffer(std::move(_buffer)), bufferSize(_bufferSize) {
+HTTPParser::HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize) : buffer(std::move(_buffer)), bufferSize(_bufferSize) {
 
     index = 0;
     std::string strMethod;
     while(index < bufferSize){
-        if(isspace(buffer.get()[index]))
+        if(isspace(buffer[index]))
             break;
-        strMethod.push_back(buffer.get()[index]);
+        strMethod.push_back(buffer[index]);
         ++index;
     }
     ++index;
     SetMethod(strMethod);
     while(index < bufferSize){
-        if(isspace(buffer.get()[index]))
+        if(isspace(buffer[index]))
             break;
-        uri.push_back(buffer.get()[index]);
+        uri.push_back(buffer[index]);
         ++index;
     }
     ++index;
     while(index < bufferSize){
-        if(isspace(buffer.get()[index]))
+        if(isspace(buffer[index]))
             break;
-        version.push_back(buffer.get()[index]);
+        version.push_back(buffer[index]);
         ++index;
     }
-    while(isspace(buffer.get()[index]))
+    while(isspace(buffer[index]))
         ++index;
 
     Logger::debug(strMethod, uri, version);
@@ -123,15 +123,15 @@ void HTTPParser::ParseHeader() {
 std::string HTTPParser::GetLine() {
     std::string ret;
     while(index < bufferSize){
-        if(buffer.get()[index] == '\n'){
+        if(buffer[index] == '\n'){
             ++index;
             break;
         }
-        if(buffer.get()[index] == '\r'){
+        if(buffer[index] == '\r'){
             ++index;
             continue;
         }
-        ret.push_back(buffer.get()[index]);
+        ret.push_back(buffer[index]);
         ++index;
     }
     return ret;
