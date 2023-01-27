@@ -1,27 +1,33 @@
 #include <ThreadPool.h>
 
 
-ThreadPool::ThreadPool(uint16_t _size) {
+ThreadPool::ThreadPool(uint16_t _size) : appRunning(true) {
     Logger::debug("Creating ThreadPool");
     for(uint16_t i = 0; i < _size; ++i){
-        pool.emplace_back(&ThreadPool::ThreadTask, pool.size(), std::ref(poolItems), std::ref(itemsMtx), std::ref(cvItems));
+        pool.emplace_back(&ThreadPool::ThreadTask, pool.size(), std::ref(appRunning), std::ref(poolItems), std::ref(itemsMtx), std::ref(cvItems));
     }
 }
 
 ThreadPool::~ThreadPool() {
     Logger::debug("Destroying ThreadPool");
+    appRunning = false;
     for (auto &th : pool) {
-        th.join();
+        th.detach();
     }
 }
 
-void ThreadPool::ThreadTask(uint16_t thID, std::queue<int> &poolItems, std::mutex &itemsMtx, std::condition_variable & cvItems) {
+void ThreadPool::ThreadTask(uint16_t thID, std::atomic<bool> & appRunning, std::queue<int> &poolItems, std::mutex &itemsMtx, std::condition_variable & cvItems) {
 
     Logger::debug("Thread", thID, "started working");
-    while(true){
+
+    auto fnc = [&poolItems, &appRunning]{return !poolItems.empty() || !appRunning;};
+
+    while(appRunning){
 
         int item;
-        CV_LOCK_PREDICATE(itemsMtx, cvItems, [&poolItems]{return !poolItems.empty();})
+        CV_LOCK_PREDICATE(itemsMtx, cvItems, fnc)
+        if(!appRunning)
+            break;
         Logger::debug("Getting item from thread pool queue");
         item = poolItems.front();
         poolItems.pop();
@@ -38,7 +44,7 @@ bool ThreadPool::HigherLoad(uint16_t _size) {
     // TODO: better logic for higher load
     Logger::debug("Creating", _size, "new threads");
     for(uint16_t i = 0; i < _size; ++i){
-        pool.emplace_back(&ThreadPool::ThreadTask, pool.size(), std::ref(poolItems), std::ref(itemsMtx), std::ref(cvItems));
+        pool.emplace_back(&ThreadPool::ThreadTask, pool.size(), std::ref(appRunning), std::ref(poolItems), std::ref(itemsMtx), std::ref(cvItems));
     }
     return true;
 }

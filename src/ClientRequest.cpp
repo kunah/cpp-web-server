@@ -18,7 +18,7 @@ ClientRequest::~ClientRequest() {
 void ClientRequest::ReadSocket() {
 
     int retVal;
-    auto buffer = std::make_shared<unsigned char>(BUFFER_SIZE);
+    auto buffer = new unsigned char[BUFFER_SIZE];
 
     FD_ZERO(&socket);
     FD_SET(socketFD, &socket);
@@ -32,19 +32,26 @@ void ClientRequest::ReadSocket() {
         Logger::info("Connection timeout!");
         return;
     }
-    auto bytesRead = recv(socketFD, buffer.get(), BUFFER_SIZE, 0);
+    auto bytesRead = recv(socketFD, buffer, BUFFER_SIZE, 0);
     if(bytesRead < 0){
         Logger::error("Socket read error:", strerror(errno));
         throw std::runtime_error("Socket read");
     }
-    Logger::debug("Requested message:\n", buffer.get());
+    Logger::debug("Requested message:\n", buffer);
 
-    request = HTTPParser(buffer, bytesRead);
+    std::vector<unsigned char> buf;
+    std::copy(buffer, buffer + bytesRead, std::back_inserter(buf));
+    delete [] buffer;
+
+    Logger::info("Previous buffer:", bytesRead, "Current Buffer", buf.size());
+
+
+    request = HTTPParser(buf, bytesRead);
 }
 
 void ClientRequest::SendResponse() {
     auto res = response.ToData();
-    Logger::debug("Sending response");
+    Logger::debug("Sending response: ", response.version);
 
     if (send(socketFD, res.data(), res.size(), MSG_NOSIGNAL) < 0) {
         Logger::error("Can't send data", strerror(errno));

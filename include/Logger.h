@@ -8,7 +8,7 @@
 #include <cerrno>
 #include <memory>
 
-#define LOG_LEVEL Logger::Level::INFO
+#define LOG_LEVEL Logger::Level::DEBUG
 
 /// Singleton class that handles output for the application
 class Logger {

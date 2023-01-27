@@ -7,6 +7,7 @@
 #include <queue>
 #include <mutex>
 #include <thread>
+#include <atomic>
 #include <condition_variable>
 
 #include <Logger.h>
@@ -57,10 +58,11 @@ public:
 
 private:
 
-    static void ThreadTask(uint16_t thID, std::queue<int> & poolItems, std::mutex & itemsMtx, std::condition_variable & cvItems);
+    static void ThreadTask(uint16_t thID, std::atomic<bool> & appRunning, std::queue<int> & poolItems, std::mutex & itemsMtx, std::condition_variable & cvItems);
 
     std::vector<std::thread> pool;
 
+    std::atomic<bool> appRunning;
     std::mutex itemsMtx;
     std::condition_variable cvItems;
     std::queue<int> poolItems;
