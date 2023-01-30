@@ -18,6 +18,7 @@ add_executable(cpp_web_server
         src/States/HTTPState.cpp
         src/Exceptions/ClientError.cpp
         src/Exceptions/HTTPExceptionBase.cpp
+        src/Exceptions/ServerError.cpp
         src/HTTPMappingRegistrar.cpp
         src/ProcessClasses/BaseHTTPProcess.cpp
         src/ProcessClasses/HTTPTextProcess.cpp

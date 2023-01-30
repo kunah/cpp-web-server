@@ -43,7 +43,7 @@ void ClientRequest::ReadSocket() {
     std::copy(buffer, buffer + bytesRead, std::back_inserter(buf));
     delete [] buffer;
 
-    Logger::info("Previous buffer:", bytesRead, "Current Buffer", buf.size());
+    Logger::debug("Previous buffer:", bytesRead, "Current Buffer", buf.size());
 
 
     request = HTTPParser(buf, bytesRead);

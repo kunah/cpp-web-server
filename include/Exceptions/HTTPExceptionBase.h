@@ -40,8 +40,18 @@ namespace HTTPException{
         PreconditionRequired = 428,
         TooManyRequest,
         RequestHeaderFieldTooLarge = 431,
-        UnavailableForLegalReasons = 451
-
+        UnavailableForLegalReasons = 451,
+        InternalServerError = 500,
+        NotImplemented,
+        BadGateway,
+        ServiceUnavailable,
+        GatewayTimeout,
+        HTTPVersionNotSupported,
+        VariantAlsoNegotiates,
+        InsufficientStorage,
+        LoopDetected,
+        NotExtended = 510,
+        NetworkAuthenticationRequired
     };
 
     /// Base exception interface for HTTP server
