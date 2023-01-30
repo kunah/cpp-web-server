@@ -26,7 +26,9 @@ add_executable(cpp_web_server
         src/ProcessClasses/BaseHTTPProcess.cpp
         src/ProcessClasses/HTTPTextProcess.cpp
         src/ProcessClasses/BaseHTTPContentProcess.cpp
-        src/ProcessClasses/HTTPBinaryProcess.cpp)
+        src/ProcessClasses/HTTPBinaryProcess.cpp
+        src/URL/URL.cpp
+        src/URL/PatternURL.cpp)
 
 #add_executable(second second.cpp)
 

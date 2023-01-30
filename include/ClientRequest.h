@@ -19,7 +19,7 @@
 
 #define BUFFER_SIZE 1'000'000
 
-/// Class thah handles clients request
+/// Class that handles clients request
 class ClientRequest {
 public:
     /// \param _socketFD File descriptor that refers to the socket
