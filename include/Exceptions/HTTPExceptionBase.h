@@ -13,6 +13,16 @@ namespace HTTPException{
 
     /// Enum of every single implemented error code exception for HTTP
     enum ErrorCode{
+        OK = 200,
+        Created,
+        Accepted,
+        NonAuthoritativeInformation,
+        NoContent,
+        ResetContent,
+        PartialContent,
+        MultiStatus,
+        AlreadyReported,
+        IMUsed = 226,
         MultipleChoices = 300,
         MovedPermanently,
         Found,

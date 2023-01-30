@@ -20,6 +20,7 @@ add_executable(cpp_web_server
         src/Exceptions/HTTPExceptionBase.cpp
         src/Exceptions/ServerError.cpp
         src/Exceptions/RedirectionMessages.cpp
+        src/Exceptions/SuccessfulResponses.cpp
         src/HTTPMappingRegistrar.cpp
         src/ProcessClasses/BaseHTTPProcess.cpp
         src/ProcessClasses/HTTPTextProcess.cpp

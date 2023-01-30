@@ -99,7 +99,7 @@ namespace HTTPException {
                 _site) {}
     };
 
-    /// ermanent Redirect
+    /// Permanent Redirect
     /// Error code: 308
     class HTTPPermanentRedirect : public HTTPExceptionBase {
     public:
