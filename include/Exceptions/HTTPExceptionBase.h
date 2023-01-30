@@ -13,6 +13,15 @@ namespace HTTPException{
 
     /// Enum of every single implemented error code exception for HTTP
     enum ErrorCode{
+        MultipleChoices = 300,
+        MovedPermanently,
+        Found,
+        SeeOther,
+        NotModified,
+        UseProxy,
+        unused,
+        TemporaryRedirect,
+        PermanentRedirect,
         BadRequest = 400,
         Unauthorized,
         PaymentRequired,
