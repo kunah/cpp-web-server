@@ -1,4 +1,4 @@
-#include "ClientRequest.h"
+#include <ClientRequest.h>
 
 ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(ServerMapping::Instance()){
     timeout.tv_sec = 1;
@@ -18,7 +18,7 @@ ClientRequest::~ClientRequest() {
 void ClientRequest::ReadSocket() {
 
     int retVal;
-    auto buffer = std::make_shared<unsigned char>(BUFFER_SIZE);
+    auto buffer = new unsigned char[BUFFER_SIZE];
 
     FD_ZERO(&socket);
     FD_SET(socketFD, &socket);
@@ -26,29 +26,36 @@ void ClientRequest::ReadSocket() {
     retVal = select(socketFD + 1, &socket, nullptr, nullptr, &timeout);
     if(retVal < 0){
         Logger::error("Select problem:", strerror(errno));
-        throw std::runtime_error("Select problem");
+        throw HTTPException::HTTPInternalServerError();
     }
     if(!FD_ISSET(socketFD, &socket)){
         Logger::info("Connection timeout!");
-        return;
+        throw HTTPException::HTTPRequestTimeout();
     }
-    auto bytesRead = recv(socketFD, buffer.get(), BUFFER_SIZE, 0);
+    auto bytesRead = recv(socketFD, buffer, BUFFER_SIZE, 0);
     if(bytesRead < 0){
         Logger::error("Socket read error:", strerror(errno));
-        throw std::runtime_error("Socket read");
+        throw HTTPException::HTTPInternalServerError();
     }
-    Logger::debug("Requested message:\n", buffer.get());
+    Logger::debug("Requested message:\n", buffer);
 
-    request = HTTPParser(buffer, bytesRead);
+    std::vector<unsigned char> buf;
+    std::copy(buffer, buffer + bytesRead, std::back_inserter(buf));
+    delete [] buffer;
+
+    Logger::debug("Previous buffer:", bytesRead, "Current Buffer", buf.size());
+
+
+    request = HTTPParser(buf, bytesRead);
 }
 
 void ClientRequest::SendResponse() {
     auto res = response.ToData();
-    Logger::debug("Sending response");
+    Logger::debug("Sending response: ", response.version);
 
     if (send(socketFD, res.data(), res.size(), MSG_NOSIGNAL) < 0) {
         Logger::error("Can't send data", strerror(errno));
-        throw std::runtime_error("Can't send data to client");
+        throw HTTPException::HTTPInternalServerError();
     }
 }
 
@@ -64,8 +71,7 @@ void ClientRequest::Run() {
         SendResponse();
     }
     catch(...){
-        response = HTTPException::HTTPNotFound().Response();
-        response.version = "HTTP/1.1 500 Server Error";
+        response = HTTPException::HTTPInternalServerError().Response();
         SendResponse();
     }
 }

@@ -1,14 +1,17 @@
 #include <WebServer.h>
 #include <HTTPMappingRegistrar.h>
+#include <ProcessClasses/HTTPTextProcess.h>
+#include <ProcessClasses/HTTPBinaryProcess.h>
 
-REGISTER_URI(HTTPMethod::GET, "/", "dist/index.html", "text/html")
-REGISTER_URI(HTTPMethod::GET, "/about", "dist/about.html", "text/html")
-REGISTER_URI(HTTPMethod::GET, "/favicon.ico", "dist/favicon.ico", "image/x-icon")
-REGISTER_URI(HTTPMethod::GET, "/face.jpg", "dist/face.jpg", "image/jpg")
+
+REGISTER_GET_URI("/", HTTPTextProcess, "dist/index.html", "text/html")
+REGISTER_GET_URI("/about", HTTPTextProcess, "dist/about.html", "text/html")
+REGISTER_GET_URI("/favicon.ico", HTTPBinaryProcess   , "dist/favicon.ico", "image/x-icon", 60)
+REGISTER_GET_URI("/face.jpg", HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
 
 int main() {
 
-    WebServer(8080).Run();
-//    WebServer(8000).Run();
+//    WebServer(8080).Run();
+    WebServer(8000).Run();
     return 0;
 }

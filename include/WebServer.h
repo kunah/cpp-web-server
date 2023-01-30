@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include <sys/socket.h>
 #include <unistd.h>
@@ -21,6 +22,7 @@ public:
     /// \param _port port to bind
     WebServer(uint16_t _port);
 
+    /// Runs the server
     void Run();
 
 private:

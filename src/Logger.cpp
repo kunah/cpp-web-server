@@ -1,4 +1,4 @@
-#include "Logger.h"
+#include <Logger.h>
 
 Logger::Logger(Logger::Level _level) : level(_level), outStream(std::cout){}
 

@@ -1,6 +1,6 @@
 #include <HTTPMappingRegistrar.h>
 
-HTTPMappingRegistrar::HTTPMappingRegistrar(HTTPMethod method, const std::string &uri, const std::string &path, const std::string &type) {
+HTTPMappingRegistrar::HTTPMappingRegistrar(HTTPMethod method, const std::string &uri, functionProcess fnc) {
     Logger::debug("Registering uri:", uri);
-    ServerMapping::Instance()->RegisterURI(method, uri, path, type);
+    ServerMapping::Instance()->RegisterURI(method, uri, std::move(fnc));
 }
