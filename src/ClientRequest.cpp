@@ -26,16 +26,16 @@ void ClientRequest::ReadSocket() {
     retVal = select(socketFD + 1, &socket, nullptr, nullptr, &timeout);
     if(retVal < 0){
         Logger::error("Select problem:", strerror(errno));
-        throw std::runtime_error("Select problem");
+        throw HTTPException::HTTPInternalServerError();
     }
     if(!FD_ISSET(socketFD, &socket)){
         Logger::info("Connection timeout!");
-        return;
+        throw HTTPException::HTTPRequestTimeout();
     }
     auto bytesRead = recv(socketFD, buffer, BUFFER_SIZE, 0);
     if(bytesRead < 0){
         Logger::error("Socket read error:", strerror(errno));
-        throw std::runtime_error("Socket read");
+        throw HTTPException::HTTPInternalServerError();
     }
     Logger::debug("Requested message:\n", buffer);
 
@@ -55,7 +55,7 @@ void ClientRequest::SendResponse() {
 
     if (send(socketFD, res.data(), res.size(), MSG_NOSIGNAL) < 0) {
         Logger::error("Can't send data", strerror(errno));
-        throw std::runtime_error("Can't send data to client");
+        throw HTTPException::HTTPInternalServerError();
     }
 }
 
@@ -71,8 +71,7 @@ void ClientRequest::Run() {
         SendResponse();
     }
     catch(...){
-        response = HTTPException::HTTPNotFound().Response();
-        response.version = "HTTP/1.1 500 Server Error";
+        response = HTTPException::HTTPInternalServerError().Response();
         SendResponse();
     }
 }

@@ -58,7 +58,6 @@ HTTPParser & HTTPParser::operator=(const HTTPParser &_other) {
 }
 
 std::vector<unsigned char> HTTPParser::ToData()  {
-    std::stringstream ss;
     std::vector<unsigned char> buffer;
     buffer.insert(buffer.end(), version.begin(), version.end());
     buffer.insert(buffer.end(), {'\r','\n'});
@@ -111,7 +110,7 @@ void HTTPParser::ParseHeader() {
         auto res = line.find(':');
         if(res == std::string::npos){
             Logger::debug("Not a header line");
-            throw std::runtime_error("Bad header");
+            throw HTTPException::HTTPBadRequest();
         }
         std::string headerName(line.begin(), line.begin() + res), headerValue(line.begin() + res + 2, line.end());
         Logger::ultra(headerName, headerValue);

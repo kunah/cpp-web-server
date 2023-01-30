@@ -15,6 +15,7 @@
 #include <ServerMapping.h>
 #include <States/HTTPState.h>
 #include <Exceptions/ClientError.h>
+#include <Exceptions/ServerError.h>
 
 #define BUFFER_SIZE 1'000'000
 

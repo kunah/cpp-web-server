@@ -3,14 +3,16 @@
 
 #include <Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException{
+namespace HTTPException {
     /// HTTP Bad Request
     /// Error code: 400
     class HTTPBadRequest : public HTTPExceptionBase {
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPBadRequest( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::BadRequest, "BadRequest", _webSite, _site) {}
+        HTTPBadRequest(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::BadRequest,
+                                                                                                 "BadRequest", _webSite,
+                                                                                                 _site) {}
     };
 
     /// HTTP Unauthorized
@@ -19,7 +21,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPUnauthorized( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Unauthorized, "Unauthorized", _webSite, _site) {}
+        HTTPUnauthorized(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::Unauthorized, "Unauthorized", _webSite, _site) {}
     };
 
     /// HTTP Payment Required
@@ -28,7 +31,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPPaymentRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PaymentRequired, "PaymentRequired", _webSite, _site) {}
+        HTTPPaymentRequired(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::PaymentRequired, "PaymentRequired", _webSite, _site) {}
     };
 
     /// HTTP Forbidden
@@ -37,7 +41,9 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPForbidden( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Forbidden, "Forbidden", _webSite, _site) {}
+        HTTPForbidden(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::Forbidden,
+                                                                                                "Forbidden", _webSite,
+                                                                                                _site) {}
     };
 
     /// HTTP Not Found
@@ -46,7 +52,9 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPNotFound( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::NotFound, "NotFound", _webSite, _site) {}
+        HTTPNotFound(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::NotFound,
+                                                                                               "NotFound", _webSite,
+                                                                                               _site) {}
     };
 
     /// HTTP Method Not Allowed
@@ -55,7 +63,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPMethodNotAllowed( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::MethodNotAllowed, "MethodNotAllowed", _webSite, _site) {}
+        HTTPMethodNotAllowed(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::MethodNotAllowed, "MethodNotAllowed", _webSite, _site) {}
     };
 
     /// HTTP Not Acceptable
@@ -64,7 +73,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPNotAcceptable( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::NotAcceptable, "NotAcceptable", _webSite, _site) {}
+        HTTPNotAcceptable(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::NotAcceptable, "NotAcceptable", _webSite, _site) {}
     };
 
     /// HTTP Proxy Authentication Required
@@ -73,7 +83,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPProxyAuthenticationRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::ProxyAuthenticationRequired, "ProxyAuthenticationRequired", _webSite, _site) {}
+        HTTPProxyAuthenticationRequired(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::ProxyAuthenticationRequired, "ProxyAuthenticationRequired", _webSite, _site) {}
     };
 
     /// HTTP Request Timeout
@@ -82,7 +93,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPRequestTimeout( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::RequestTimeout, "RequestTimeout", _webSite, _site) {}
+        HTTPRequestTimeout(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::RequestTimeout, "RequestTimeout", _webSite, _site) {}
     };
 
     /// HTTP Conflict
@@ -91,7 +103,9 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPConflict( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Conflict, "Conflict", _webSite, _site) {}
+        HTTPConflict(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::Conflict,
+                                                                                               "Conflict", _webSite,
+                                                                                               _site) {}
     };
 
     /// HTTP Gone
@@ -100,7 +114,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPGone( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Gone, "Gone", _webSite, _site) {}
+        HTTPGone(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::Gone, "Gone",
+                                                                                           _webSite, _site) {}
     };
 
     /// HTTP Length Required
@@ -109,7 +124,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPLengthRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::LengthRequired, "LengthRequired", _webSite, _site) {}
+        HTTPLengthRequired(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::LengthRequired, "LengthRequired", _webSite, _site) {}
     };
 
     /// HTTP Precondition Failed
@@ -118,7 +134,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPPreconditionFailed( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PreconditionFailed, "PreconditionFailed", _webSite, _site) {}
+        HTTPPreconditionFailed(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::PreconditionFailed, "PreconditionFailed", _webSite, _site) {}
     };
 
     /// HTTP Payload Too Large
@@ -127,7 +144,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPPayloadTooLarge( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PayloadTooLarge, "PayloadTooLarge", _webSite, _site) {}
+        HTTPPayloadTooLarge(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::PayloadTooLarge, "PayloadTooLarge", _webSite, _site) {}
     };
 
     /// HTTP URI Too Long
@@ -136,7 +154,9 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPURITooLong( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::URITooLong, "URITooLong", _webSite, _site) {}
+        HTTPURITooLong(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::URITooLong,
+                                                                                                 "URITooLong", _webSite,
+                                                                                                 _site) {}
     };
 
     /// HTTP Unsupported Media Type
@@ -145,7 +165,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPUnsupportedMediaType( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UnsupportedMediaType, "UnsupportedMediaType", _webSite, _site) {}
+        HTTPUnsupportedMediaType(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::UnsupportedMediaType, "UnsupportedMediaType", _webSite, _site) {}
     };
 
     /// HTTP Range Not Satisfiable
@@ -154,7 +175,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPRangeNotSatisfiable( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::RangeNotSatisfiable, "RangeNotSatisfiable", _webSite, _site) {}
+        HTTPRangeNotSatisfiable(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::RangeNotSatisfiable, "RangeNotSatisfiable", _webSite, _site) {}
     };
 
     /// HTTP Expectation Failed
@@ -163,7 +185,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPExpectationFailed( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::ExpectationFailed, "ExpectationFailed", _webSite, _site) {}
+        HTTPExpectationFailed(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::ExpectationFailed, "ExpectationFailed", _webSite, _site) {}
     };
 
     /// HTTP Misdirected Request
@@ -172,7 +195,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPMisdirectedRequest( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::MisdirectedRequest, "MisdirectedRequest", _webSite, _site) {}
+        HTTPMisdirectedRequest(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::MisdirectedRequest, "MisdirectedRequest", _webSite, _site) {}
     };
 
     /// HTTP Unprocessable Entity
@@ -181,7 +205,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPUnprocessableEntity( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UnprocessableEntity, "UnprocessableEntity", _webSite, _site) {}
+        HTTPUnprocessableEntity(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::UnprocessableEntity, "UnprocessableEntity", _webSite, _site) {}
     };
 
     /// HTTP Locked
@@ -190,7 +215,9 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPLocked( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::Locked, "Locked", _webSite, _site) {}
+        HTTPLocked(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::Locked,
+                                                                                             "Locked", _webSite,
+                                                                                             _site) {}
     };
 
     /// HTTP Failed Dependency
@@ -199,7 +226,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPFailedDependency( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::FailedDependency, "FailedDependency", _webSite, _site) {}
+        HTTPFailedDependency(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::FailedDependency, "FailedDependency", _webSite, _site) {}
     };
 
     /// HTTP Too Early
@@ -208,7 +236,9 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPTooEarly( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::TooEarly, "TooEarly", _webSite, _site) {}
+        HTTPTooEarly(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(ErrorCode::TooEarly,
+                                                                                               "TooEarly", _webSite,
+                                                                                               _site) {}
     };
 
     /// HTTP Upgrade Required
@@ -217,7 +247,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPUpgradeRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UpgradeRequired, "UpgradeRequired", _webSite, _site) {}
+        HTTPUpgradeRequired(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::UpgradeRequired, "UpgradeRequired", _webSite, _site) {}
     };
 
     /// HTTP Precondition Required
@@ -226,7 +257,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPPreconditionRequired( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::PreconditionRequired, "PreconditionRequired", _webSite, _site) {}
+        HTTPPreconditionRequired(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::PreconditionRequired, "PreconditionRequired", _webSite, _site) {}
     };
 
     /// HTTP Too Many Request
@@ -235,7 +267,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPTooManyRequest( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::TooManyRequest, "TooManyRequest", _webSite, _site) {}
+        HTTPTooManyRequest(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::TooManyRequest, "TooManyRequest", _webSite, _site) {}
     };
 
     /// HTTP Request Header Field Too Large
@@ -244,7 +277,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPRequestHeaderFieldTooLarge( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::RequestHeaderFieldTooLarge, "RequestHeaderFieldTooLarge", _webSite, _site) {}
+        HTTPRequestHeaderFieldTooLarge(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::RequestHeaderFieldTooLarge, "RequestHeaderFieldTooLarge", _webSite, _site) {}
     };
 
     /// HTTP Unavailable For Legal Reasons
@@ -253,7 +287,8 @@ namespace HTTPException{
     public:
         /// \param _webSite if to send a web site back
         /// \param _site path to the site
-        HTTPUnavailableForLegalReasons( bool _webSite = false, const std::string & _site = "") : HTTPExceptionBase(ErrorCode::UnavailableForLegalReasons, "UnavailableForLegalReasons", _webSite, _site) {}
+        HTTPUnavailableForLegalReasons(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
+                ErrorCode::UnavailableForLegalReasons, "UnavailableForLegalReasons", _webSite, _site) {}
     };
 }
 
