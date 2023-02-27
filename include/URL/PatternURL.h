@@ -14,7 +14,7 @@ public:
 
     ~PatternURL() override = default;
 
-    bool operator==(const URL & other) override;
+    bool operator==( URL & other) override;
 
     void Print();
 
@@ -23,10 +23,10 @@ private:
     std::string RegexUriBase;
     std::regex RegexUri;
 
-    std::regex::flag_type flags
-            = std::regex::flag_type{0}
+    std::regex::flag_type flags =
+//            = std::regex::flag_type{0}
               // Choose one of the supported grammars:
-              | std::regex::ECMAScript
+              std::regex::ECMAScript
 //              | std::regex::basic
 //              | std::regex::extended
 //              | std::regex::awk

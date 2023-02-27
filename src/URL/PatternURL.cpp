@@ -2,12 +2,12 @@
 
 PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
 
-    auto words_begin = std::sregex_iterator(uri.begin(), uri.end(), words);
-    auto words_end = std::sregex_iterator();
+    auto wordsBegin = std::sregex_iterator(uri.begin(), uri.end(), words);
+    auto wordsEnd = std::sregex_iterator();
 
     int count = 0;
 
-    for (std::sregex_iterator i = words_begin; i != words_end; ++i) {
+    for (std::sregex_iterator i = wordsBegin; i != wordsEnd; ++i) {
         std::smatch match = *i;
 
         std::string matched = match.str();
@@ -23,8 +23,35 @@ PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
     RegexUri = std::regex(RegexUriBase, flags);
 }
 
-bool PatternURL::operator==(const URL &other) {
-    return std::regex_match(other.GetURL(), RegexUri);
+bool PatternURL::operator==(URL& other) {
+    if (!std::regex_match(other.GetURL(), RegexUri))
+        return false;
+
+    auto otherUrl = other.GetURL();
+    auto otherVal = other.GetValues();
+
+    auto wordsBegin = std::sregex_iterator(otherUrl.begin(), otherUrl.end(), replacePatter);
+    auto wordsEnd = std::sregex_iterator();
+
+    int count = 0;
+
+    for (std::sregex_iterator i = wordsBegin; i != wordsEnd; ++i, ++count) {
+        std::smatch match = *i;
+        auto res = dynamicURLMapping.find(count);
+        if(res != dynamicURLMapping.end()){
+            otherVal[res->second] = match.str();
+        }
+    }
+
+    std::cout << uri << " -> " << RegexUriBase << " -> " << otherUrl << std::endl;
+
+    std::cout << "Dynamic values" << std::endl;
+    for(auto & it : otherVal){
+        std::cout << "\t" << it.first << " " << it.second << std::endl;
+    }
+
+    other.SetValues(otherVal);
+    return true;
 }
 
 void PatternURL::Print() {
