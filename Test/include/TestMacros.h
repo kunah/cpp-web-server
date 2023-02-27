@@ -92,11 +92,12 @@ void name##Test::RunTest()
 
 #define RUN_ALL_TESTS { \
 auto tests = Tester::Instance()->GetTests(); \
-int i = 0;                        \
-for(auto t : tests){     \
+int i = 0, test = 1;                        \
+for(auto t : tests){    \
+    std::cout << "Running test: " << test++ << "/" << tests.size() << std::endl;                    \
     t->RunTest();       \
     i += (int)t->Failed();                   \
     }\
-std::cout << i << " tests failed" << std::endl;\
+std::cout << i << " test failed" << std::endl;\
 }
 #endif //CPP_WEB_SERVER_TESTMACROS_H
