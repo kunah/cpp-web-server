@@ -10,11 +10,12 @@
 
 #include <Logger.h>
 #include <HTTPMethod.h>
+#include <URL/PatternURL.h>
 #include <ProcessClasses/BaseHTTPProcess.h>
 
 typedef std::function<std::shared_ptr<BaseHTTPProcess>()> functionProcess;
 /// uri -> process for handling that uri
-typedef std::unordered_map<std::string, functionProcess> uriMethod;
+typedef std::vector<std::pair<PatternURL, functionProcess>> uriMethod;
 
 /// Singleton class that stores server mappings for HTTP methods
 class ServerMapping {

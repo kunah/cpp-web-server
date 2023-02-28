@@ -10,10 +10,11 @@ void HTTPState::SetState(HTTPMethod requestMethod) {
 HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
     auto uris = ServerMapping::Instance()->GetURIs(method);
 
-    auto process = uris.find(request.uri);
+    auto process = std::find_if(uris.begin(), uris.end(),
+                                [&request](std::pair<PatternURL, functionProcess> & posUrl){return posUrl.first == request.url;});
 
     if(process == uris.end()){
-        Logger::error("Request URI is not mapped", request.uri);
+        Logger::error("Request URI is not mapped", request.url);
         throw HTTPException::HTTPNotFound();
     }
     return process->second()->Process(request);

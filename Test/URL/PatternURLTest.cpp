@@ -40,3 +40,12 @@ TEST(testPatterURLGetValues){
     ASSERT_EQ(val["this"], "nakup")
     ASSERT_EQ(val["that"], "this")
 }
+
+TEST(testPatterURLCompareString){
+    PatternURL patternUrl("/ahoj/{this}/cau");
+
+    ASSERT_EQ(patternUrl, "/ahoj/tohle/cau")
+    ASSERT_EQ(patternUrl, "/ahoj/thisIsIt/cau")
+
+    ASSERT_NOT_EQ(patternUrl, "/ahoj/tohle/")
+}

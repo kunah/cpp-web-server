@@ -5,7 +5,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "Logger.h"
+#include <Logger.h>
 
 class URL{
 public:
@@ -14,8 +14,14 @@ public:
 
     virtual ~URL() = default;
 
-    virtual bool operator==(const URL & other);
+    URL& operator=(std::string & other);
+    URL& operator=(const URL & other);
+
     virtual bool operator==(URL & other);
+    virtual bool operator==(const std::string &otherUri);
+    virtual bool operator==(std::string &otherUri);
+
+    friend std::ostream& operator<<(std::ostream & os, URL & url);
 
     std::string GetURL() const;
     std::unordered_map<std::string, std::string> GetValues() const;

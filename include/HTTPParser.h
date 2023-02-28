@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <Logger.h>
+#include <URL/URL.h>
 #include <HTTPMethod.h>
 
 /// Class that parses incoming HTTP request
@@ -30,7 +31,7 @@ public:
     std::unordered_map<std::string, std::string> header;
 
     std::vector<unsigned char> body;
-    std::string uri;
+    URL url;
     std::string version;
 private:
 

@@ -15,6 +15,8 @@ public:
     ~PatternURL() override = default;
 
     bool operator==( URL & other) override;
+    bool operator==( std::string & otherUri) override;
+    bool operator==( const std::string & otherUri) override;
 
     void Print();
 

@@ -24,10 +24,12 @@ PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
 }
 
 bool PatternURL::operator==(URL& other) {
-    if (!std::regex_match(other.GetURL(), RegexUri))
-        return false;
 
     auto otherUrl = other.GetURL();
+
+    if (!(*this == otherUrl))
+        return false;
+
     auto otherVal = other.GetValues();
 
     auto wordsBegin = std::sregex_iterator(otherUrl.begin(), otherUrl.end(), replacePatter);
@@ -43,15 +45,24 @@ bool PatternURL::operator==(URL& other) {
         }
     }
 
-    std::cout << uri << " -> " << RegexUriBase << " -> " << otherUrl << std::endl;
+    Logger::debug(uri, "->", RegexUriBase, "->", otherUrl);
 
-    std::cout << "Dynamic values" << std::endl;
+    Logger::debug("Dynamic values");
     for(auto & it : otherVal){
-        std::cout << "\t" << it.first << " " << it.second << std::endl;
+        Logger::debug("\t", it.first, it.second);
     }
 
     other.SetValues(otherVal);
     return true;
+}
+
+
+bool PatternURL::operator==(std::string &otherUri) {
+    return std::regex_match(otherUri, RegexUri);
+}
+
+bool PatternURL::operator==(const std::string &otherUri) {
+    return std::regex_match(otherUri, RegexUri);
 }
 
 void PatternURL::Print() {
