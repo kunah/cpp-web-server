@@ -94,10 +94,15 @@ void name##Test::RunTest()
 auto tests = Tester::Instance()->GetTests(); \
 int i = 0, test = 1;                        \
 for(auto t : tests){    \
+    Logger::ClearSS();                    \
     std::cout << "Running test " << t->GetName() << " "  << test++ << "/" << tests.size() << std::endl;                    \
     t->RunTest();       \
-    i += (int)t->Failed();                   \
-    }\
+    if(t->Failed()){    \
+        ++i;            \
+        std::cout << "Test " << t->GetName() << " failed\nTest output:" << std::endl;                                                                           \
+        std::cout << Logger::GetSS();\
+    }     \
+}\
 std::cout << i << " test failed" << std::endl;\
 }
 #endif //CPP_WEB_SERVER_TESTMACROS_H

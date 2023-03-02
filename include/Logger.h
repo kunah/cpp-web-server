@@ -7,6 +7,7 @@
 #include <mutex>
 #include <cerrno>
 #include <memory>
+#include <sstream>
 
 #ifndef LOG_LEVEL
     #warning "LOG_LEVEL macro is not defined, setting default values"
@@ -24,6 +25,7 @@ public:
         WARN,
         INFO,
         DEBUG,
+        TEST,
         UlTRA
     };
 
@@ -56,6 +58,10 @@ public:
         Logger::Instance()->PrintMultipleLog(Logger::Level::UlTRA, "[ULTRA]", args...);
     }
 
+    static std::string GetSS();
+
+    static void ClearSS();
+
 
 protected:
 
@@ -78,10 +84,12 @@ private:
             return;
         mtx.lock();
         PrintCurrentTime();
-        ((outStream << " " << args) , ...);
-        outStream << std::endl;
+        ((GetStream() << " " << args) , ...);
+        GetStream() << std::endl;
         mtx.unlock();
     }
+
+    std::ostream & GetStream();
 
     /// Gets current time and print it to the output stream
     std::ostream & PrintCurrentTime();
@@ -91,6 +99,7 @@ private:
     Logger::Level level;
 
     std::ostream & outStream;
+    std::ostringstream oss;
 };
 
 #endif //CPP_WEB_SERVER_LOGGER_H

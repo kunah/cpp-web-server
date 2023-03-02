@@ -44,7 +44,7 @@ add_executable(Test_cpp_web_server
 
 target_compile_definitions(cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::DEBUG)
 
-target_compile_definitions(Test_cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::WARN)
+target_compile_definitions(Test_cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::TEST)
 
 
 set(CMAKE_CXX_FLAGS -pthread)
