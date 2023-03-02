@@ -8,7 +8,10 @@
 #include <cerrno>
 #include <memory>
 
-#define LOG_LEVEL Logger::Level::DEBUG
+#ifndef LOG_LEVEL
+    #warning "LOG_LEVEL macro is not defined, setting default values"
+    #define LOG_LEVEL Logger::Level::OFF
+#endif
 
 /// Singleton class that handles output for the application
 class Logger {

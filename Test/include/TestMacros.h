@@ -94,7 +94,7 @@ void name##Test::RunTest()
 auto tests = Tester::Instance()->GetTests(); \
 int i = 0, test = 1;                        \
 for(auto t : tests){    \
-    std::cout << "Running test: " << test++ << "/" << tests.size() << std::endl;                    \
+    std::cout << "Running test " << t->GetName() << " "  << test++ << "/" << tests.size() << std::endl;                    \
     t->RunTest();       \
     i += (int)t->Failed();                   \
     }\

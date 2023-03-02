@@ -32,15 +32,20 @@ MESSAGE(STATUS ${SRC_FILES})
 
 add_executable(cpp_web_server
         main.cpp
+
         ${SRC_FILES})
 
 add_executable(Test_cpp_web_server
         Test/main.cpp
-        Test/URL/PatternURLTest.cpp
-        Test/TestMacros.cpp
-        ${SRC_FILES})
+        Test/src/URL/PatternURLTest.cpp
+        Test/src/TestMacros.cpp
 
-#add_executable(second second.cpp)
+        ${SRC_FILES} Test/src/HTTPParserTest.cpp)
+
+target_compile_definitions(cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::DEBUG)
+
+target_compile_definitions(Test_cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::WARN)
+
 
 set(CMAKE_CXX_FLAGS -pthread)
 
