@@ -81,6 +81,7 @@ std::pair<functionProcess, URL> URLMapper::FindURL(const std::string &uri) {
     auto url = partPointer->GetURL();
     if(!(url == requestedURL)){
         Logger::error("URL is not matching, check it out", url.GetURL(), requestedURL.GetURL());
+        throw HTTPException::HTTPNotFound();
     }
     return {fnc, url};
 }

@@ -77,9 +77,37 @@ if(first == sec) {             \
     std::cerr << "Test " << name << " failed in file: " << __FILE_NAME__ << " on line: " << line << std::endl; \
 }
 
+#define __ASSERT_TRUE(first, line) \
+if(!first){                        \
+    failed = true;                 \
+    std::cerr << "Test: " << __func__ << " failed on line: " << line << std::endl; \
+}\
+
+#define __ASSERT_NOT_TRUE(first, line) \
+if(first){                        \
+    failed = true;                 \
+    std::cerr << "Test: " << __func__ << " failed on line: " << line << std::endl; \
+}\
+
+#define __ASSERT_THROW(first, exc, line) \
+try{                                     \
+    first;                               \
+    failed = true;                       \
+    std::cerr << "Did not throw an exception " << #exc << " on line: " << line << std::endl;\
+}                                        \
+catch(exc & e){  \
+    Logger::debug(e.what());\
+}
+
 #define ASSERT_EQ(first, sec) __ASSERT_EQ(first, sec, __LINE__)
 
 #define ASSERT_NOT_EQ(first, sec) __ASSERT_NOT_EQ(first, sec, __LINE__)
+
+#define ASSERT_TRUE(first) __ASSERT_TRUE(first, __LINE__)
+
+#define ASSERT_NOT_TRUE(first) __ASSERT_NOT_TRUE(first, __LINE__)
+
+#define ASSERT_THROW(first, exc) __ASSERT_THROW(first, exc, __LINE__)
 
 #define TEST(name) \
 class name##Test : public Test{ \
