@@ -26,7 +26,7 @@ set(SRC_FILES src/WebServer.cpp
         src/ProcessClasses/BaseHTTPContentProcess.cpp
         src/ProcessClasses/HTTPBinaryProcess.cpp
         src/URL/URL.cpp
-        src/URL/PatternURL.cpp)
+        src/URL/PatternURL.cpp src/URL/URLMapper.cpp)
 
 MESSAGE(STATUS ${SRC_FILES})
 
@@ -40,7 +40,7 @@ add_executable(Test_cpp_web_server
         Test/src/URL/PatternURLTest.cpp
         Test/src/TestMacros.cpp
 
-        ${SRC_FILES} Test/src/HTTPParserTest.cpp)
+        ${SRC_FILES} Test/src/HTTPParserTest.cpp Test/src/URL/URLTest.cpp)
 
 target_compile_definitions(cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::DEBUG)
 
