@@ -8,7 +8,7 @@ REGISTER_GET_URI("/", HTTPTextProcess, "dist/index.html", "text/html")
 REGISTER_GET_URI("/about", HTTPTextProcess, "dist/about.html", "text/html")
 REGISTER_GET_URI("/favicon.ico", HTTPBinaryProcess   , "dist/favicon.ico", "image/x-icon", 60)
 REGISTER_GET_URI("/face.jpg", HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
-REGISTER_GET_URI("/{name}/face.jpg", HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
+REGISTER_GET_URI("/photo/{name}/face.jpg", HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
 
 int main() {
 

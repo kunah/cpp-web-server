@@ -54,7 +54,7 @@ TEST(testHTTPParser){
 
     HTTPParser parser(fileInfo, fileInfo.size());
 
-    ASSERT_EQ(parser.url, "/ahoj/face.jpg")
+    ASSERT_EQ(parser.url, "/first/face.jpg")
     ASSERT_EQ(parser.version, "HTTP/1.1")
     ASSERT_EQ(parser.header.size(), 5)
     ASSERT_EQ(parser.body.empty(), true)

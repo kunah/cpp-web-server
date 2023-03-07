@@ -11,20 +11,20 @@ TEST(testUrlMapperEasyRegistreation){
 
     mapper.RegisterURL("/", testFnc);
     mapper.RegisterURL("/test", testFnc);
-    mapper.RegisterURL("/ahoj", testFnc);
-    mapper.RegisterURL("/ahoj/pokus", testFnc);
+    mapper.RegisterURL("/first", testFnc);
+    mapper.RegisterURL("/first/hello", testFnc);
 
     ASSERT_TRUE(mapper.FindURL("/").first)
     ASSERT_TRUE(mapper.FindURL("/test").first)
-    ASSERT_TRUE(mapper.FindURL("/ahoj").first)
-    ASSERT_TRUE(mapper.FindURL("/ahoj/pokus").first)
+    ASSERT_TRUE(mapper.FindURL("/first").first)
+    ASSERT_TRUE(mapper.FindURL("/first/hello").first)
 
     ASSERT_THROW(mapper.FindURL(""), HTTPException::HTTPNotFound)
     ASSERT_THROW(mapper.FindURL("/tady"), HTTPException::HTTPNotFound)
-    ASSERT_THROW(mapper.FindURL("/ahoj/pokus/poslendi"), HTTPException::HTTPNotFound)
+    ASSERT_THROW(mapper.FindURL("/first/hello/poslendi"), HTTPException::HTTPNotFound)
 
     ASSERT_THROW(mapper.RegisterURL("/", testFnc), std::runtime_error)
-    ASSERT_THROW(mapper.RegisterURL("/ahoj/pokus/", testFnc), std::runtime_error)
+    ASSERT_THROW(mapper.RegisterURL("/first/hello/", testFnc), std::runtime_error)
 
 }
 
@@ -36,21 +36,21 @@ TEST(testUrlMapperHardRegistreation){
 
     mapper.RegisterURL("/", testFnc);
     mapper.RegisterURL("/{test}", testFnc);
-    mapper.RegisterURL("/pokus", testFnc);
-    mapper.RegisterURL("/ahoj/{pokus}", testFnc);
+    mapper.RegisterURL("/hello", testFnc);
+    mapper.RegisterURL("/first/{hello}", testFnc);
 
     ASSERT_TRUE(mapper.FindURL("/").first)
     ASSERT_TRUE(mapper.FindURL("/test").first)
-    ASSERT_TRUE(mapper.FindURL("/pokus").first)
-    ASSERT_TRUE(mapper.FindURL("/ahoj/pokus").first)
+    ASSERT_TRUE(mapper.FindURL("/hello").first)
+    ASSERT_TRUE(mapper.FindURL("/first/hello").first)
 
     ASSERT_THROW(mapper.FindURL(""), HTTPException::HTTPNotFound)
-    ASSERT_THROW(mapper.FindURL("/pokus/ahoj"), HTTPException::HTTPNotFound)
+    ASSERT_THROW(mapper.FindURL("/hello/first"), HTTPException::HTTPNotFound)
 
-    ASSERT_THROW(mapper.RegisterURL("/pokus", testFnc), std::runtime_error)
+    ASSERT_THROW(mapper.RegisterURL("/hello", testFnc), std::runtime_error)
     ASSERT_THROW(mapper.RegisterURL("/{test2}", testFnc), std::runtime_error)
-    ASSERT_THROW(mapper.RegisterURL("/ahoj/{tenhle}", testFnc), std::runtime_error)
+    ASSERT_THROW(mapper.RegisterURL("/first/{this}", testFnc), std::runtime_error)
 
-    ASSERT_EQ(mapper.FindURL("/ahoj/pokus").second.GetURL(), "/ahoj/[[:alnum:]]+")
+    ASSERT_EQ(mapper.FindURL("/first/hello").second.GetURL(), "/first/[[:alnum:]]+")
 
 }

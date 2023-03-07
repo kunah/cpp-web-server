@@ -2,14 +2,14 @@
 #include <URL/PatternURL.h>
 
 TEST(testPatterURL){
-    PatternURL patternUrl("/ahoj/{this}/cau");
-    PatternURL patternUrlSecond("/ahoj/{this}/cau/{that}");
+    PatternURL patternUrl("/first/{this}/next");
+    PatternURL patternUrlSecond("/first/{this}/next/{that}");
 
-    URL first("/ahoj/tohle/cau");
-    URL second("/ahoj/nakup/cau");
-    URL third("/ahoj/nakup/cau/this");
-    URL fourth("/ahoj/cau");
-    URL fifth("ahoj/tohle/cau");
+    URL first("/first/that/next");
+    URL second("/first/video/next");
+    URL third("/first/video/next/this");
+    URL fourth("/first/next");
+    URL fifth("first/that/next");
 
     ASSERT_EQ(patternUrl, first)
     ASSERT_EQ(patternUrl, second)
@@ -22,30 +22,30 @@ TEST(testPatterURL){
 
 
 TEST(testPatterURLGetValues){
-    PatternURL patternUrl("/ahoj/{this}/cau");
-    PatternURL patternUrlSecond("/ahoj/{this}/cau/{that}");
+    PatternURL patternUrl("/first/{this}/next");
+    PatternURL patternUrlSecond("/first/{this}/next/{that}");
 
-    URL first("/ahoj/tohle/cau");
-    URL second("/ahoj/nakup/cau/this");
+    URL first("/first/that/next");
+    URL second("/first/video/next/this");
 
     ASSERT_EQ(patternUrl, first)
     ASSERT_EQ(patternUrlSecond, second)
 
     auto val = first.GetValues();
     ASSERT_EQ(val.size(), 1)
-    ASSERT_EQ(val["this"], "tohle")
+    ASSERT_EQ(val["this"], "that")
 
     val = second.GetValues();
     ASSERT_EQ(val.size(), 2)
-    ASSERT_EQ(val["this"], "nakup")
+    ASSERT_EQ(val["this"], "video")
     ASSERT_EQ(val["that"], "this")
 }
 
 TEST(testPatterURLCompareString){
-    PatternURL patternUrl("/ahoj/{this}/cau");
+    PatternURL patternUrl("/first/{this}/next");
 
-    ASSERT_EQ(patternUrl, "/ahoj/tohle/cau")
-    ASSERT_EQ(patternUrl, "/ahoj/thisIsIt/cau")
+    ASSERT_EQ(patternUrl, "/first/that/next")
+    ASSERT_EQ(patternUrl, "/first/thisIsIt/next")
 
-    ASSERT_NOT_EQ(patternUrl, "/ahoj/tohle/")
+    ASSERT_NOT_EQ(patternUrl, "/first/that/")
 }

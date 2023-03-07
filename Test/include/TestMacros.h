@@ -93,7 +93,7 @@ if(first){                        \
 try{                                     \
     first;                               \
     failed = true;                       \
-    std::cerr << "Did not throw an exception " << #exc << " on line: " << line << std::endl;\
+    std::cerr << "Did not throw an exception " << #exc << '\n' << __func__ << " on line: " << line << std::endl;\
 }                                        \
 catch(exc & e){  \
     Logger::debug(e.what());\
