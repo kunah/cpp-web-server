@@ -21,6 +21,8 @@ PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
 
     RegexUriBase = std::regex_replace(uri, uriPattern, replacePatterString);
     RegexUri = std::regex(RegexUriBase, flags);
+    uri = RegexUriBase;
+    ParseURL();
 }
 
 bool PatternURL::operator==(URL& other) {

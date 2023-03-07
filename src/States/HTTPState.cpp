@@ -8,14 +8,17 @@ void HTTPState::SetState(HTTPMethod requestMethod) {
 }
 
 HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
-    auto uris = ServerMapping::Instance()->GetURIs(method);
+//    auto uris = ServerMapping::Instance()->GetURIs(method);
 
-    auto process = std::find_if(uris.begin(), uris.end(),
-                                [&request](std::pair<PatternURL, functionProcess> & posUrl){return posUrl.first == request.url;});
+//    auto process = std::find_if(uris.begin(), uris.end(),
+//                                [&request](std::pair<PatternURL, functionProcess> & posUrl){return posUrl.first == request.url;});
+//
+//    if(process == uris.end()){
+//        Logger::error("Request URI is not mapped", request.url);
+//        throw HTTPException::HTTPNotFound();
+//    }
 
-    if(process == uris.end()){
-        Logger::error("Request URI is not mapped", request.url);
-        throw HTTPException::HTTPNotFound();
-    }
-    return process->second()->Process(request);
+    auto process = ServerMapping::Instance()->GetProcess(request.method, request.url.GetURL());
+
+    return process()->Process(request);
 }

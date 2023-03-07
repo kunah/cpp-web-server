@@ -3,6 +3,7 @@
 
 #include <regex>
 #include <string>
+#include <vector>
 #include <unordered_map>
 
 #include <Logger.h>
@@ -24,13 +25,17 @@ public:
     friend std::ostream& operator<<(std::ostream & os, URL & url);
 
     std::string GetURL() const;
+    std::vector<std::string> GetParts() const;
     std::unordered_map<std::string, std::string> GetValues() const;
     void SetValues(std::unordered_map<std::string, std::string>& _values);
 
 protected:
 
+    void ParseURL();
 
     std::string uri;
+
+    std::vector<std::string> parts;
 
     std::unordered_map<std::string, std::string> values;
 

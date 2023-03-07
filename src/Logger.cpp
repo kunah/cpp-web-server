@@ -22,7 +22,7 @@ std::string Logger::GetSS() {
 
 void Logger::ClearSS() {
     auto instance = Logger::Instance();
-    instance->oss.clear();
+    instance->oss.str("");
 }
 
 std::ostream & Logger::GetStream(){
