@@ -1,17 +1,15 @@
 #ifndef CPP_WEB_SERVER_THREADPOOL_H
 #define CPP_WEB_SERVER_THREADPOOL_H
 
-#include <iostream>
 
-#include <vector>
 #include <queue>
 #include <mutex>
+#include <vector>
 #include <thread>
 #include <atomic>
 #include <condition_variable>
 
 #include <Logger.h>
-
 #include <ClientRequest.h>
 
 #define CV_LOCK(MTX, CV) { \

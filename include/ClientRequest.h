@@ -2,13 +2,12 @@
 #define CPP_WEB_SERVER_CLIENTREQUEST_H
 
 #include <string>
-#include <sys/socket.h>
-#include <sys/select.h>
-#include <unistd.h>
-
 #include <ctime>
 #include <cstring>
 #include <sstream>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <sys/select.h>
 
 #include <Logger.h>
 #include <HTTPParser.h>
@@ -19,7 +18,7 @@
 
 #define BUFFER_SIZE 1'000'000
 
-/// Class thah handles clients request
+/// Class that handles clients request
 class ClientRequest {
 public:
     /// \param _socketFD File descriptor that refers to the socket

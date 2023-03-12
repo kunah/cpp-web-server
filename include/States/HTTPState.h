@@ -2,14 +2,14 @@
 #define CPP_WEB_SERVER_HTTPSTATE_H
 
 #include <memory>
-#include <fstream>
 #include <chrono>
-#include <iomanip>
 #include <vector>
+#include <iomanip>
+#include <fstream>
 
+#include <Logger.h>
 #include <HTTPParser.h>
 #include <ServerMapping.h>
-#include <Logger.h>
 #include <Exceptions/ClientError.h>
 
 /// Class that behaves based on HTTP method

@@ -5,11 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(Threads REQUIRED)
 
-include_directories(include)
+include_directories(include Test/include)
 
-add_executable(cpp_web_server
-        main.cpp
-        src/WebServer.cpp
+set(SRC_FILES src/WebServer.cpp
         src/Logger.cpp
         src/ThreadPool.cpp
         src/ClientRequest.cpp
@@ -26,9 +24,32 @@ add_executable(cpp_web_server
         src/ProcessClasses/BaseHTTPProcess.cpp
         src/ProcessClasses/HTTPTextProcess.cpp
         src/ProcessClasses/BaseHTTPContentProcess.cpp
-        src/ProcessClasses/HTTPBinaryProcess.cpp)
+        src/ProcessClasses/HTTPBinaryProcess.cpp
+        src/URL/URL.cpp
+        src/URL/PatternURL.cpp
+        src/URL/URLMapper.cpp)
 
-#add_executable(second second.cpp)
+MESSAGE(STATUS ${SRC_FILES})
+
+add_executable(cpp_web_server
+        main.cpp
+
+        ${SRC_FILES})
+
+add_executable(Test_cpp_web_server
+        ${SRC_FILES}
+
+        Test/main.cpp
+        Test/src/URL/PatternURLTest.cpp
+        Test/src/TestMacros.cpp
+        Test/src/HTTPParserTest.cpp
+        Test/src/URL/URLTest.cpp
+        Test/src/URL/URLMapperTest.cpp)
+
+target_compile_definitions(cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::DEBUG)
+
+target_compile_definitions(Test_cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::TEST)
+
 
 set(CMAKE_CXX_FLAGS -pthread)
 

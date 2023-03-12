@@ -1,14 +1,18 @@
 #ifndef CPP_WEB_SERVER_LOGGER_H
 #define CPP_WEB_SERVER_LOGGER_H
 
-#include <iostream>
-#include <chrono>
-#include <iomanip>
 #include <mutex>
-#include <cerrno>
+#include <chrono>
 #include <memory>
+#include <cerrno>
+#include <iomanip>
+#include <sstream>
+#include <iostream>
 
-#define LOG_LEVEL Logger::Level::DEBUG
+#ifndef LOG_LEVEL
+    #warning "LOG_LEVEL macro is not defined, setting default values"
+    #define LOG_LEVEL Logger::Level::OFF
+#endif
 
 /// Singleton class that handles output for the application
 class Logger {
@@ -21,6 +25,7 @@ public:
         WARN,
         INFO,
         DEBUG,
+        TEST,
         UlTRA
     };
 
@@ -53,6 +58,12 @@ public:
         Logger::Instance()->PrintMultipleLog(Logger::Level::UlTRA, "[ULTRA]", args...);
     }
 
+    /// \return the content of the std::ostringstream as a string
+    static std::string GetSS();
+
+    /// Clear the std::ostringstream
+    static void ClearSS();
+
 
 protected:
 
@@ -75,10 +86,13 @@ private:
             return;
         mtx.lock();
         PrintCurrentTime();
-        ((outStream << " " << args) , ...);
-        outStream << std::endl;
+        ((GetStream() << " " << args) , ...);
+        GetStream() << std::endl;
         mtx.unlock();
     }
+
+    /// \return the output stream that should be used in this logger
+    std::ostream & GetStream();
 
     /// Gets current time and print it to the output stream
     std::ostream & PrintCurrentTime();
@@ -88,6 +102,7 @@ private:
     Logger::Level level;
 
     std::ostream & outStream;
+    std::ostringstream oss;
 };
 
 #endif //CPP_WEB_SERVER_LOGGER_H
