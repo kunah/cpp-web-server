@@ -27,7 +27,7 @@ const URLMapper & ServerMapping::GetURIs(HTTPMethod method) {
     return HTTPMethodsMappings[method];
 }
 
-functionProcess ServerMapping::GetProcess(HTTPMethod method, const std::string &uri) {
+functionProcess ServerMapping::GetProcess(HTTPMethod method, URL &uri) {
     std::unique_lock<std::mutex> lk(methodsMtx);
 //    auto res = std::find_if(HTTPMethodsMappings[method].begin(), HTTPMethodsMappings[method].end(),
 //                            [&uri](std::pair<PatternURL, functionProcess>& posUri){return posUri.first == uri;});

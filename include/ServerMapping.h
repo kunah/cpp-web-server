@@ -31,7 +31,7 @@ public:
     /// \return all mapped uris for given method
     const URLMapper & GetURIs(HTTPMethod method);
     /// \return path of a file for given method and uri mapping
-    functionProcess GetProcess(HTTPMethod method, const std::string & uri);
+    functionProcess GetProcess(HTTPMethod method, URL & uri);
 
 protected:
     /// Protected constructor to preserve singleton architecture

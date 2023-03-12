@@ -9,12 +9,14 @@ URL::URL(const std::string &_uri) : uri(_uri) {
 URL& URL::operator=(std::string &other) {
     uri = other;
     values.clear();
+    ParseURL();
     return (*this);
 }
 
 URL& URL::operator=(const URL &other) {
     this->uri = other.uri;
     this->values = other.values;
+    ParseURL();
     return (*this);
 }
 

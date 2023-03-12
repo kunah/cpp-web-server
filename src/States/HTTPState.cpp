@@ -18,7 +18,7 @@ HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
 //        throw HTTPException::HTTPNotFound();
 //    }
 
-    auto process = ServerMapping::Instance()->GetProcess(request.method, request.url.GetURL());
+    auto process = ServerMapping::Instance()->GetProcess(request.method, request.url);
 
     return process()->Process(request);
 }

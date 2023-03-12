@@ -1,19 +1,35 @@
 #include <URL/URLMapper.h>
 
-URLPart::URLPart(const std::string &_part) : part(_part), url(""), regexDescendant(nullptr){}
+RegexPart::RegexPart(const std::string &_part) : regexPart(_part, flags), regexStr(_part){}
+
+bool RegexPart::operator==(const RegexPart &part) const {
+    return std::regex_match(part.regexStr, regexPart);
+}
+
+std::string RegexPart::GetRegex() const {
+    return regexStr;
+}
+
+URLPart::URLPart(const std::string &_part) : part(_part), url("") {}
 
 std::shared_ptr<URLPart> URLPart::AddDescendant(const std::string &newDesc) {
     auto res = descendants.find(newDesc);
-    bool reg = newDesc == "[[:alnum:]]+";
+    bool reg = newDesc.find("[[:alnum:]]+") != std::string::npos;
     if(res == descendants.end() && !reg){
         auto newPtr = std::make_shared<URLPart>(newDesc);
         descendants[newDesc] = newPtr;
         return newPtr;
     }
     else if(reg){
-        if(!regexDescendant)
-            regexDescendant = std::make_shared<URLPart>(newDesc);
-        return regexDescendant;
+        auto regexRes = std::find_if(regexDescendants.begin(), regexDescendants.end(),[&newDesc](const std::pair<RegexPart, std::shared_ptr<URLPart>> & t){
+            return t.first == newDesc;
+        });
+        if(regexRes == regexDescendants.end()){
+            auto newPtr = std::make_shared<URLPart>(newDesc);
+            regexDescendants.emplace_back(newDesc, newPtr);
+            return newPtr;
+        }
+        return regexRes->second;
     }
     return res->second;
 }
@@ -22,7 +38,10 @@ std::shared_ptr<URLPart> URLPart::FindDescendant(const std::string &nextPart) co
     auto res = descendants.find(nextPart);
     if(res != descendants.end())
         return res->second;
-    return regexDescendant ? regexDescendant : std::shared_ptr<URLPart>(nullptr);
+    auto regexRes = std::find_if(regexDescendants.begin(), regexDescendants.end(), [&nextPart](const std::pair<RegexPart, std::shared_ptr<URLPart>> & t){
+        return t.first == nextPart;
+    });
+    return regexRes != regexDescendants.end() ? regexRes->second : std::shared_ptr<URLPart>(nullptr);
 }
 
 void URLPart::MapFunction(functionProcess _fnc, PatternURL _url) {
@@ -58,10 +77,9 @@ void URLMapper::RegisterURL(const std::string &uri, functionProcess _fnc) {
     partPointer->MapFunction(_fnc, newURL);
 }
 
-std::pair<functionProcess, URL> URLMapper::FindURL(const std::string &uri) {
-    URL requestedURL(uri);
+std::pair<functionProcess, URL> URLMapper::FindURL(URL &uri) {
 
-    auto parts = requestedURL.GetParts();
+    auto parts = uri.GetParts();
     auto partPointer = root;
 
     for(auto & part : parts) {
@@ -79,9 +97,14 @@ std::pair<functionProcess, URL> URLMapper::FindURL(const std::string &uri) {
     }
 
     auto url = partPointer->GetURL();
-    if(!(url == requestedURL)){
-        Logger::error("URL is not matching, check it out", url.GetURL(), requestedURL.GetURL());
+    if(!(url == uri)){
+        Logger::error("URL is not matching, check it out", url.GetURL(), uri.GetURL());
         throw HTTPException::HTTPNotFound();
     }
     return {fnc, url};
+}
+
+std::pair<functionProcess, URL> URLMapper::FindURL(const std::string &uri) {
+    URL url(uri);
+    return FindURL(url);
 }
