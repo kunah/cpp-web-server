@@ -22,7 +22,7 @@ std::shared_ptr<URLPart> URLPart::AddDescendant(const std::string &newDesc) {
     }
     else if(reg){
         auto regexRes = std::find_if(regexDescendants.begin(), regexDescendants.end(),[&newDesc](const std::pair<RegexPart, std::shared_ptr<URLPart>> & t){
-            return t.first == newDesc;
+            return t.first.GetRegex() == newDesc;
         });
         if(regexRes == regexDescendants.end()){
             auto newPtr = std::make_shared<URLPart>(newDesc);

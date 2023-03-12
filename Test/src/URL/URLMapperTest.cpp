@@ -38,19 +38,23 @@ TEST(testUrlMapperHardRegistreation){
     mapper.RegisterURL("/{test}", testFnc);
     mapper.RegisterURL("/hello", testFnc);
     mapper.RegisterURL("/first/{hello}", testFnc);
+    mapper.RegisterURL("/first/{test}.src", testFnc);
 
     ASSERT_TRUE(mapper.FindURL("/").first)
     ASSERT_TRUE(mapper.FindURL("/test").first)
     ASSERT_TRUE(mapper.FindURL("/hello").first)
     ASSERT_TRUE(mapper.FindURL("/first/hello").first)
+    ASSERT_TRUE(mapper.FindURL("/first/first.src").first)
 
     ASSERT_THROW(mapper.FindURL(""), HTTPException::HTTPNotFound)
     ASSERT_THROW(mapper.FindURL("/hello/first"), HTTPException::HTTPNotFound)
+    ASSERT_THROW(mapper.FindURL("/hello/second.srr"), HTTPException::HTTPNotFound)
 
     ASSERT_THROW(mapper.RegisterURL("/hello", testFnc), std::runtime_error)
     ASSERT_THROW(mapper.RegisterURL("/{test2}", testFnc), std::runtime_error)
     ASSERT_THROW(mapper.RegisterURL("/first/{this}", testFnc), std::runtime_error)
 
     ASSERT_EQ(mapper.FindURL("/first/hello").second.GetURL(), "/first/[[:alnum:]]+")
+    ASSERT_EQ(mapper.FindURL("/first/third.src").second.GetURL(), "/first/[[:alnum:]]+.src")
 
 }
