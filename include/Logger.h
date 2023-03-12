@@ -1,13 +1,13 @@
 #ifndef CPP_WEB_SERVER_LOGGER_H
 #define CPP_WEB_SERVER_LOGGER_H
 
-#include <iostream>
-#include <chrono>
-#include <iomanip>
 #include <mutex>
-#include <cerrno>
+#include <chrono>
 #include <memory>
+#include <cerrno>
+#include <iomanip>
 #include <sstream>
+#include <iostream>
 
 #ifndef LOG_LEVEL
     #warning "LOG_LEVEL macro is not defined, setting default values"
@@ -58,8 +58,10 @@ public:
         Logger::Instance()->PrintMultipleLog(Logger::Level::UlTRA, "[ULTRA]", args...);
     }
 
+    /// \return the content of the std::ostringstream as a string
     static std::string GetSS();
 
+    /// Clear the std::ostringstream
     static void ClearSS();
 
 
@@ -89,6 +91,7 @@ private:
         mtx.unlock();
     }
 
+    /// \return the output stream that should be used in this logger
     std::ostream & GetStream();
 
     /// Gets current time and print it to the output stream

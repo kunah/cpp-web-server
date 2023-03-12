@@ -4,20 +4,36 @@
 #include <string>
 #include <unordered_map>
 
-#include <URL/URL.h>
 #include <Logger.h>
+#include <URL/URL.h>
 
+/// Class for storing a URL with regex support
 class PatternURL : public URL{
 public:
 
+    /// URL as a string
+    /// Supports creating URLs with names for regex parameters in the format: /part/{regex-part}
+    /// \param _uri URL as a string
     PatternURL(const std::string & _uri);
 
     ~PatternURL() override = default;
 
+    /// Compares basic URL with this regex supported URL, setts regex parts to the URL [key][value]
+    /// key is the name from the URL in {}
+    /// value is the mapped value corresponding that regex
+    /// \param other other URL to compare with
+    /// \return if the URL is mapped on this regex URL
     bool operator==( URL & other) override;
+    /// Compares basic URL with this regex supported URL
+    /// \param otherUri uri to compare with
+    /// \return if the uri is mapped on this regex URL
     bool operator==( std::string & otherUri) override;
+    /// Compares basic URL with this regex supported URL
+    /// \param otherUri uri to compare with
+    /// \return if the uri is mapped on this regex URL
     bool operator==( const std::string & otherUri) override;
 
+    /// Prints the content of this regex URL
     void Print();
 
 private:

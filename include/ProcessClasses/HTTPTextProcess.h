@@ -1,8 +1,8 @@
 #ifndef CPP_WEB_SERVER_HTTPTEXTPROCESS_H
 #define CPP_WEB_SERVER_HTTPTEXTPROCESS_H
 
-#include <fstream>
 #include <string>
+#include <fstream>
 
 #include <Logger.h>
 #include <ServerMapping.h>

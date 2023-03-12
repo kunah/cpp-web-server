@@ -3,10 +3,10 @@
 
 #include <memory>
 #include <string>
-#include <unordered_map>
-#include <functional>
-#include <sstream>
 #include <vector>
+#include <sstream>
+#include <functional>
+#include <unordered_map>
 
 #include <Logger.h>
 #include <URL/URL.h>
