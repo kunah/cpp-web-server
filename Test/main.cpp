@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <WebServer.h>
 #include <HTTPMappingRegistrar.h>
 #include <ProcessClasses/HTTPTextProcess.h>
@@ -107,6 +108,13 @@ int main() {
     catch(std::regex_error & err){
         show_regex_error(err);
     }
+=======
+#include <TestMacros.h>
+
+int main(){
+
+    RUN_ALL_TESTS
+>>>>>>> 46092fc700e112ec85a4bc33ae113e0c8776a688
 
     return 0;
 }

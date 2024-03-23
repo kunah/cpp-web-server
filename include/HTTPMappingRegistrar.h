@@ -19,12 +19,14 @@ public:
     HTTPMappingRegistrar(HTTPMethod method, const std::string & uri, functionProcess fnc);
 };
 
-#define CONCAT_(x,y) x##y
-#define CONCAT(x,y) CONCAT_(x,y)
+#ifndef CONCAT
+    #define CONCAT_(x,y) x##y
+    #define CONCAT(x,y) CONCAT_(x,y)
+#endif
 
 /// Macro to add new uri mapping
 #define REGISTER_URI(method, uri, obj, args...) \
 static HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, [](){return std::make_shared<obj>(args);});
 
-#define REGISTER_GET_URI(uri, path, args...) REGISTER_URI(HTTPMethod::GET, uri, path, args);
+#define REGISTER_GET_URI(uri, path, args...) REGISTER_URI(HTTPMethod::GET, uri, path, args)
 #endif //CPP_WEB_SERVER_HTTPMAPPINGREGISTRAR_H

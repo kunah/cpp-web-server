@@ -1,0 +1,7 @@
+GET /first/face.jpg HTTP/1.1
+Host: localhost:8000
+Connection: keep-alive
+Referer: http://localhost:8000/first/face.jpg
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-GB,en;q=0.9
+

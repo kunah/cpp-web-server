@@ -15,12 +15,15 @@ HTTPParser::HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize) :
     }
     ++index;
     SetMethod(strMethod);
+
+    std::string uri;
     while(index < bufferSize){
         if(isspace(buffer[index]))
             break;
         uri.push_back(buffer[index]);
         ++index;
     }
+    url = uri;
     ++index;
     while(index < bufferSize){
         if(isspace(buffer[index]))
@@ -52,7 +55,7 @@ HTTPParser & HTTPParser::operator=(const HTTPParser &_other) {
     this->version = _other.version;
     this->body = _other.body;
     this->header = _other.header;
-    this->uri = _other.uri;
+    this->url = _other.url;
 
     return *this;
 }

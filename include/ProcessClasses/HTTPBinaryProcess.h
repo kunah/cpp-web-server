@@ -1,8 +1,8 @@
 #ifndef CPP_WEB_SERVER_HTTPBINARYPROCESS_H
 #define CPP_WEB_SERVER_HTTPBINARYPROCESS_H
 
-#include <utility>
 #include <string>
+#include <utility>
 
 #include <Logger.h>
 #include <ProcessClasses/BaseHTTPContentProcess.h>
