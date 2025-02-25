@@ -27,14 +27,18 @@ set(SRC_FILES src/WebServer.cpp
         src/HTTPResolver/ProcessClasses/HTTPBinaryProcess.cpp
         src/URL/URL.cpp
         src/URL/PatternURL.cpp
-        src/URL/URLMapper.cpp)
+        src/URL/URLMapper.cpp
+        src/WebServerBuilder.cpp
+        src/Middleware.cpp
+)
 
 MESSAGE(STATUS ${SRC_FILES})
 
 add_executable(cpp_web_server
         main.cpp
 
-        ${SRC_FILES})
+        ${SRC_FILES}
+)
 
 add_executable(Test_cpp_web_server
         ${SRC_FILES}
@@ -46,7 +50,7 @@ add_executable(Test_cpp_web_server
         Test/src/URL/URLTest.cpp
         Test/src/URL/URLMapperTest.cpp)
 
-target_compile_definitions(cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::INFO)
+target_compile_definitions(cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::DEBUG)
 
 target_compile_definitions(Test_cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::TEST)
 

@@ -2,6 +2,7 @@
 #include <HTTPResolver/HTTPMappingRegistrar.h>
 #include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
 #include <HTTPResolver/ProcessClasses/HTTPBinaryProcess.h>
+#include "WebServerBuilder.h"
 
 
 REGISTER_GET_URI("/", HTTPTextProcess, "dist/index.html", "text/html")
@@ -13,7 +14,10 @@ REGISTER_GET_URI("/photo/{name}.jpg", HTTPBinaryProcess, "dist/face.jpg", "image
 
 int main() {
 
+    auto builder = WebServerBuilder(8080);
+    builder.AddMiddleware<DummyMiddleware>();
+
 //    WebServer(8080).Run();
-    WebServer(8000).Run();
+//    WebServer(8000).Run();
     return 0;
 }
