@@ -8,7 +8,7 @@ Accept-Encoding: gzip, deflate
 Connection: keep-alive
 
 ###
-GET /shitfest/this HTTP/1.1
+GET /unknown/request HTTP/1.1
 Host: localhost:8080
 Upgrade-Insecure-Requests: 1
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8

@@ -28,5 +28,9 @@ public:
 #define REGISTER_URI(method, uri, obj, args...) \
 static HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, [](){return std::make_shared<obj>(args);});
 
-#define REGISTER_GET_URI(uri, path, args...) REGISTER_URI(HTTPMethod::GET, uri, path, args)
+/// \param uri Represents the url that needs to be registered
+/// \param obj Object handling the request
+/// \param args parameters for creating the object
+/// \warning obj needs to be subclass of BaseHTTPProcess
+#define REGISTER_GET_URI(uri, obj, args...) REGISTER_URI(HTTPMethod::GET, uri, obj, args)
 #endif //CPP_WEB_SERVER_HTTPMAPPINGREGISTRAR_H

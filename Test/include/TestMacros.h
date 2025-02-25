@@ -74,7 +74,7 @@ if(first != sec) {             \
 #define __ASSERT_NOT_EQ(first, sec, line) \
 if(first == sec) {             \
     failed = true;        \
-    std::cerr << "Test " << name << " failed in file: " << __FILE_NAME__ << " on line: " << line << std::endl; \
+    std::cerr << "Test " << name << " failed in file: " << __FILE__ << " on line: " << line << std::endl; \
 }
 
 #define __ASSERT_TRUE(first, line) \
