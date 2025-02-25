@@ -1,7 +1,7 @@
 #include <WebServer.h>
-#include <HTTPMappingRegistrar.h>
-#include <ProcessClasses/HTTPTextProcess.h>
-#include <ProcessClasses/HTTPBinaryProcess.h>
+#include <HTTPResolver/HTTPMappingRegistrar.h>
+#include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
+#include <HTTPResolver/ProcessClasses/HTTPBinaryProcess.h>
 
 
 REGISTER_GET_URI("/", HTTPTextProcess, "dist/index.html", "text/html")

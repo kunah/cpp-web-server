@@ -11,20 +11,20 @@ set(SRC_FILES src/WebServer.cpp
         src/Logger.cpp
         src/ThreadPool.cpp
         src/ClientRequest.cpp
-        src/HTTPParser.cpp
+        src/HTTPResolver/HTTPParser.cpp
         src/ServerMapping.cpp
-        src/States/HTTPState.cpp
-        src/Exceptions/ClientError.cpp
-        src/Exceptions/HTTPExceptionBase.cpp
-        src/Exceptions/ServerError.cpp
-        src/Exceptions/RedirectionMessages.cpp
-        src/Exceptions/SuccessfulResponses.cpp
-        src/Exceptions/InformationResponses.cpp
-        src/HTTPMappingRegistrar.cpp
-        src/ProcessClasses/BaseHTTPProcess.cpp
-        src/ProcessClasses/HTTPTextProcess.cpp
-        src/ProcessClasses/BaseHTTPContentProcess.cpp
-        src/ProcessClasses/HTTPBinaryProcess.cpp
+        src/HTTPResolver/States/HTTPState.cpp
+        src/HTTPResolver/Exceptions/ClientError.cpp
+        src/HTTPResolver/Exceptions/HTTPExceptionBase.cpp
+        src/HTTPResolver/Exceptions/ServerError.cpp
+        src/HTTPResolver/Exceptions/RedirectionMessages.cpp
+        src/HTTPResolver/Exceptions/SuccessfulResponses.cpp
+        src/HTTPResolver/Exceptions/InformationResponses.cpp
+        src/HTTPResolver/HTTPMappingRegistrar.cpp
+        src/HTTPResolver/ProcessClasses/BaseHTTPProcess.cpp
+        src/HTTPResolver/ProcessClasses/HTTPTextProcess.cpp
+        src/HTTPResolver/ProcessClasses/BaseHTTPContentProcess.cpp
+        src/HTTPResolver/ProcessClasses/HTTPBinaryProcess.cpp
         src/URL/URL.cpp
         src/URL/PatternURL.cpp
         src/URL/URLMapper.cpp)

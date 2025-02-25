@@ -8,8 +8,8 @@
 
 #include <Logger.h>
 #include <URL/PatternURL.h>
-#include <Exceptions/ClientError.h>
-#include <ProcessClasses/BaseHTTPProcess.h>
+#include <HTTPResolver/Exceptions/ClientError.h>
+#include <HTTPResolver/ProcessClasses/BaseHTTPProcess.h>
 
 typedef std::function<std::shared_ptr<BaseHTTPProcess>()> functionProcess;
 

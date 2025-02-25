@@ -9,9 +9,10 @@
 #include <unordered_map>
 
 #include <Logger.h>
-#include <HTTPMethod.h>
 #include <URL/URLMapper.h>
 #include <URL/PatternURL.h>
+#include <HTTPResolver/HTTPMethod.h>
+#include <HTTPResolver/ProcessClasses/BaseHTTPProcess.h>
 
 typedef std::function<std::shared_ptr<BaseHTTPProcess>()> functionProcess;
 

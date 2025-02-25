@@ -10,11 +10,11 @@
 #include <sys/select.h>
 
 #include <Logger.h>
-#include <HTTPParser.h>
+#include <HTTPResolver/HTTPParser.h>
 #include <ServerMapping.h>
-#include <States/HTTPState.h>
-#include <Exceptions/ClientError.h>
-#include <Exceptions/ServerError.h>
+#include <HTTPResolver/States/HTTPState.h>
+#include <HTTPResolver/Exceptions/ClientError.h>
+#include <HTTPResolver/Exceptions/ServerError.h>
 
 #define BUFFER_SIZE 1'000'000
 
