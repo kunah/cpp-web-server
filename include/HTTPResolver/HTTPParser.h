@@ -12,38 +12,44 @@
 #include <URL/URL.h>
 #include <HTTPResolver/HTTPMethod.h>
 
+namespace ws::http {
+
 /// Class that parses incoming HTTP request
-class HTTPParser {
-public:
+    class HTTPParser {
+    public:
 
 
-    /// Creates empty object
-    HTTPParser();
-    /// Creates object with parsed HTTP data from buffer
-    HTTPParser( std::vector<unsigned char> _buffer, size_t _bufferSize);
-    HTTPParser & operator=( const HTTPParser & _other);
+        /// Creates empty object
+        HTTPParser();
 
-    /// Prepares HTTP response
-    std::vector<unsigned char> ToData();
+        /// Creates object with parsed HTTP data from buffer
+        HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize);
 
-    HTTPMethod method;
+        HTTPParser &operator=(const HTTPParser &_other);
 
-    std::unordered_map<std::string, std::string> header;
+        /// Prepares HTTP response
+        std::vector<unsigned char> ToData();
 
-    std::vector<unsigned char> body;
-    URL url;
-    std::string version;
-private:
+        HTTPMethod method;
 
-    void SetMethod(std::string & str);
+        std::unordered_map<std::string, std::string> header;
 
-    void ParseHeader();
-    std::string GetLine();
+        std::vector<unsigned char> body;
+        url::URL url;
+        std::string version;
+    private:
 
-    std::vector<unsigned char> buffer;
-    size_t bufferSize;
-    size_t index;
-};
+        void SetMethod(std::string &str);
 
+        void ParseHeader();
+
+        std::string GetLine();
+
+        std::vector<unsigned char> buffer;
+        size_t bufferSize;
+        size_t index;
+    };
+
+}
 
 #endif //CPP_WEB_SERVER_HTTPPARSER_H

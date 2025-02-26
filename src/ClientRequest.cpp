@@ -1,6 +1,8 @@
 #include <ClientRequest.h>
 
-ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(ServerMapping::Instance()){
+using namespace ws;
+
+ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(_mapping::ServerMapping::Instance()){
     timeout.tv_sec = 1;
     timeout.tv_usec = 0;
     Logger::debug("ClientRequest created with max buffer size:", BUFFER_SIZE, "bytes");
@@ -46,7 +48,7 @@ void ClientRequest::ReadSocket() {
     Logger::debug("Previous buffer:", bytesRead, "Current Buffer", buf.size());
 
 
-    request = HTTPParser(buf, bytesRead);
+    request = http::HTTPParser(buf, bytesRead);
 }
 
 void ClientRequest::SendResponse() {
@@ -63,7 +65,7 @@ void ClientRequest::Run() {
     try{
         Logger::debug("Running Client request");
         ReadSocket();
-        response = HTTPState(request.method).HandleRequest(request);
+        response = http::HTTPState(request.method).HandleRequest(request);
         SendResponse();
     }
     catch (HTTPException::HTTPExceptionBase & err){

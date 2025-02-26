@@ -1,5 +1,7 @@
 #include <URL/PatternURL.h>
 
+using namespace ws::url;
+
 PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
 
     auto wordsBegin = std::sregex_iterator(uri.begin(), uri.end(), words);

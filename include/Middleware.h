@@ -3,21 +3,26 @@
 
 #include <functional>
 
-class Middleware {
-public:
+namespace ws {
 
-    virtual ~Middleware() = default;
+    class Middleware {
+    public:
 
-    virtual void Run() = 0;
+        virtual ~Middleware() = default;
 
-    virtual std::string Name() final;
-};
+        virtual void Run() = 0;
 
-class DummyMiddleware : public Middleware {
-public:
-    DummyMiddleware() = default;
-    void Run() override;
-};
+        virtual std::string Name() final;
+    };
+
+    class DummyMiddleware : public Middleware {
+    public:
+        DummyMiddleware() = default;
+
+        void Run() override;
+    };
+
+}
 
 
 #endif //CPP_WEB_SERVER_MIDDLEWARE_H

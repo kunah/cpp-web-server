@@ -1,6 +1,8 @@
 #include <HTTPResolver/HTTPParser.h>
 #include <HTTPResolver/Exceptions/ClientError.h> // added to avoid cyclic includes
 
+using namespace ws::http;
+
 HTTPParser::HTTPParser() : method(HTTPMethod::GET), bufferSize(0), index(0) {}
 
 HTTPParser::HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize) : buffer(std::move(_buffer)), bufferSize(_bufferSize) {

@@ -1,5 +1,7 @@
 #include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
 
+using namespace ws::http;
+
 HTTPTextProcess::HTTPTextProcess(std::string _filePath, std::string _contentType)
         : BaseHTTPStaticContentProcess(std::move(_filePath), std::move(_contentType)) {}
 

@@ -3,7 +3,7 @@
 
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException {
+namespace ws::HTTPException {
     /// Continue
     /// Error code: 100
     class HTTPContinue : public HTTPExceptionBase {

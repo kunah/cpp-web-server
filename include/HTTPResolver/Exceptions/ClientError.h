@@ -3,7 +3,7 @@
 
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException {
+namespace ws::HTTPException {
     /// HTTP Bad Request
     /// Error code: 400
     class HTTPBadRequest : public HTTPExceptionBase {

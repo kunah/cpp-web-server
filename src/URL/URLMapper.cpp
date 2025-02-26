@@ -1,5 +1,8 @@
 #include <URL/URLMapper.h>
 
+using namespace ws::url;
+using namespace ws::url::_internal;
+
 RegexPart::RegexPart(const std::string &_part) : regexPart(_part, flags), regexStr(_part){}
 
 bool RegexPart::operator==(const RegexPart &part) const {

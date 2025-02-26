@@ -7,49 +7,54 @@
 #include "WebServer.h"
 #include "Middleware.h"
 
-typedef std::shared_ptr<Middleware> middlewareInstance;
-
 template<class Base, class Derived>
 struct is_strict_base_of
         : std::bool_constant<std::is_base_of<Base, Derived>::value && !std::is_same<Base, Derived>::value> {};
 
+namespace ws {
 
-class WebServerBuilder {
+    typedef std::shared_ptr<Middleware> middlewareInstance;
 
-public:
-    explicit WebServerBuilder(uint16_t port);
+    class WebServerBuilder {
 
-    WebServer Build();
+    public:
+        explicit WebServerBuilder(uint16_t port);
 
-    template<typename TMiddleware,
-            typename std::enable_if<is_strict_base_of<Middleware, TMiddleware>::value, bool>::type = true>
-    WebServerBuilder & AddMiddleware() {
+        WebServer Build();
 
-        middlewareInstance middleware = std::make_shared<TMiddleware>();
+        template<typename TMiddleware,
+                typename std::enable_if<is_strict_base_of<Middleware, TMiddleware>::value, bool>::type = true>
+        WebServerBuilder &AddMiddleware() {
 
-        auto res =std::find_if(requestMiddlewares.begin(), requestMiddlewares.end(),
-                               [&middleware](auto i) {return middleware->Name() == i->Name();});
+            middlewareInstance middleware = std::make_shared<TMiddleware>();
 
-        if(res != requestMiddlewares.end())
-            throw std::runtime_error(std::format("Middleware {} is already registered!", middleware->Name()));
+            auto res = std::find_if(requestMiddlewares.begin(), requestMiddlewares.end(),
+                                    [&middleware](auto i) { return middleware->Name() == i->Name(); });
 
-        Logger::debug("Adding", middleware->Name());
+            if (res != requestMiddlewares.end())
+                throw std::runtime_error(std::format("Middleware {} is already registered!", middleware->Name()));
 
-        requestMiddlewares.push_back(middleware);
+            Logger::debug("Adding", middleware->Name());
 
-        return *this;
-    }
+            requestMiddlewares.push_back(middleware);
+
+            return *this;
+        }
 
 //    WebServerBuilder & AddEndpoint();
 //
 //    WebServerBuilder & AddEndpoints();
 
-private:
+    private:
 
-    uint16_t _port;
+        uint16_t _port;
 
-    std::list<middlewareInstance> requestMiddlewares;
+        std::list<middlewareInstance> requestMiddlewares;
 
-};
+    };
+
+}
+
+
 
 #endif //CPP_WEB_SERVER_WEBSERVERBUILDER_H

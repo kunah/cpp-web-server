@@ -20,6 +20,6 @@ std::vector<testObj> Tester::GetTests() {
 }
 
 TestFunctionRegistrar::TestFunctionRegistrar(std::shared_ptr<Test> test) {
-    Logger::debug("Registering new test:", test->GetName());
+    ws::Logger::debug("Registering new test:", test->GetName());
     Tester::Instance()->RegisterTest(test);
 }

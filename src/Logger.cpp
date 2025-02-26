@@ -1,5 +1,7 @@
 #include <Logger.h>
 
+using namespace ws;
+
 Logger::Logger(Logger::Level _level) : level(_level), outStream(std::cout){}
 
 std::shared_ptr<Logger> Logger::Instance() {

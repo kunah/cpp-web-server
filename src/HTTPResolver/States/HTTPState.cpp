@@ -1,5 +1,6 @@
 #include <HTTPResolver/States/HTTPState.h>
 
+using namespace ws::http;
 
 HTTPState::HTTPState(HTTPMethod _method) : method(_method) {}
 
@@ -18,7 +19,7 @@ HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
 //        throw HTTPException::HTTPNotFound();
 //    }
 
-    auto process = ServerMapping::Instance()->GetProcess(request.method, request.url);
+    auto process = _mapping::ServerMapping::Instance()->GetProcess(request.method, request.url);
 
     return process()->Process(request);
 }

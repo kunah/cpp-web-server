@@ -12,20 +12,23 @@
 #include <ServerMapping.h>
 #include <HTTPResolver/Exceptions/ClientError.h>
 
+namespace ws::http {
+
 /// Class that behaves based on HTTP method
-class HTTPState {
-public:
-    HTTPState(HTTPMethod _method);
+    class HTTPState {
+    public:
+        HTTPState(HTTPMethod _method);
 
-    /// \param request request to handle
-    /// \return response in HTTPParser
-    HTTPParser HandleRequest(HTTPParser & request);
+        /// \param request request to handle
+        /// \return response in HTTPParser
+        HTTPParser HandleRequest(HTTPParser &request);
 
-    void SetState(HTTPMethod requestMethod);
+        void SetState(HTTPMethod requestMethod);
 
-protected:
-    HTTPMethod method;
-};
+    protected:
+        HTTPMethod method;
+    };
 
+}
 
 #endif //CPP_WEB_SERVER_HTTPSTATE_H

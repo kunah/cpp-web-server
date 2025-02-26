@@ -1,5 +1,7 @@
 #include <HTTPResolver/ProcessClasses/HTTPBinaryProcess.h>
 
+using namespace ws::http;
+
 HTTPBinaryProcess::HTTPBinaryProcess(std::string _filePath, std::string _contentType, uint32_t _maxAge)
         : BaseHTTPStaticContentProcess(std::move(_filePath), std::move(_contentType)), maxAge(_maxAge) {}
 

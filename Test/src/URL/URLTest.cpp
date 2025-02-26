@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+using namespace ws::url;
+
 TEST(testURL){
 
     URL main("/");

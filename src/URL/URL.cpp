@@ -2,6 +2,8 @@
 
 using namespace std::string_literals;
 
+using namespace ws::url;
+
 URL::URL(const std::string &_uri) : uri(_uri) {
     ParseURL();
 }
@@ -32,7 +34,7 @@ bool URL::operator==(std::string &otherUri) {
     return uri == otherUri;
 }
 
-std::ostream& operator<<(std::ostream &os, URL & url) {
+std::ostream& ws::url::operator<<(std::ostream &os, URL & url) {
     os << url.uri << std::endl;
     os << "Uri parts" << std::endl;
     for(size_t i = 0; i < url.parts.size() ; ++i)

@@ -1,6 +1,8 @@
 #include <TestMacros.h>
 #include <URL/PatternURL.h>
 
+using namespace ws::url;
+
 TEST(testPatterURL){
     PatternURL patternUrl("/first/{this}/next");
     PatternURL patternUrlSecond("/first/{this}/next/{that}");

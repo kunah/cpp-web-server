@@ -2,6 +2,8 @@
 
 #define MODE AF_INET
 
+using namespace ws;
+
 WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
     Logger::info("Starting Web server on port", port);
 

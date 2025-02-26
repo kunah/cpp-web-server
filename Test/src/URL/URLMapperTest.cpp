@@ -1,7 +1,11 @@
 #include <TestMacros.h>
 #include <URL/URLMapper.h>
-#include <ProcessClasses/HTTPTextProcess.h>
+#include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
 #include <memory>
+
+using namespace ws;
+using namespace ws::url;
+using namespace ws::http;
 
 TEST(testUrlMapperEasyRegistreation){
 

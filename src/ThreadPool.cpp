@@ -1,5 +1,6 @@
 #include <ThreadPool.h>
 
+using namespace ws::threads;
 
 ThreadPool::ThreadPool(uint16_t _size) : appRunning(true) {
     Logger::debug("Creating ThreadPool");

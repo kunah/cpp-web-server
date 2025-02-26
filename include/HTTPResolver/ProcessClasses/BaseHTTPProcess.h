@@ -8,23 +8,28 @@
 #include <HTTPResolver/HTTPParser.h>
 #include <HTTPResolver/Exceptions/ClientError.h>
 
+namespace ws::http {
+
 /// Base API class that is used inside server for handling requests
 /// It must be inherited to other Process classes in server
-class BaseHTTPProcess{
-public:
-    BaseHTTPProcess() = default;
-    virtual ~BaseHTTPProcess() = default;
-    /// Main method that is called inside the server
-    /// \param request Request to handle
-    /// \return Answer for the server to send
-    virtual HTTPParser Process(HTTPParser & request) = 0;
+    class BaseHTTPProcess {
+    public:
+        BaseHTTPProcess() = default;
 
-protected:
+        virtual ~BaseHTTPProcess() = default;
 
-    std::unordered_map<std::string, std::string> headers;
+        /// Main method that is called inside the server
+        /// \param request Request to handle
+        /// \return Answer for the server to send
+        virtual HTTPParser Process(HTTPParser &request) = 0;
 
-private:
+    protected:
 
-};
+        std::unordered_map<std::string, std::string> headers;
+
+    private:
+
+    };
+}
 
 #endif //CPP_WEB_SERVER_BASEHTTPPROCESS_H
