@@ -51,10 +51,10 @@ namespace ws {
         fd_set socket;
         struct timeval timeout;
 
-        std::shared_ptr<_mapping::ServerMapping> mapping;
+        std::shared_ptr<ws::internal::ServerMapping> mapping;
     };
 
-}
+} // namespace ws
 
 
 #endif //CPP_WEB_SERVER_CLIENTREQUEST_H

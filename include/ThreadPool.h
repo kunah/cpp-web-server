@@ -71,6 +71,6 @@ namespace ws::threads {
         std::queue<int> poolItems;
     };
 
-}
+} //namespace ws::threads
 
 #endif //CPP_WEB_SERVER_THREADPOOL_H

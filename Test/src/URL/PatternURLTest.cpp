@@ -1,17 +1,17 @@
 #include <TestMacros.h>
 #include <URL/PatternURL.h>
 
-using namespace ws::url;
+namespace url = ws::url;
 
 TEST(testPatterURL){
-    PatternURL patternUrl("/first/{this}/next");
-    PatternURL patternUrlSecond("/first/{this}/next/{that}");
+    url::PatternURL patternUrl("/first/{this}/next");
+    url::PatternURL patternUrlSecond("/first/{this}/next/{that}");
 
-    URL first("/first/that/next");
-    URL second("/first/video/next");
-    URL third("/first/video/next/this");
-    URL fourth("/first/next");
-    URL fifth("first/that/next");
+    url::URL first("/first/that/next");
+    url::URL second("/first/video/next");
+    url::URL third("/first/video/next/this");
+    url::URL fourth("/first/next");
+    url::URL fifth("first/that/next");
 
     ASSERT_EQ(patternUrl, first)
     ASSERT_EQ(patternUrl, second)
@@ -24,11 +24,11 @@ TEST(testPatterURL){
 
 
 TEST(testPatterURLGetValues){
-    PatternURL patternUrl("/first/{this}/next");
-    PatternURL patternUrlSecond("/first/{this}/next/{that}");
+    url::PatternURL patternUrl("/first/{this}/next");
+    url::PatternURL patternUrlSecond("/first/{this}/next/{that}");
 
-    URL first("/first/that/next");
-    URL second("/first/video/next/this");
+    url::URL first("/first/that/next");
+    url::URL second("/first/video/next/this");
 
     ASSERT_EQ(patternUrl, first)
     ASSERT_EQ(patternUrlSecond, second)
@@ -44,7 +44,7 @@ TEST(testPatterURLGetValues){
 }
 
 TEST(testPatterURLCompareString){
-    PatternURL patternUrl("/first/{this}/next");
+    url::PatternURL patternUrl("/first/{this}/next");
 
     ASSERT_EQ(patternUrl, "/first/that/next")
     ASSERT_EQ(patternUrl, "/first/thisIsIt/next")

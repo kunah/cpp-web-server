@@ -1,8 +1,8 @@
 #include <HTTPResolver/HTTPMappingRegistrar.h>
 
-using namespace ws::http;
+namespace http = ws::http;
 
-HTTPMappingRegistrar::HTTPMappingRegistrar(HTTPMethod method, const std::string &uri, _mapping::functionProcess fnc) {
+http::HTTPMappingRegistrar::HTTPMappingRegistrar(HTTPMethod method, const std::string &uri, ws::internal::functionProcess fnc) {
     Logger::debug("Registering uri:", uri);
-    _mapping::ServerMapping::Instance()->RegisterURI(method, uri, std::move(fnc));
+    ws::internal::ServerMapping::Instance()->RegisterURI(method, uri, std::move(fnc));
 }

@@ -111,6 +111,6 @@ namespace ws::HTTPException {
                 _site) {}
     };
 
-}
+} // namespace ws::HTTPException
 
 #endif //CPP_WEB_SERVER_REDIRECTIONMESSAGES_H

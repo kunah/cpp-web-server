@@ -96,5 +96,5 @@ namespace ws::HTTPException{
     };
 
 
-}
+} // namespace ws::HTTPException
 #endif //CPP_WEB_SERVER_HTTPEXCEPTIONBASE_H

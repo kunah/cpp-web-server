@@ -114,6 +114,6 @@ namespace ws::HTTPException {
                                                                                                   "NetworkAuthenticationRequired", _webSite,
                                                                                                   _site) {}
     };
-}
+} // namespace ws::HTTPException
 
 #endif //CPP_WEB_SERVER_SERVERERROR_H

@@ -71,6 +71,6 @@ namespace ws::url {
 
     };
 
-}
+} // namespace ws::url
 
 #endif //CPP_WEB_SERVER_URL_H

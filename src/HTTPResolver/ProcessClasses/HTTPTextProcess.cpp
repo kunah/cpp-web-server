@@ -1,11 +1,11 @@
 #include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
 
-using namespace ws::http;
+namespace http = ws::http;
 
-HTTPTextProcess::HTTPTextProcess(std::string _filePath, std::string _contentType)
+http::HTTPTextProcess::HTTPTextProcess(std::string _filePath, std::string _contentType)
         : BaseHTTPStaticContentProcess(std::move(_filePath), std::move(_contentType)) {}
 
-HTTPParser HTTPTextProcess::Process(HTTPParser &request) {
+http::HTTPParser http::HTTPTextProcess::Process(HTTPParser &request) {
 
     HTTPParser response;
 

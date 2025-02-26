@@ -1,21 +1,20 @@
 #include <URL/URLMapper.h>
 
-using namespace ws::url;
-using namespace ws::url::_internal;
+namespace url = ws::url;
 
-RegexPart::RegexPart(const std::string &_part) : regexPart(_part, flags), regexStr(_part){}
+url::internal::RegexPart::RegexPart(const std::string &_part) : regexPart(_part, flags), regexStr(_part){}
 
-bool RegexPart::operator==(const RegexPart &part) const {
+bool url::internal::RegexPart::operator==(const RegexPart &part) const {
     return std::regex_match(part.regexStr, regexPart);
 }
 
-std::string RegexPart::GetRegex() const {
+std::string url::internal::RegexPart::GetRegex() const {
     return regexStr;
 }
 
-URLPart::URLPart(const std::string &_part) : part(_part), url("") {}
+url::URLPart::URLPart(const std::string &_part) : part(_part), url("") {}
 
-std::shared_ptr<URLPart> URLPart::AddDescendant(const std::string &newDesc) {
+std::shared_ptr<url::URLPart> url::URLPart::AddDescendant(const std::string &newDesc) {
     auto res = descendants.find(newDesc);
     bool reg = newDesc.find("[[:alnum:]]+") != std::string::npos;
     if(res == descendants.end() && !reg){
@@ -24,7 +23,7 @@ std::shared_ptr<URLPart> URLPart::AddDescendant(const std::string &newDesc) {
         return newPtr;
     }
     else if(reg){
-        auto regexRes = std::find_if(regexDescendants.begin(), regexDescendants.end(),[&newDesc](const std::pair<RegexPart, std::shared_ptr<URLPart>> & t){
+        auto regexRes = std::find_if(regexDescendants.begin(), regexDescendants.end(),[&newDesc](const std::pair<url::internal::RegexPart, std::shared_ptr<URLPart>> & t){
             return t.first.GetRegex() == newDesc;
         });
         if(regexRes == regexDescendants.end()){
@@ -37,17 +36,17 @@ std::shared_ptr<URLPart> URLPart::AddDescendant(const std::string &newDesc) {
     return res->second;
 }
 
-std::shared_ptr<URLPart> URLPart::FindDescendant(const std::string &nextPart) const {
+std::shared_ptr<url::URLPart> url::URLPart::FindDescendant(const std::string &nextPart) const {
     auto res = descendants.find(nextPart);
     if(res != descendants.end())
         return res->second;
-    auto regexRes = std::find_if(regexDescendants.begin(), regexDescendants.end(), [&nextPart](const std::pair<RegexPart, std::shared_ptr<URLPart>> & t){
+    auto regexRes = std::find_if(regexDescendants.begin(), regexDescendants.end(), [&nextPart](const std::pair<url::internal::RegexPart, std::shared_ptr<URLPart>> & t){
         return t.first == nextPart;
     });
     return regexRes != regexDescendants.end() ? regexRes->second : std::shared_ptr<URLPart>(nullptr);
 }
 
-void URLPart::MapFunction(functionProcess _fnc, PatternURL _url) {
+void url::URLPart::MapFunction(functionProcess _fnc, PatternURL _url) {
     if(fnc){
         Logger::error("Trying to register uri for the same method");
         throw std::runtime_error("Trying to register uri for the same method");
@@ -56,17 +55,17 @@ void URLPart::MapFunction(functionProcess _fnc, PatternURL _url) {
     url = _url;
 }
 
-functionProcess URLPart::GetFunction() const {
+url::functionProcess url::URLPart::GetFunction() const {
     return fnc;
 }
 
-const PatternURL & URLPart::GetURL() const {
+const url::PatternURL & url::URLPart::GetURL() const {
     return url;
 }
 
-URLMapper::URLMapper() : root(std::make_shared<URLPart>("/")){}
+url::URLMapper::URLMapper() : root(std::make_shared<URLPart>("/")){}
 
-void URLMapper::RegisterURL(const std::string &uri, functionProcess _fnc) {
+void url::URLMapper::RegisterURL(const std::string &uri, functionProcess _fnc) {
 
     PatternURL newURL(uri);
 
@@ -80,7 +79,7 @@ void URLMapper::RegisterURL(const std::string &uri, functionProcess _fnc) {
     partPointer->MapFunction(_fnc, newURL);
 }
 
-std::pair<functionProcess, URL> URLMapper::FindURL(URL &uri) {
+std::pair<url::functionProcess, url::URL> url::URLMapper::FindURL(URL &uri) {
 
     auto parts = uri.GetParts();
     auto partPointer = root;
@@ -107,7 +106,7 @@ std::pair<functionProcess, URL> URLMapper::FindURL(URL &uri) {
     return {fnc, url};
 }
 
-std::pair<functionProcess, URL> URLMapper::FindURL(const std::string &uri) {
+std::pair<url::functionProcess, url::URL> url::URLMapper::FindURL(const std::string &uri) {
     URL url(uri);
     return FindURL(url);
 }

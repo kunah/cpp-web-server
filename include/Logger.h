@@ -113,6 +113,6 @@ namespace ws {
         std::ostringstream oss;
     };
 
-}
+} // namespace ws
 
 #endif //CPP_WEB_SERVER_LOGGER_H

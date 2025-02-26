@@ -16,6 +16,6 @@ namespace ws::http {
         PATCH
     };
 
-}
+} // namespace ws::http
 
 #endif //CPP_WEB_SERVER_HTTPMETHOD_H

@@ -50,6 +50,6 @@ namespace ws::http {
         size_t index;
     };
 
-}
+} // namespace ws::http
 
 #endif //CPP_WEB_SERVER_HTTPPARSER_H

@@ -35,5 +35,5 @@ namespace ws {
 
         threads::ThreadPool pool;
     };
-}
+} // namespace ws
 #endif //CPP_WEB_SERVER_WEBSERVER_H

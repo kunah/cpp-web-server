@@ -11,55 +11,57 @@
 #include <HTTPResolver/Exceptions/ClientError.h>
 #include <HTTPResolver/ProcessClasses/BaseHTTPProcess.h>
 
-namespace ws::url::_internal {
+namespace ws::url {
+    namespace internal {
 
-    /// Class for storing the regex part of an URL
-    class RegexPart {
-    public:
-        /// Basic constructor for the URL part
-        /// \param _part the string of the part
-        RegexPart(const std::string &_part);
+        /// Class for storing the regex part of an URL
+        class RegexPart {
+        public:
+            /// Basic constructor for the URL part
+            /// \param _part the string of the part
+            RegexPart(const std::string &_part);
 
-        /// \param part part to compare with
-        /// \return compares if two parts are identical
-        bool operator==(const RegexPart &part) const;
+            /// \param part part to compare with
+            /// \return compares if two parts are identical
+            bool operator==(const RegexPart &part) const;
 
-        /// \return string representation of the part
-        std::string GetRegex() const;
+            /// \return string representation of the part
+            std::string GetRegex() const;
 
-    private:
-        std::regex::flag_type flags =
+        private:
+            std::regex::flag_type flags =
 //            = std::regex::flag_type{0}
-                // Choose one of the supported grammars:
-                std::regex::ECMAScript
+                    // Choose one of the supported grammars:
+                    std::regex::ECMAScript
 //              | std::regex::basic
 //              | std::regex::extended
 //              | std::regex::awk
 //              | std::regex::grep
 //              | std::regex::egrep
-        // Choose any of the next options:
+            // Choose any of the next options:
 //              | std::regex::icase
 //              | std::regex::nosubs
 //              | std::regex::optimize
 //              | std::regex::collate
-        ;
-        std::regex regexPart;
-        std::string regexStr;
+            ;
+            std::regex regexPart;
+            std::string regexStr;
 
-    };
-}
+        };
+    } // namespace internal
+} // namespace ws::url
 
 namespace std{
     /// The hash function for RegexPart
     template<>
-    struct hash<ws::url::_internal::RegexPart>{
+    struct hash<ws::url::internal::RegexPart>{
         /// \param part the part to compute the hash
         /// \return the hash of the part
-        std::size_t operator()(const ws::url::_internal::RegexPart& part) const{
+        std::size_t operator()(const ws::url::internal::RegexPart& part) const{
             return std::hash<std::string>()(part.GetRegex());
         }
     };
-}
+} // namespace std
 
 namespace ws::url {
 
@@ -103,10 +105,10 @@ namespace ws::url {
 
         functionProcess fnc;
 
-        std::unordered_map<_internal::RegexPart, std::shared_ptr<URLPart>> descendants;
+        std::unordered_map<internal::RegexPart, std::shared_ptr<URLPart>> descendants;
 
         // TODO: implement more regex parts of an url and be able to search in them
-        std::vector<std::pair<_internal::RegexPart, std::shared_ptr<URLPart>>> regexDescendants;
+        std::vector<std::pair<internal::RegexPart, std::shared_ptr<URLPart>>> regexDescendants;
     };
 
     /// Class for maintaining the hierarchy URL tree
@@ -139,6 +141,6 @@ namespace ws::url {
 
 
     };
-}
+} // namespace ws::url
 
 #endif //CPP_WEB_SERVER_URLMAPPER_H

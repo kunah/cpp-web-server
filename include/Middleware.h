@@ -22,7 +22,7 @@ namespace ws {
         void Run() override;
     };
 
-}
+} //namespace ws
 
 
 #endif //CPP_WEB_SERVER_MIDDLEWARE_H

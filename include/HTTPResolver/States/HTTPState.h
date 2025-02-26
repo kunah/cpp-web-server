@@ -29,6 +29,6 @@ namespace ws::http {
         HTTPMethod method;
     };
 
-}
+} // namespace ws::http
 
 #endif //CPP_WEB_SERVER_HTTPSTATE_H

@@ -1,10 +1,8 @@
 #include "WebServerBuilder.h"
 
-using namespace ws;
+ws::WebServerBuilder::WebServerBuilder(uint16_t port) : _port(port) {}
 
-WebServerBuilder::WebServerBuilder(uint16_t port) : _port(port) {}
-
-WebServer WebServerBuilder::Build() {
+ws::WebServer ws::WebServerBuilder::Build() {
 
     return {_port};
 

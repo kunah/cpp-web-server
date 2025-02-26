@@ -18,9 +18,9 @@ namespace ws::http {
         /// \param method HTTP method that will be assigned to this uri
         /// \param uri uri starting from root
         /// \param fnc function that creates object that handles incoming request
-        HTTPMappingRegistrar(HTTPMethod method, const std::string &uri, ws::_mapping::functionProcess fnc);
+        HTTPMappingRegistrar(HTTPMethod method, const std::string &uri, ws::internal::functionProcess fnc);
     };
-}
+} // namespace ws::http
 
 #ifndef CONCAT
 #define CONCAT_(x, y) x##y
@@ -29,13 +29,13 @@ namespace ws::http {
 
 /// Macro to add new uri mapping
 #define REGISTER_URI(method, uri, obj, args...) \
-static http::HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, [](){return std::make_shared<obj>(args);});
+static ws::http::HTTPMappingRegistrar CONCAT(register, __COUNTER__)(method, uri, [](){return std::make_shared<obj>(args);});
 
 /// \param uri Represents the url that needs to be registered
 /// \param obj Object handling the request
 /// \param args parameters for creating the object
 /// \warning obj needs to be subclass of BaseHTTPProcess
-#define REGISTER_GET_URI(uri, obj, args...) REGISTER_URI(http::HTTPMethod::GET, uri, obj, args)
+#define REGISTER_GET_URI(uri, obj, args...) REGISTER_URI(ws::http::HTTPMethod::GET, uri, obj, args)
 
 
 #endif //CPP_WEB_SERVER_HTTPMAPPINGREGISTRAR_H

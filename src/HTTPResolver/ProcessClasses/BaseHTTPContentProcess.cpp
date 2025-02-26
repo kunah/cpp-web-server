@@ -1,13 +1,13 @@
 #include <HTTPResolver/ProcessClasses/BaseHTTPStaticContentProcess.h>
 
-using namespace ws::http;
+namespace http = ws::http;
 
-BaseHTTPStaticContentProcess::BaseHTTPStaticContentProcess(std::string _filePath, std::string _contentType)
+http::BaseHTTPStaticContentProcess::BaseHTTPStaticContentProcess(std::string _filePath, std::string _contentType)
         : filePath(std::move(_filePath)), contentType(std::move(_contentType)) {}
 
-HTTPParser BaseHTTPStaticContentProcess::Process(HTTPParser &request) {
+http::HTTPParser http::BaseHTTPStaticContentProcess::Process(http::HTTPParser &request) {
 
-    HTTPParser response;
+    http::HTTPParser response;
 
     std::ifstream file(filePath, std::ios::binary);
 

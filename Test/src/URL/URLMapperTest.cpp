@@ -3,15 +3,13 @@
 #include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
 #include <memory>
 
-using namespace ws;
-using namespace ws::url;
-using namespace ws::http;
+namespace HTTPException = ws::HTTPException;
 
 TEST(testUrlMapperEasyRegistreation){
 
-    URLMapper mapper;
+    ws::url::URLMapper mapper;
 
-    auto testFnc = [](){return std::make_shared<HTTPTextProcess>("dist/Test/testHeader.txt", "text/html");};
+    auto testFnc = [](){return std::make_shared<ws::http::HTTPTextProcess>("dist/Test/testHeader.txt", "text/html");};
 
     mapper.RegisterURL("/", testFnc);
     mapper.RegisterURL("/test", testFnc);
@@ -34,9 +32,9 @@ TEST(testUrlMapperEasyRegistreation){
 
 TEST(testUrlMapperHardRegistreation){
 
-    URLMapper mapper;
+    ws::url::URLMapper mapper;
 
-    auto testFnc = [](){return std::make_shared<HTTPTextProcess>("dist/Test/testHeader.txt", "text/html");};
+    auto testFnc = [](){return std::make_shared<ws::http::HTTPTextProcess>("dist/Test/testHeader.txt", "text/html");};
 
     mapper.RegisterURL("/", testFnc);
     mapper.RegisterURL("/{test}", testFnc);

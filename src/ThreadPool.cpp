@@ -1,15 +1,15 @@
 #include <ThreadPool.h>
 
-using namespace ws::threads;
+namespace th = ws::threads;
 
-ThreadPool::ThreadPool(uint16_t _size) : appRunning(true) {
+th::ThreadPool::ThreadPool(uint16_t _size) : appRunning(true) {
     Logger::debug("Creating ThreadPool");
     for(uint16_t i = 0; i < _size; ++i){
         pool.emplace_back(&ThreadPool::ThreadTask, pool.size(), std::ref(appRunning), std::ref(poolItems), std::ref(itemsMtx), std::ref(cvItems));
     }
 }
 
-ThreadPool::~ThreadPool() {
+th::ThreadPool::~ThreadPool() {
     Logger::debug("Destroying ThreadPool");
     appRunning = false;
     for (auto &th : pool) {
@@ -17,7 +17,7 @@ ThreadPool::~ThreadPool() {
     }
 }
 
-void ThreadPool::ThreadTask(uint16_t thID, std::atomic<bool> & appRunning, std::queue<int> &poolItems, std::mutex &itemsMtx, std::condition_variable & cvItems) {
+void th::ThreadPool::ThreadTask(uint16_t thID, std::atomic<bool> & appRunning, std::queue<int> &poolItems, std::mutex &itemsMtx, std::condition_variable & cvItems) {
 
     Logger::debug("Thread", thID, "started working");
 
@@ -41,7 +41,7 @@ void ThreadPool::ThreadTask(uint16_t thID, std::atomic<bool> & appRunning, std::
     }
 }
 
-bool ThreadPool::HigherLoad(uint16_t _size) {
+bool th::ThreadPool::HigherLoad(uint16_t _size) {
     // TODO: better logic for higher load
     Logger::debug("Creating", _size, "new threads");
     for(uint16_t i = 0; i < _size; ++i){
@@ -50,7 +50,7 @@ bool ThreadPool::HigherLoad(uint16_t _size) {
     return true;
 }
 
-void ThreadPool::Add(int _wi) {
+void th::ThreadPool::Add(int _wi) {
     Logger::debug("Adding work item to the thread pool queue");
     std::unique_lock<std::mutex> lk(itemsMtx);
     poolItems.push(_wi);

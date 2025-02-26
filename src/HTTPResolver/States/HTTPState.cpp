@@ -1,14 +1,14 @@
 #include <HTTPResolver/States/HTTPState.h>
 
-using namespace ws::http;
+namespace http = ws::http;
 
-HTTPState::HTTPState(HTTPMethod _method) : method(_method) {}
+http::HTTPState::HTTPState(HTTPMethod _method) : method(_method) {}
 
-void HTTPState::SetState(HTTPMethod requestMethod) {
+void http::HTTPState::SetState(HTTPMethod requestMethod) {
     method = requestMethod;
 }
 
-HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
+http::HTTPParser http::HTTPState::HandleRequest(HTTPParser &request) {
 //    auto uris = ServerMapping::Instance()->GetURIs(method);
 
 //    auto process = std::find_if(uris.begin(), uris.end(),
@@ -19,7 +19,7 @@ HTTPParser HTTPState::HandleRequest(HTTPParser &request) {
 //        throw HTTPException::HTTPNotFound();
 //    }
 
-    auto process = _mapping::ServerMapping::Instance()->GetProcess(request.method, request.url);
+    auto process = ws::internal::ServerMapping::Instance()->GetProcess(request.method, request.url);
 
     return process()->Process(request);
 }

@@ -1,11 +1,11 @@
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-using namespace ws::HTTPException;
+namespace HTTPException = ws::HTTPException;
 
-HTTPExceptionBase::HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site)
+HTTPException::HTTPExceptionBase::HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site)
 : code(_code), webSite(_webSite), site(std::move(_site)), msg(std::move(_msg)) {}
 
-ws::http::HTTPParser HTTPExceptionBase::Response() {
+ws::http::HTTPParser HTTPException::HTTPExceptionBase::Response() {
 
     http::HTTPParser response;
 

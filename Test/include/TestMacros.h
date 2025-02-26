@@ -96,7 +96,7 @@ try{                                     \
     std::cerr << "Did not throw an exception " << #exc << '\n' << __func__ << " on line: " << line << std::endl;\
 }                                        \
 catch(exc & e){  \
-    Logger::debug(e.what());\
+    ws::Logger::debug(e.what());\
 }
 
 #define ASSERT_EQ(first, sec) __ASSERT_EQ(first, sec, __LINE__)

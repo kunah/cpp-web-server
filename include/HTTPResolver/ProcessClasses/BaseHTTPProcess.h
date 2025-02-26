@@ -30,6 +30,6 @@ namespace ws::http {
     private:
 
     };
-}
+}// namespace ws::http
 
 #endif //CPP_WEB_SERVER_BASEHTTPPROCESS_H

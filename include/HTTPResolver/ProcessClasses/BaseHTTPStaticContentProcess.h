@@ -33,6 +33,6 @@ namespace ws::http {
 
     };
 
-}
+} // namespace ws::http
 
 #endif //CPP_WEB_SERVER_BASEHTTPSTATICCONTENTPROCESS_H

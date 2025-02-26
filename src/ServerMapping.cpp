@@ -1,8 +1,8 @@
 #include <ServerMapping.h>
 
-using namespace ws::_mapping;
+namespace internal = ws::internal;
 
-std::shared_ptr<ServerMapping> ServerMapping::Instance() {
+std::shared_ptr<internal::ServerMapping> internal::ServerMapping::Instance() {
     std::unique_lock<std::mutex> lk(instanceMtx);
     if(!instance)
         instance = std::shared_ptr<ServerMapping>(new ServerMapping);
@@ -10,7 +10,7 @@ std::shared_ptr<ServerMapping> ServerMapping::Instance() {
 }
 
 
-void ServerMapping::RegisterURI(http::HTTPMethod method, const std::string &uri, functionProcess fnc) {
+void internal::ServerMapping::RegisterURI(http::HTTPMethod method, const std::string &uri, functionProcess fnc) {
 //    auto pt = std::filesystem::absolute(path);
     ServerMapping::Instance(); // make sure to init Server Mapping
     std::unique_lock<std::mutex> lkM(instance->methodsMtx);
@@ -24,12 +24,12 @@ void ServerMapping::RegisterURI(http::HTTPMethod method, const std::string &uri,
     instance->HTTPMethodsMappings[method].RegisterURL(uri, std::move(fnc));
 }
 
-const ws::url::URLMapper & ServerMapping::GetURIs(http::HTTPMethod method) {
+const ws::url::URLMapper & internal::ServerMapping::GetURIs(http::HTTPMethod method) {
     std::unique_lock<std::mutex> lk(methodsMtx);
     return HTTPMethodsMappings[method];
 }
 
-functionProcess ServerMapping::GetProcess(http::HTTPMethod method, ws::url::URL &uri) {
+internal::functionProcess internal::ServerMapping::GetProcess(ws::http::HTTPMethod method, ws::url::URL &uri) {
     std::unique_lock<std::mutex> lk(methodsMtx);
 //    auto res = std::find_if(HTTPMethodsMappings[method].begin(), HTTPMethodsMappings[method].end(),
 //                            [&uri](std::pair<PatternURL, functionProcess>& posUri){return posUri.first == uri;});

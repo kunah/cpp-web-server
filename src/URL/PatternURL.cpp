@@ -1,8 +1,8 @@
 #include <URL/PatternURL.h>
 
-using namespace ws::url;
+namespace url = ws::url;
 
-PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
+url::PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
 
     auto wordsBegin = std::sregex_iterator(uri.begin(), uri.end(), words);
     auto wordsEnd = std::sregex_iterator();
@@ -27,7 +27,7 @@ PatternURL::PatternURL(const std::string &_uri) : URL(_uri){
     ParseURL();
 }
 
-bool PatternURL::operator==(URL& other) {
+bool url::PatternURL::operator==(URL& other) {
 
     auto otherUrl = other.GetURL();
 
@@ -61,15 +61,15 @@ bool PatternURL::operator==(URL& other) {
 }
 
 
-bool PatternURL::operator==(std::string &otherUri) {
+bool url::PatternURL::operator==(std::string &otherUri) {
     return std::regex_match(otherUri, RegexUri);
 }
 
-bool PatternURL::operator==(const std::string &otherUri) {
+bool url::PatternURL::operator==(const std::string &otherUri) {
     return std::regex_match(otherUri, RegexUri);
 }
 
-void PatternURL::Print() {
+void url::PatternURL::Print() {
 
     std::cout << uri << " -> " << RegexUriBase << std::endl;
 

@@ -50,6 +50,6 @@ namespace ws::HTTPException {
                 "EarlyHints", _webSite,
                 _site) {}
     };
-}
+} // namespace ws::HTTPException
 
 #endif //CPP_WEB_SERVER_INFORMATIONRESPONSES_H

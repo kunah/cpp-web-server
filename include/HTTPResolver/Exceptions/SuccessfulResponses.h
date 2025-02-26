@@ -123,6 +123,6 @@ namespace ws::HTTPException {
                 _site) {}
     };
 
-}
+} // namespace ws::Exception
 
 #endif //CPP_WEB_SERVER_SUCCESSFULREPONSES_H
