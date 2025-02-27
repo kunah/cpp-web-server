@@ -3,11 +3,13 @@
 
 #include <algorithm>
 
+namespace url = ws::url;
+
 TEST(testURL){
 
-    URL main("/");
-    URL about("/about");
-    URL test("/test/");
+    url::URL main("/");
+    url::URL about("/about");
+    url::URL test("/test/");
 
     std::ostringstream oss;
     std::ostringstream res;

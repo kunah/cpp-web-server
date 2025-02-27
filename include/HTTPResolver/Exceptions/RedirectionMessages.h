@@ -3,7 +3,7 @@
 
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException {
+namespace ws::HTTPException {
     /// Multiple Choices
     /// Error code: 300
     class HTTPMultipleChoices : public HTTPExceptionBase {
@@ -111,6 +111,6 @@ namespace HTTPException {
                 _site) {}
     };
 
-}
+} // namespace ws::HTTPException
 
 #endif //CPP_WEB_SERVER_REDIRECTIONMESSAGES_H

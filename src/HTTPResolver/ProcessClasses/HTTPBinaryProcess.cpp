@@ -1,11 +1,14 @@
 #include <HTTPResolver/ProcessClasses/HTTPBinaryProcess.h>
 
-HTTPBinaryProcess::HTTPBinaryProcess(std::string _filePath, std::string _contentType, uint32_t _maxAge)
+namespace http = ws::http;
+namespace HTTPException = ws::HTTPException;
+
+http::HTTPBinaryProcess::HTTPBinaryProcess(std::string _filePath, std::string _contentType, uint32_t _maxAge)
         : BaseHTTPStaticContentProcess(std::move(_filePath), std::move(_contentType)), maxAge(_maxAge) {}
 
-HTTPParser HTTPBinaryProcess::Process(HTTPParser &request) {
+http::HTTPParser http::HTTPBinaryProcess::Process(http::HTTPParser &request) {
 
-    HTTPParser response;
+    http::HTTPParser response;
 
     std::ifstream file(filePath, std::ios::binary);
 

@@ -96,7 +96,7 @@ try{                                     \
     std::cerr << "Did not throw an exception " << #exc << '\n' << __func__ << " on line: " << line << std::endl;\
 }                                        \
 catch(exc & e){  \
-    Logger::debug(e.what());\
+    ws::Logger::debug(e.what());\
 }
 
 #define ASSERT_EQ(first, sec) __ASSERT_EQ(first, sec, __LINE__)
@@ -122,13 +122,13 @@ void name##Test::RunTest()
 auto tests = Tester::Instance()->GetTests(); \
 int i = 0, test = 1;                        \
 for(auto t : tests){    \
-    Logger::ClearSS();                    \
+    ws::Logger::ClearSS();                    \
     std::cout << "Running test " << t->GetName() << " "  << test++ << "/" << tests.size() << std::endl;                    \
     t->RunTest();       \
     if(t->Failed()){    \
         ++i;            \
         std::cout << "Test " << t->GetName() << " failed\nTest output:" << std::endl;                                                                           \
-        std::cout << Logger::GetSS();\
+        std::cout << ws::Logger::GetSS();\
     }     \
 }\
 std::cout << i << " test failed" << std::endl;\

@@ -18,35 +18,43 @@
 
 #define BUFFER_SIZE 1'000'000
 
+namespace ws {
+
 /// Class that handles clients request
-class ClientRequest {
-public:
-    /// \param _socketFD File descriptor that refers to the socket
-    ClientRequest(int _socketFD);
-    ~ClientRequest();
+    class ClientRequest {
+    public:
+        /// \param _socketFD File descriptor that refers to the socket
+        ClientRequest(int _socketFD);
 
-    ClientRequest(ClientRequest & _other) = delete;
-    void operator=(ClientRequest & _other) = delete;
+        ~ClientRequest();
 
-    /// Handles client
-    void Run();
-private:
+        ClientRequest(ClientRequest &_other) = delete;
 
-    /// Reads data from the socket
-    void ReadSocket();
-    /// Sends response to the client
-    void SendResponse();
+        void operator=(ClientRequest &_other) = delete;
 
-    HTTPParser request;
+        /// Handles client
+        void Run();
 
-    HTTPParser response;
+    private:
 
-    int socketFD;
-    fd_set socket;
-    struct timeval timeout;
+        /// Reads data from the socket
+        void ReadSocket();
 
-    std::shared_ptr<ServerMapping> mapping;
-};
+        /// Sends response to the client
+        void SendResponse();
+
+        http::HTTPParser request;
+
+        http::HTTPParser response;
+
+        int socketFD;
+        fd_set socket;
+        struct timeval timeout;
+
+        std::shared_ptr<ws::internal::ServerMapping> mapping;
+    };
+
+} // namespace ws
 
 
 #endif //CPP_WEB_SERVER_CLIENTREQUEST_H

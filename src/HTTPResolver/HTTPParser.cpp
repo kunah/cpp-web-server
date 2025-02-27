@@ -1,9 +1,11 @@
 #include <HTTPResolver/HTTPParser.h>
 #include <HTTPResolver/Exceptions/ClientError.h> // added to avoid cyclic includes
 
-HTTPParser::HTTPParser() : method(HTTPMethod::GET), bufferSize(0), index(0) {}
+namespace http = ws::http;
 
-HTTPParser::HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize) : buffer(std::move(_buffer)), bufferSize(_bufferSize) {
+http::HTTPParser::HTTPParser() : method(HTTPMethod::GET), bufferSize(0), index(0) {}
+
+http::HTTPParser::HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize) : buffer(std::move(_buffer)), bufferSize(_bufferSize) {
 
     index = 0;
     std::string strMethod;
@@ -45,7 +47,7 @@ HTTPParser::HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize) :
     Logger::debug("Request parsed");
 }
 
-HTTPParser & HTTPParser::operator=(const HTTPParser &_other) {
+http::HTTPParser & http::HTTPParser::operator=(const HTTPParser &_other) {
     if(&_other == this)
         return *this;
     this->index = _other.index;
@@ -60,7 +62,7 @@ HTTPParser & HTTPParser::operator=(const HTTPParser &_other) {
     return *this;
 }
 
-std::vector<unsigned char> HTTPParser::ToData()  {
+std::vector<unsigned char> http::HTTPParser::ToData()  {
     std::vector<unsigned char> buffer;
     buffer.insert(buffer.end(), version.begin(), version.end());
     buffer.insert(buffer.end(), {'\r','\n'});
@@ -76,7 +78,7 @@ std::vector<unsigned char> HTTPParser::ToData()  {
     return buffer;
 }
 
-void HTTPParser::SetMethod(std::string &str) {
+void http::HTTPParser::SetMethod(std::string &str) {
 
     if(str == "GET")
         method = HTTPMethod::GET;
@@ -103,7 +105,7 @@ void HTTPParser::SetMethod(std::string &str) {
 
 }
 
-void HTTPParser::ParseHeader() {
+void http::HTTPParser::ParseHeader() {
 
     while(true){
         auto line = GetLine();
@@ -122,7 +124,7 @@ void HTTPParser::ParseHeader() {
 
 }
 
-std::string HTTPParser::GetLine() {
+std::string http::HTTPParser::GetLine() {
     std::string ret;
     while(index < bufferSize){
         if(buffer[index] == '\n'){

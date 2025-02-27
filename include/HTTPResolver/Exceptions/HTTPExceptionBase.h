@@ -9,7 +9,7 @@
 #include <HTTPResolver/HTTPParser.h>
 
 
-namespace HTTPException{
+namespace ws::HTTPException{
 
     /// Enum of every single implemented error code exception for HTTP
     enum ErrorCode{
@@ -87,7 +87,7 @@ namespace HTTPException{
             HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site);
 
             /// Generates response with given values
-            HTTPParser Response();
+            http::HTTPParser Response();
         private:
             ErrorCode code;
             bool webSite;
@@ -96,5 +96,5 @@ namespace HTTPException{
     };
 
 
-}
+} // namespace ws::HTTPException
 #endif //CPP_WEB_SERVER_HTTPEXCEPTIONBASE_H

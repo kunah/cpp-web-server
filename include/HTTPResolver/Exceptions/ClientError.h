@@ -3,7 +3,7 @@
 
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException {
+namespace ws::HTTPException {
     /// HTTP Bad Request
     /// Error code: 400
     class HTTPBadRequest : public HTTPExceptionBase {
@@ -290,6 +290,6 @@ namespace HTTPException {
         HTTPUnavailableForLegalReasons(bool _webSite = false, const std::string &_site = "") : HTTPExceptionBase(
                 ErrorCode::UnavailableForLegalReasons, "UnavailableForLegalReasons", _webSite, _site) {}
     };
-}
+} // namespace ws::HTTPException
 
 #endif //CPP_WEB_SERVER_CLIENTERROR_H

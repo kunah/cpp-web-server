@@ -3,7 +3,7 @@
 
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException {
+namespace ws::HTTPException {
     /// Internal Server Error
     /// Error code: 500
     class HTTPInternalServerError: public HTTPExceptionBase {
@@ -114,6 +114,6 @@ namespace HTTPException {
                                                                                                   "NetworkAuthenticationRequired", _webSite,
                                                                                                   _site) {}
     };
-}
+} // namespace ws::HTTPException
 
 #endif //CPP_WEB_SERVER_SERVERERROR_H

@@ -1,14 +1,13 @@
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-
-
+namespace HTTPException = ws::HTTPException;
 
 HTTPException::HTTPExceptionBase::HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site)
 : code(_code), webSite(_webSite), site(std::move(_site)), msg(std::move(_msg)) {}
 
-HTTPParser HTTPException::HTTPExceptionBase::Response() {
+ws::http::HTTPParser HTTPException::HTTPExceptionBase::Response() {
 
-    HTTPParser response;
+    http::HTTPParser response;
 
     auto in_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::stringstream ss;

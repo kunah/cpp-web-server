@@ -36,35 +36,41 @@ CV.notify_one(); \
 CV.notify_all(); \
 }
 
+namespace ws::threads {
+
 /// Class to take care of threads that do repetitive tasks
 /// Better creating multiple threads at once and than giving them work than creating every time a new thread
-class ThreadPool {
-public:
-    /// Default constructor that initialise thread pool
-    /// \param _size size of the thread pool
-    ThreadPool(uint16_t _size);
-    ~ThreadPool();
+    class ThreadPool {
+    public:
+        /// Default constructor that initialise thread pool
+        /// \param _size size of the thread pool
+        ThreadPool(uint16_t _size);
 
-    /// If thread pool is under huge load allocate new threads
-    /// \param _size # of threads to allocate
-    /// \return function success
-    bool HigherLoad(uint16_t _size);
+        ~ThreadPool();
 
-    /// Adds work item to the thread pool queue to process
-    /// \param _wi work item with params
-    void Add(int _wi);
+        /// If thread pool is under huge load allocate new threads
+        /// \param _size # of threads to allocate
+        /// \return function success
+        bool HigherLoad(uint16_t _size);
 
-private:
+        /// Adds work item to the thread pool queue to process
+        /// \param _wi work item with params
+        void Add(int _wi);
 
-    static void ThreadTask(uint16_t thID, std::atomic<bool> & appRunning, std::queue<int> & poolItems, std::mutex & itemsMtx, std::condition_variable & cvItems);
+    private:
 
-    std::vector<std::thread> pool;
+        static void
+        ThreadTask(uint16_t thID, std::atomic<bool> &appRunning, std::queue<int> &poolItems, std::mutex &itemsMtx,
+                   std::condition_variable &cvItems);
 
-    std::atomic<bool> appRunning;
-    std::mutex itemsMtx;
-    std::condition_variable cvItems;
-    std::queue<int> poolItems;
-};
+        std::vector<std::thread> pool;
 
+        std::atomic<bool> appRunning;
+        std::mutex itemsMtx;
+        std::condition_variable cvItems;
+        std::queue<int> poolItems;
+    };
+
+} //namespace ws::threads
 
 #endif //CPP_WEB_SERVER_THREADPOOL_H

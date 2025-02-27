@@ -2,7 +2,7 @@
 
 #define MODE AF_INET
 
-WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
+ws::WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
     Logger::info("Starting Web server on port", port);
 
     if(port == 0){
@@ -41,7 +41,7 @@ WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
     Logger::info("Server prepared");
 }
 
-void WebServer::Run() {
+void ws::WebServer::Run() {
 
     Logger::info("Server listening on port", port);
 

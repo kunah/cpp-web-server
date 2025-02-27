@@ -14,24 +14,26 @@
 #include <ThreadPool.h>
 #include <ServerMapping.h>
 
-typedef struct sockaddr_in sockaddr_in;
+namespace ws {
 
-class WebServer {
-public:
-    /// Default constructor for webserver
-    /// \param _port port to bind
-    WebServer(uint16_t _port);
+    typedef struct sockaddr_in sockaddr_in;
 
-    /// Runs the server
-    void Run();
+    class WebServer {
+    public:
+        /// Default constructor for webserver
+        /// \param _port port to bind
+        WebServer(uint16_t _port);
 
-private:
+        /// Runs the server
+        void Run();
 
-    sockaddr_in address;
-    int socketFD;
-    uint16_t port;
+    private:
 
-    ThreadPool pool;
-};
+        sockaddr_in address;
+        int socketFD;
+        uint16_t port;
 
+        threads::ThreadPool pool;
+    };
+} // namespace ws
 #endif //CPP_WEB_SERVER_WEBSERVER_H

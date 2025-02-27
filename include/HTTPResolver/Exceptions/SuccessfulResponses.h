@@ -3,7 +3,7 @@
 
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException {
+namespace ws::HTTPException {
     /// OK
     /// Error code: 200
     class HTTPOK : public HTTPExceptionBase {
@@ -123,6 +123,6 @@ namespace HTTPException {
                 _site) {}
     };
 
-}
+} // namespace ws::Exception
 
 #endif //CPP_WEB_SERVER_SUCCESSFULREPONSES_H

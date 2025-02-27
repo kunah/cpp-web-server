@@ -1,12 +1,12 @@
 #include <ClientRequest.h>
 
-ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(ServerMapping::Instance()){
+ws::ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(ws::internal::ServerMapping::Instance()){
     timeout.tv_sec = 1;
     timeout.tv_usec = 0;
     Logger::debug("ClientRequest created with max buffer size:", BUFFER_SIZE, "bytes");
 }
 
-ClientRequest::~ClientRequest() {
+ws::ClientRequest::~ClientRequest() {
     if(socketFD >= 0){
         Logger::debug("Closing connection", socketFD);
         if(close(socketFD))
@@ -15,7 +15,7 @@ ClientRequest::~ClientRequest() {
     Logger::debug("Destroying client request");
 }
 
-void ClientRequest::ReadSocket() {
+void ws::ClientRequest::ReadSocket() {
 
     int retVal;
     auto buffer = new unsigned char[BUFFER_SIZE];
@@ -46,10 +46,10 @@ void ClientRequest::ReadSocket() {
     Logger::debug("Previous buffer:", bytesRead, "Current Buffer", buf.size());
 
 
-    request = HTTPParser(buf, bytesRead);
+    request = http::HTTPParser(buf, bytesRead);
 }
 
-void ClientRequest::SendResponse() {
+void ws::ClientRequest::SendResponse() {
     auto res = response.ToData();
     Logger::debug("Sending response: ", response.version);
 
@@ -59,11 +59,11 @@ void ClientRequest::SendResponse() {
     }
 }
 
-void ClientRequest::Run() {
+void ws::ClientRequest::Run() {
     try{
         Logger::debug("Running Client request");
         ReadSocket();
-        response = HTTPState(request.method).HandleRequest(request);
+        response = http::HTTPState(request.method).HandleRequest(request);
         SendResponse();
     }
     catch (HTTPException::HTTPExceptionBase & err){

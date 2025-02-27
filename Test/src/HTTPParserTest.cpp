@@ -1,5 +1,5 @@
 #include <TestMacros.h>
-#include <HTTPParser.h>
+#include <HTTPResolver/HTTPParser.h>
 
 #include <fstream>
 
@@ -41,7 +41,7 @@ TEST(testHTTPParser){
     std::ifstream file(filePath);
 
     if(!file.is_open()){
-        Logger::error("Can't open file", filePath);
+        ws::Logger::error("Can't open file", filePath);
         throw std::runtime_error("Can't open file " + filePath);
     }
     std::vector<unsigned char>fileInfo;
@@ -52,7 +52,7 @@ TEST(testHTTPParser){
     }
     file.close();
 
-    HTTPParser parser(fileInfo, fileInfo.size());
+    ws::http::HTTPParser parser(fileInfo, fileInfo.size());
 
     ASSERT_EQ(parser.url, "/first/face.jpg")
     ASSERT_EQ(parser.version, "HTTP/1.1")

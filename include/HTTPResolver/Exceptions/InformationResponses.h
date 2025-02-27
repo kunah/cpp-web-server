@@ -3,7 +3,7 @@
 
 #include <HTTPResolver/Exceptions/HTTPExceptionBase.h>
 
-namespace HTTPException {
+namespace ws::HTTPException {
     /// Continue
     /// Error code: 100
     class HTTPContinue : public HTTPExceptionBase {
@@ -50,6 +50,6 @@ namespace HTTPException {
                 "EarlyHints", _webSite,
                 _site) {}
     };
-}
+} // namespace ws::HTTPException
 
 #endif //CPP_WEB_SERVER_INFORMATIONRESPONSES_H

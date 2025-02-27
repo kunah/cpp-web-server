@@ -2,18 +2,21 @@
 #include <HTTPResolver/HTTPMappingRegistrar.h>
 #include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
 #include <HTTPResolver/ProcessClasses/HTTPBinaryProcess.h>
+#include "WebServerBuilder.h"
 
-
-REGISTER_GET_URI("/", HTTPTextProcess, "dist/index.html", "text/html")
-REGISTER_GET_URI("/about", HTTPTextProcess, "dist/about.html", "text/html")
-REGISTER_GET_URI("/favicon.ico", HTTPBinaryProcess   , "dist/favicon.ico", "image/x-icon", 60)
-REGISTER_GET_URI("/face.jpg", HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
-REGISTER_GET_URI("/photo/{name}/face.jpg", HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
-REGISTER_GET_URI("/photo/{name}.jpg", HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
+REGISTER_GET_URI("/", ws::http::HTTPTextProcess, "dist/index.html", "text/html")
+REGISTER_GET_URI("/about", ws::http::HTTPTextProcess, "dist/about.html", "text/html")
+REGISTER_GET_URI("/favicon.ico", ws::http::HTTPBinaryProcess   , "dist/favicon.ico", "image/x-icon", 60)
+REGISTER_GET_URI("/face.jpg", ws::http::HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
+REGISTER_GET_URI("/photo/{name}/face.jpg", ws::http::HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
+REGISTER_GET_URI("/photo/{name}.jpg", ws::http::HTTPBinaryProcess, "dist/face.jpg", "image/jpg", 10)
 
 int main() {
 
+    auto builder = ws::WebServerBuilder(8080);
+    builder.AddMiddleware<ws::DummyMiddleware>();
+
 //    WebServer(8080).Run();
-    WebServer(8000).Run();
+//    WebServer(8000).Run();
     return 0;
 }
