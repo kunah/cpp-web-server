@@ -38,7 +38,6 @@ set(SRC_FILES src/WebServer.cpp
         src/URL/URLMapper.cpp
         src/WebServerBuilder.cpp
         src/DummyMiddleware.cpp
-        include/DummyMiddleware.h
 )
 
 MESSAGE(STATUS ${SRC_FILES})
