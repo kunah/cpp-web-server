@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 #include <Logger.h>
-#include <HTTPResolver/HTTPParser.h>
+#include <HTTPResolver/HTTPContext.h>
 #include <HTTPResolver/Exceptions/ClientError.h>
 
 namespace ws::http {
@@ -21,7 +21,7 @@ namespace ws::http {
         /// Main method that is called inside the server
         /// \param request Request to handle
         /// \return Answer for the server to send
-        virtual HTTPParser Process(HTTPParser &request) = 0;
+        virtual HTTPContext Process(HTTPContext &request) = 0;
 
     protected:
 

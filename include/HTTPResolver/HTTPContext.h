@@ -1,5 +1,5 @@
-#ifndef CPP_WEB_SERVER_HTTPPARSER_H
-#define CPP_WEB_SERVER_HTTPPARSER_H
+#ifndef CPP_WEB_SERVER_HTTPCONTEXT_H
+#define CPP_WEB_SERVER_HTTPCONTEXT_H
 
 #include <memory>
 #include <string>
@@ -15,17 +15,17 @@
 namespace ws::http {
 
 /// Class that parses incoming HTTP request
-    class HTTPParser {
+    class HTTPContext {
     public:
 
 
         /// Creates empty object
-        HTTPParser();
+        HTTPContext();
 
         /// Creates object with parsed HTTP data from buffer
-        HTTPParser(std::vector<unsigned char> _buffer, size_t _bufferSize);
+        HTTPContext(std::vector<unsigned char> _buffer, size_t _bufferSize);
 
-        HTTPParser &operator=(const HTTPParser &_other);
+        HTTPContext &operator=(const HTTPContext &_other);
 
         /// Prepares HTTP response
         std::vector<unsigned char> ToData();
@@ -52,4 +52,4 @@ namespace ws::http {
 
 } // namespace ws::http
 
-#endif //CPP_WEB_SERVER_HTTPPARSER_H
+#endif //CPP_WEB_SERVER_HTTPCONTEXT_H

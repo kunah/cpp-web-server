@@ -1,5 +1,5 @@
 #include <TestMacros.h>
-#include <HTTPResolver/HTTPParser.h>
+#include <HTTPResolver/HTTPContext.h>
 
 #include <fstream>
 
@@ -52,7 +52,7 @@ TEST(testHTTPParser){
     }
     file.close();
 
-    ws::http::HTTPParser parser(fileInfo, fileInfo.size());
+    ws::http::HTTPContext parser(fileInfo, fileInfo.size());
 
     ASSERT_EQ(parser.url, "/first/face.jpg")
     ASSERT_EQ(parser.version, "HTTP/1.1")

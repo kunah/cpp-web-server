@@ -8,7 +8,7 @@ void http::HTTPState::SetState(HTTPMethod requestMethod) {
     method = requestMethod;
 }
 
-http::HTTPParser http::HTTPState::HandleRequest(HTTPParser &request) {
+http::HTTPContext http::HTTPState::HandleRequest(HTTPContext &request) {
 //    auto uris = ServerMapping::Instance()->GetURIs(method);
 
 //    auto process = std::find_if(uris.begin(), uris.end(),

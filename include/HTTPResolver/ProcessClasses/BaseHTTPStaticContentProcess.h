@@ -22,7 +22,7 @@ namespace ws::http {
         /// Default method that sends the file as raw bytes without any modifications
         /// \param request Request to handle
         /// \return Answer for the server to send
-        HTTPParser Process(HTTPParser &request) override;
+        HTTPContext Process(HTTPContext &request) override;
 
     protected:
 

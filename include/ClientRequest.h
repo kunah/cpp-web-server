@@ -1,6 +1,7 @@
 #ifndef CPP_WEB_SERVER_CLIENTREQUEST_H
 #define CPP_WEB_SERVER_CLIENTREQUEST_H
 
+#include <vector>
 #include <string>
 #include <ctime>
 #include <cstring>
@@ -10,8 +11,9 @@
 #include <sys/select.h>
 
 #include <Logger.h>
-#include <HTTPResolver/HTTPParser.h>
 #include <ServerMapping.h>
+#include <interface/Middleware.h>
+#include <HTTPResolver/HTTPContext.h>
 #include <HTTPResolver/States/HTTPState.h>
 #include <HTTPResolver/Exceptions/ClientError.h>
 #include <HTTPResolver/Exceptions/ServerError.h>
@@ -20,11 +22,13 @@
 
 namespace ws {
 
-/// Class that handles clients request
+    typedef std::vector<std::shared_ptr<ws::interface::Middleware>> Pipeline;
+
+    /// Class that handles clients request
     class ClientRequest {
     public:
         /// \param _socketFD File descriptor that refers to the socket
-        ClientRequest(int _socketFD);
+        ClientRequest(int _socketFD, const std::shared_ptr<Pipeline> pipeline);
 
         ~ClientRequest();
 
@@ -43,15 +47,15 @@ namespace ws {
         /// Sends response to the client
         void SendResponse();
 
-        http::HTTPParser request;
+        http::HTTPContext request;
 
-        http::HTTPParser response;
+        http::HTTPContext response;
 
         int socketFD;
         fd_set socket;
         struct timeval timeout;
 
-        std::shared_ptr<ws::internal::ServerMapping> mapping;
+        const std::shared_ptr<Pipeline> requestPipeline;
     };
 
 } // namespace ws

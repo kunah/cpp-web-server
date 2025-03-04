@@ -6,7 +6,7 @@
 #include <exception>
 
 #include <Logger.h>
-#include <HTTPResolver/HTTPParser.h>
+#include <HTTPResolver/HTTPContext.h>
 
 
 namespace ws::HTTPException{
@@ -87,7 +87,7 @@ namespace ws::HTTPException{
             HTTPExceptionBase( ErrorCode _code, std::string _msg, bool _webSite, std::string  _site);
 
             /// Generates response with given values
-            http::HTTPParser Response();
+            http::HTTPContext Response();
         private:
             ErrorCode code;
             bool webSite;

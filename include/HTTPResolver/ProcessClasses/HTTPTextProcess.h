@@ -22,7 +22,7 @@ namespace ws::http {
         /// Manipulates with text files
         /// \param request Requested to handle
         /// \return Answer for the server to send
-        HTTPParser Process(HTTPParser &request) override;
+        HTTPContext Process(HTTPContext &request) override;
 
     };
 

@@ -14,15 +14,18 @@
 #include <ThreadPool.h>
 #include <ServerMapping.h>
 
+#include <interface/Middleware.h>
+
 namespace ws {
 
     typedef struct sockaddr_in sockaddr_in;
-
     class WebServer {
     public:
+
         /// Default constructor for webserver
         /// \param _port port to bind
-        WebServer(uint16_t _port);
+        /// \param pipeline pipeline that will handle the incoming request
+        WebServer(uint16_t _port, std::shared_ptr<Pipeline> pipeline = nullptr);
 
         /// Runs the server
         void Run();
@@ -35,5 +38,5 @@ namespace ws {
 
         threads::ThreadPool pool;
     };
-} // namespace ws
+} // namespace wsa
 #endif //CPP_WEB_SERVER_WEBSERVER_H

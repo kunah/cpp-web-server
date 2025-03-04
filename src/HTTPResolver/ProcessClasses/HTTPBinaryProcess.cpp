@@ -6,9 +6,9 @@ namespace HTTPException = ws::HTTPException;
 http::HTTPBinaryProcess::HTTPBinaryProcess(std::string _filePath, std::string _contentType, uint32_t _maxAge)
         : BaseHTTPStaticContentProcess(std::move(_filePath), std::move(_contentType)), maxAge(_maxAge) {}
 
-http::HTTPParser http::HTTPBinaryProcess::Process(http::HTTPParser &request) {
+http::HTTPContext http::HTTPBinaryProcess::Process(http::HTTPContext &request) {
 
-    http::HTTPParser response;
+    http::HTTPContext response;
 
     std::ifstream file(filePath, std::ios::binary);
 

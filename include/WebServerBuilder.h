@@ -1,42 +1,53 @@
 #ifndef CPP_WEB_SERVER_WEBSERVERBUILDER_H
 #define CPP_WEB_SERVER_WEBSERVERBUILDER_H
 
-#include <list>
+#include <vector>
 #include <memory>
 
 #include "WebServer.h"
-#include "Middleware.h"
+#include "interface/Middleware.h"
 
+/// Type comparer
+/// \tparam Base
+/// \tparam Derived
 template<class Base, class Derived>
 struct is_strict_base_of
         : std::bool_constant<std::is_base_of<Base, Derived>::value && !std::is_same<Base, Derived>::value> {};
 
 namespace ws {
 
-    typedef std::shared_ptr<Middleware> middlewareInstance;
+    typedef std::shared_ptr<ws::interface::Middleware> middlewareInstance;
 
-    class WebServerBuilder {
+    class WebServerBuilder{
 
     public:
+
         explicit WebServerBuilder(uint16_t port);
 
-        WebServer Build();
+        /// Creates the web server
+        /// \return
+        virtual std::unique_ptr<ws::WebServer> Build();
 
+        /// Ads middleware to the middleware pipeline of the web server
+        /// \warning First added middleware will be the first middleware in the request processing pipeline
+        /// \warning Only one instance of the Middleware type is allowed
+        /// \tparam TMiddleware subtype of Middleware
+        /// \return reference to this builder
         template<typename TMiddleware,
-                typename std::enable_if<is_strict_base_of<Middleware, TMiddleware>::value, bool>::type = true>
+                typename std::enable_if<is_strict_base_of<ws::interface::Middleware, TMiddleware>::value, bool>::type = true>
         WebServerBuilder &AddMiddleware() {
 
             middlewareInstance middleware = std::make_shared<TMiddleware>();
 
-            auto res = std::find_if(requestMiddlewares.begin(), requestMiddlewares.end(),
+            auto res = std::find_if(requestMiddlewares->begin(), requestMiddlewares->end(),
                                     [&middleware](auto i) { return middleware->Name() == i->Name(); });
 
-            if (res != requestMiddlewares.end())
+            if (res != requestMiddlewares->end())
                 throw std::runtime_error(std::format("Middleware {} is already registered!", middleware->Name()));
 
             Logger::debug("Adding", middleware->Name());
 
-            requestMiddlewares.push_back(middleware);
+            requestMiddlewares->push_back(middleware);
 
             return *this;
         }
@@ -49,7 +60,7 @@ namespace ws {
 
         uint16_t _port;
 
-        std::list<middlewareInstance> requestMiddlewares;
+        std::shared_ptr<std::vector<middlewareInstance>> requestMiddlewares;
 
     };
 

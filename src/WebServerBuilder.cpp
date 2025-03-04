@@ -1,9 +1,9 @@
 #include "WebServerBuilder.h"
 
-ws::WebServerBuilder::WebServerBuilder(uint16_t port) : _port(port) {}
+ws::WebServerBuilder::WebServerBuilder(uint16_t port) : _port(port), requestMiddlewares(new std::vector<middlewareInstance>) {}
 
-ws::WebServer ws::WebServerBuilder::Build() {
+std::unique_ptr<ws::WebServer> ws::WebServerBuilder::Build() {
 
-    return {_port};
+    return std::unique_ptr<ws::WebServer>(new ws::WebServer(_port, requestMiddlewares));
 
 }

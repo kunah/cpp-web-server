@@ -1,6 +1,6 @@
 #include <ClientRequest.h>
 
-ws::ClientRequest::ClientRequest(int _socketFD) : socketFD(_socketFD), mapping(ws::internal::ServerMapping::Instance()){
+ws::ClientRequest::ClientRequest(int _socketFD, const std::shared_ptr<Pipeline> pipeline) : socketFD(_socketFD), requestPipeline(pipeline) {
     timeout.tv_sec = 1;
     timeout.tv_usec = 0;
     Logger::debug("ClientRequest created with max buffer size:", BUFFER_SIZE, "bytes");
@@ -37,16 +37,16 @@ void ws::ClientRequest::ReadSocket() {
         Logger::error("Socket read error:", strerror(errno));
         throw HTTPException::HTTPInternalServerError();
     }
-    Logger::debug("Requested message:\n", buffer);
-
     std::vector<unsigned char> buf;
     std::copy(buffer, buffer + bytesRead, std::back_inserter(buf));
     delete [] buffer;
 
+    Logger::debug("Requested message:\n", std::string(buf.begin(), buf.end()));
+
     Logger::debug("Previous buffer:", bytesRead, "Current Buffer", buf.size());
 
 
-    request = http::HTTPParser(buf, bytesRead);
+    request = http::HTTPContext(buf, bytesRead);
 }
 
 void ws::ClientRequest::SendResponse() {
@@ -63,6 +63,11 @@ void ws::ClientRequest::Run() {
     try{
         Logger::debug("Running Client request");
         ReadSocket();
+
+        for(const auto & middleware : *requestPipeline){
+            middleware->Run(request);
+        }
+
         response = http::HTTPState(request.method).HandleRequest(request);
         SendResponse();
     }

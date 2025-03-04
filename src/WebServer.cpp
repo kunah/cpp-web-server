@@ -2,7 +2,7 @@
 
 #define MODE AF_INET
 
-ws::WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
+ws::WebServer::WebServer(uint16_t _port, std::shared_ptr<Pipeline> pipeline) : port(_port), pool(5, pipeline) {
     Logger::info("Starting Web server on port", port);
 
     if(port == 0){
@@ -30,7 +30,7 @@ ws::WebServer::WebServer(uint16_t _port) : port(_port), pool(5) {
         throw std::runtime_error("Can't assign address to socket");
     }
 
-    // start listeningx max 10 clients
+    // start listening max 10 clients
     Logger::debug("Setting up listening mode on socket", socketFD);
     if(listen(socketFD, 10) < 0){
         Logger::error("Can't start listening:", strerror(errno));

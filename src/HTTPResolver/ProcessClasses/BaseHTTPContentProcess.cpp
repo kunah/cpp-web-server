@@ -5,9 +5,9 @@ namespace http = ws::http;
 http::BaseHTTPStaticContentProcess::BaseHTTPStaticContentProcess(std::string _filePath, std::string _contentType)
         : filePath(std::move(_filePath)), contentType(std::move(_contentType)) {}
 
-http::HTTPParser http::BaseHTTPStaticContentProcess::Process(http::HTTPParser &request) {
+http::HTTPContext http::BaseHTTPStaticContentProcess::Process(http::HTTPContext &request) {
 
-    http::HTTPParser response;
+    http::HTTPContext response;
 
     std::ifstream file(filePath, std::ios::binary);
 

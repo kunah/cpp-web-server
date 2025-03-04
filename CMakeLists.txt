@@ -3,6 +3,14 @@ project(cpp_web_server)
 
 set(CMAKE_CXX_STANDARD 20)
 
+file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/dist")
+
+file(GLOB files "dist/*")
+foreach(file ${files})
+    message(STATUS ${file})
+    file(COPY ${file} DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/dist")
+endforeach()
+
 find_package(Threads REQUIRED)
 
 include_directories(include Test/include)
@@ -11,7 +19,7 @@ set(SRC_FILES src/WebServer.cpp
         src/Logger.cpp
         src/ThreadPool.cpp
         src/ClientRequest.cpp
-        src/HTTPResolver/HTTPParser.cpp
+        src/HTTPResolver/HTTPContext.cpp
         src/ServerMapping.cpp
         src/HTTPResolver/States/HTTPState.cpp
         src/HTTPResolver/Exceptions/ClientError.cpp
@@ -29,7 +37,8 @@ set(SRC_FILES src/WebServer.cpp
         src/URL/PatternURL.cpp
         src/URL/URLMapper.cpp
         src/WebServerBuilder.cpp
-        src/Middleware.cpp
+        src/DummyMiddleware.cpp
+        include/DummyMiddleware.h
 )
 
 MESSAGE(STATUS ${SRC_FILES})
@@ -56,11 +65,3 @@ target_compile_definitions(Test_cpp_web_server PRIVATE LOG_LEVEL=Logger::Level::
 
 
 set(CMAKE_CXX_FLAGS -pthread)
-
-file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/dist")
-
-file(GLOB files "dist/*")
-foreach(file ${files})
-    message(STATUS ${file})
-    file(COPY ${file} DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/dist")
-endforeach()

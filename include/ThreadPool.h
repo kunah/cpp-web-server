@@ -38,13 +38,13 @@ CV.notify_all(); \
 
 namespace ws::threads {
 
-/// Class to take care of threads that do repetitive tasks
-/// Better creating multiple threads at once and than giving them work than creating every time a new thread
+    /// Class to take care of threads that do repetitive tasks
+    /// Better creating multiple threads at once and than giving them work than creating every time a new thread
     class ThreadPool {
     public:
         /// Default constructor that initialise thread pool
         /// \param _size size of the thread pool
-        ThreadPool(uint16_t _size);
+        ThreadPool(uint16_t _size, std::shared_ptr<Pipeline> pipeline = nullptr);
 
         ~ThreadPool();
 
@@ -61,7 +61,7 @@ namespace ws::threads {
 
         static void
         ThreadTask(uint16_t thID, std::atomic<bool> &appRunning, std::queue<int> &poolItems, std::mutex &itemsMtx,
-                   std::condition_variable &cvItems);
+                   std::condition_variable &cvItems, const std::shared_ptr<Pipeline> pipeline);
 
         std::vector<std::thread> pool;
 
@@ -69,6 +69,7 @@ namespace ws::threads {
         std::mutex itemsMtx;
         std::condition_variable cvItems;
         std::queue<int> poolItems;
+        std::shared_ptr<Pipeline> requestPipeline;
     };
 
 } //namespace ws::threads
