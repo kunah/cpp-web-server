@@ -10,8 +10,8 @@
 
 namespace ws::http {
 
-/// Base API class that is used inside server for handling requests
-/// It must be inherited to other Process classes in server
+    /// Base API class that is used inside server for handling requests
+    /// It must be inherited to other Process classes in server
     class BaseHTTPProcess {
     public:
         BaseHTTPProcess() = default;

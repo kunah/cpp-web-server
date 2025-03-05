@@ -30,9 +30,8 @@ set(SRC_FILES src/WebServer.cpp
         src/HTTPResolver/Exceptions/InformationResponses.cpp
         src/HTTPResolver/HTTPMappingRegistrar.cpp
         src/HTTPResolver/ProcessClasses/BaseHTTPProcess.cpp
-        src/HTTPResolver/ProcessClasses/HTTPTextProcess.cpp
-        src/HTTPResolver/ProcessClasses/BaseHTTPContentProcess.cpp
-        src/HTTPResolver/ProcessClasses/HTTPBinaryProcess.cpp
+        src/HTTPResolver/ProcessClasses/BaseHTTPStaticContentProcess.cpp
+        src/HTTPResolver/ProcessClasses/HTTPFileProcess.cpp
         src/URL/URL.cpp
         src/URL/PatternURL.cpp
         src/URL/URLMapper.cpp

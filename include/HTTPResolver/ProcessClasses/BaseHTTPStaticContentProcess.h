@@ -10,7 +10,7 @@
 
 namespace ws::http {
 
-/// Base API class for handling content sending request (images, text files, etc.)
+    /// Base API class for handling content sending request (images, text files, etc.)
     class BaseHTTPStaticContentProcess : public BaseHTTPProcess {
     public:
         /// \param _filePath path to the file to be send
