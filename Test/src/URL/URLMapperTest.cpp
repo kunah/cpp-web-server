@@ -1,6 +1,6 @@
 #include <TestMacros.h>
 #include <URL/URLMapper.h>
-#include <HTTPResolver/ProcessClasses/HTTPTextProcess.h>
+#include <HTTPResolver/ProcessClasses/HTTPFileProcess.h>
 #include <memory>
 
 namespace HTTPException = ws::HTTPException;
@@ -9,7 +9,7 @@ TEST(testUrlMapperEasyRegistreation){
 
     ws::url::URLMapper mapper;
 
-    auto testFnc = [](){return std::make_shared<ws::http::HTTPTextProcess>("dist/Test/testHeader.txt", "text/html");};
+    auto testFnc = [](){return std::make_shared<ws::http::HTTPFileProcess>("dist/Test/testHeader.txt", "text/html");};
 
     mapper.RegisterURL("/", testFnc);
     mapper.RegisterURL("/test", testFnc);
@@ -34,7 +34,7 @@ TEST(testUrlMapperHardRegistreation){
 
     ws::url::URLMapper mapper;
 
-    auto testFnc = [](){return std::make_shared<ws::http::HTTPTextProcess>("dist/Test/testHeader.txt", "text/html");};
+    auto testFnc = [](){return std::make_shared<ws::http::HTTPFileProcess>("dist/Test/testHeader.txt", "text/html");};
 
     mapper.RegisterURL("/", testFnc);
     mapper.RegisterURL("/{test}", testFnc);
